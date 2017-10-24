@@ -56,6 +56,7 @@
     <Compile Include="Course_choosing.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="Major.cs" />
+    <Compile Include="news.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="Studentms.cs" />
