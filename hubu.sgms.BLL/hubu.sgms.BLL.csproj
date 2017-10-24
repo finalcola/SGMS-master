@@ -46,6 +46,8 @@
     <Compile Include="Impl\CourseServiceImpl.cs" />
     <Compile Include="Impl\HomeServiceImpl.cs" />
     <Compile Include="Impl\LoginServiceImpl.cs" />
+    <Compile Include="Impl\TeacherServiceImpl.cs" />
+    <Compile Include="ITeacherService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

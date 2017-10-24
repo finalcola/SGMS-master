@@ -147,6 +147,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -675,7 +676,7 @@
     <Content Include="Views\Admin\SubmitUpdateCourseInfo.cshtml" />
     <Content Include="Views\Course\GetCourseDetail.cshtml" />
     <Content Include="Views\Admin\DeleteCourseInfo.cshtml" />
-    <Content Include="Views\Course\ChooseCoursePage.cshtml" />
+    <Content Include="Views\Teacher\SelectCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -714,10 +715,6 @@
     <ProjectReference Include="..\hubu.sgms.Model\hubu.sgms.Model.csproj">
       <Project>{de5ecfdf-f4d4-42e7-937b-7ecd165af6fc}</Project>
       <Name>hubu.sgms.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\hubu.sgms.Utils\hubu.sgms.Utils.csproj">
-      <Project>{4c8e3dd6-8268-4c97-812d-a4667ceed670}</Project>
-      <Name>hubu.sgms.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
