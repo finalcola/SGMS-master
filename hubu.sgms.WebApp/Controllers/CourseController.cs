@@ -215,8 +215,6 @@ namespace hubu.sgms.WebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
             return View();
-
-
         }
 
         /// <summary>
