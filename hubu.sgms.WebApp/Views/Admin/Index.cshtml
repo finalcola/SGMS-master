@@ -68,31 +68,12 @@
             <div class='info'>
                 <div class="z_content">
                     <!--发布新闻公告-->
-                    <form action="" class="z_myform form-horizontal">
-                        <div class="form-group">
-                            <label for="" class='col-sm-2 control-label '>标题:</label>
-                            <div class="col-sm-9">
-                                <input type="text" class='form-control Username' placeholder='请输入新闻标体'>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class='col-sm-2 control-label '>关键字:</label>
-                            <div class="col-sm-3">
-                                <input type="text" class='form-control' placeholder='关键字一'>
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="text" class='form-control' placeholder='关键字二'>
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="text" class='form-control' placeholder='关键字三'>
-                            </div>
-                        </div>
-                        <p><textarea id="tid" rows="15"></textarea></p>
-                        <p style="padding-top: 20px;margin-left: 45%;">
-                            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="demo1" style="width: 120px;">发布     </button>
-                        </p>
-                    </form>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class='embed-responsive-item' src="/News/Index" noResize scrolling="no" width="100%" height="530px" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" border="0" frameborder="0"></iframe>
+                    </div>
                 </div>
+
+
                 <div class="z_content">
                     <!--修改个人信息-->
                     <div class="container">
@@ -211,19 +192,8 @@ layui.use('element', function(){
   var element = layui.element;
 
 });
-//文本编辑器
-KindEditor.ready(function(K) {
-	editor = K.create('#tid'
-//,{
-//		resizeType : 2,
-//		allowPreviewEmoticons : false,
-//		allowImageUpload : true,
-//		items : [
-//				'source', 'fontname', 'fontsize', 'forecolor','preview','fullscreen'
-//			],
-//}
-	);
-});
+
+
     </script>
 </body>
 </html>

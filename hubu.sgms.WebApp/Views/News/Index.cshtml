@@ -1,0 +1,421 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>新闻管理</title>
+    <script src="~/Scripts/jquery-1.8.2.js"></script>
+    <script src="~/Content/EasyUI/jquery.easyui.min.js"></script>
+    <script src="~/Content/EasyUI/easyui-lang-zh_CN.js"></script>
+    <link href="~/Content/EasyUI/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Content/EasyUI/themes/icon.css" rel="stylesheet" />
+    <script src="~/KinderEditor/kindeditor-min.js"></script>
+
+   @*<script src="~/Scripts/kindeditor-min.js"></script>*@ 
+
+    <script src="~/Scripts/MyAjaxForm.js"></script>
+    <script type="text/javascript">
+        //刚进入就执行该函数
+        $(function () {
+            //初始化表格
+            initTable();
+            //设置详细框为不可见
+            $("#detailDiv").css("display", "none");
+            //设置添加框为不可见
+            $("#addDiv").css("display", "none");
+            //设置编辑框为不可见
+            $("#UpdateDiv").css("display", "none");
+            //设置输入框为禁用
+            $("#title").textbox('textbox').attr('readonly', true);
+            $("#author").textbox('textbox').attr('readonly', true);
+            $("#subDateTime").textbox('textbox').attr('readonly', true);
+            $("#Msg").textbox('textbox').attr('readonly', true);
+        });
+
+  
+        //初始化表格
+        function initTable() {
+            $("#tt").datagrid({
+                //指向一个地址，当表格加载完成后自动请求该地址
+                //自动向后台发送，rows当前页多少条数据        page：当前页
+                //要求返回的数据json对象  {total:200,rows:[{},{}]}
+                url: '/News/ShowNewsList',
+                title: "新闻管理",
+                fitColumns: true,
+                height:520,
+                idField: 'Id',      //后台返回数据中的主键列。一定注意大小写。
+                loadMsg: "正在加载新闻信息........",
+                pagination: true,      //启用分页
+                singleSelect: true,      //只允许选中一行
+                pageSize: 10,        //一页默认多少条
+                pageNumber: 1,        //默认页
+                rownumbers: true,//行号
+                pageList: [10, 15, 20],      //允许一页多少条数据
+                queryParams: {},          //异步请求可以额外传递的数据
+                columns: [[
+               { field: 'ck', checkbox: true, align: 'left', width: 50 },    // 设置cheakbox
+               { field: 'Title', title: '标题', width: 120 },
+               { field: 'SubDateTime', title: '发布时间', width: 80, formatter: ChangeDateFormat, },
+               { field: 'Author', title: '作者', width: 80 },
+
+                 {
+                     field: 'operate', title: '操作', align: 'center', width: $(this).width() * 0.1,
+                     formatter: function (value, row, index) {
+                         var str = "";
+                         str += '<a href="#" name="detail" id="detail" class="easyui-linkbutton" onclick="showDetail('+row.Id+')"></a>';
+                         str += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+                         str += '<a href="#" name="update" id="update" class="easyui-linkbutton" onclick="updateNewInfo(' + row.Id + ')" ></a>';
+                         str += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+                         str += '<a href="#" name="delete" id="delete" class="easyui-linkbutton" onclick="deleteNewInfo(' + row.Id + ')" ></a>';
+                         return str;
+                     }
+                 }
+                ]],
+
+                onLoadSuccess: function (data) {
+                    $("a[name='detail']").linkbutton({ text: '详情', plain: true, iconCls: 'icon-more' });
+                    $("a[name='update']").linkbutton({ text: '编辑', plain: true, iconCls: 'icon-edit' });
+                    $("a[name='delete']").linkbutton({ text: '删除', plain: true, iconCls: 'icon-cancel' });
+                    ////点击详情按钮
+                    //clickDetail();
+                },
+
+                toolbar: [{
+                    id: 'btnAdd',
+                    text: '添加',
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        addBtnClick();    //添加新闻
+                    }
+                }],
+            });
+        }
+
+
+        //添加新闻
+        function addBtnClick()  {
+            var editor1;
+            $("#addDiv").css("display", "block");
+            $("#addDiv").dialog({
+                title: "添加新闻",
+                modal: true,
+                width: 900,
+                height: 500,
+                onOpen: function (){
+                    var options = {
+                        items: ['source', '|', 'undo', 'redo', '|', 'code', 'cut', 'copy', 'paste', 'plainpaste', 'wordpaste', '|', 'forecolor', 'fontname', 'fontsize', '|', 'textcolor', 'bgcolor', 'bold', 'italic', 'underline', 'selectall', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', '|', 'fullscreen', 'image', 'link', 'unlink'],
+                        filterMode: true,
+                        afterBlur: function () { this.sync(); }   //异步传输数据
+                    };
+                    //局部变量，后面删除remove会有问题
+                    editor1 = KindEditor.create('#MsgContent', options);
+                },
+                onBeforeClose: function (event, ui) {
+                    editor1.remove();
+                },
+                buttons: [{
+                    text: "确定",
+                    iconCls: "icon-ok",
+                    handler: function () {
+                        //  document.getElementById("addForm").submit();
+                  
+                    }
+                }, {
+                    text: "取消",
+                    iconCls: "icon-cancel",
+                    handler: function () {
+                        $("#addDiv").dialog("close");
+                    }
+                }]
+            })
+        }
+
+        //修改新闻
+        function updateNewInfo(index) {
+            var editor2;
+
+            $("#updateid").val("");
+            $("#updateTitle").textbox("setValue", "");
+            $("#updateAuthor").textbox("setValue", "");
+            $('#updatemenuIconShow').empty();
+            $("#updateidImage").val("");
+          //  $("#UpdateMsg").val("");
+
+            $.post("/News/ShowModelById", { id: index }, function (data) {
+                //显示之前的数据 
+
+                $("#updateid").val(data.Id);
+                $("#updateTitle").textbox("setValue", data.Title);
+                $("#updateAuthor").textbox("setValue", data.Author);
+                $("#UpdateMsg").val(data.Msg);
+ 
+                if (data.ImagePath != ""){
+                    $("#updateidImage").val(data.ImagePath);   //文件名
+                    $("#updatemenuIconShow").append("<img src='" + data.ImagePath + "' width='40px' height='40px' />");   //图片显示
+                }
+            });
+
+            $("#UpdateDiv").css("display", "block");
+            $("#UpdateDiv").dialog({
+                title: "修改新闻",
+                modal: true,
+                width: 900,
+                height: 500,
+                onOpen: function () {
+                    var options = {
+                        items: ['source', '|', 'undo', 'redo', '|', 'code', 'cut', 'copy', 'paste', 'plainpaste', 'wordpaste', '|', 'forecolor', 'fontname', 'fontsize', '|', 'textcolor', 'bgcolor', 'bold', 'italic', 'underline', 'selectall', 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', '|', 'fullscreen', 'image', 'link', 'unlink'],
+                        filterMode: true,
+                        afterBlur: function () { this.sync(); }   //异步传输数据
+                    };
+
+                    editor2 = KindEditor.create('#UpdateMsg', options);
+              
+                    //开始更改时清空 
+                },
+                onBeforeClose: function (event, ui) {
+                    
+                    editor2.remove();
+                },
+                buttons: [{
+                    text: "确定",
+                    iconCls: "icon-ok",
+                    handler: function () {
+                        //添加修改新闻确定按钮
+                        document.getElementById("updateForm").submit();
+                    }
+                }, {
+                    text: "取消",
+                    iconCls: "icon-cancel",
+                    handler: function () {
+                        $("#UpdateDiv").dialog("close");
+                    }
+                }]
+            });
+            
+         
+        }
+
+
+        //显示新闻详情
+        function showDetail(index) {
+            //弹出div
+            $("#detailDiv").css("display", "block");
+            $.post("/News/ShowModelById", { id: index }, function (data) {
+                $("#title").textbox("setValue", data.Title);
+                $("#author").textbox("setValue", data.Author);
+                $("#subDateTime").textbox("setValue", ChangeDateFormat(data.SubDateTime));
+                $("#Msg").textbox("setValue", data.Msg);
+            });
+            //弹出dialog
+            $("#detailDiv").dialog({
+                title: "新闻详情",
+                modal: true,
+                width: 500,
+                height: 500,
+            });
+        }
+
+
+        //删除新闻
+        function deleteNewInfo(index){
+            $.messager.confirm("提示", "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确定要删除吗?", function (r) {
+                if (r) {
+                    $.post("/News/DeleteNewInfo", { id: index }, function (data) {
+                        if (data == "ok") {
+                            //刷新表格
+                            $('#tt').datagrid('reload');
+                            $.messager.alert("提示", "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp删除成功", "info");
+                        }
+                        else {
+                            $.messager.alert("提示", "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除失败", "info");
+                        }
+                    });
+                }
+            });
+        }
+
+
+        //添加上传图片
+        function FileUpload() {
+            if ($("#imgIcon").val()=="") {
+                $.messager.alert("提示", "请选择文件");
+                return;
+            }
+            $("#addForm").ajaxSubmit({
+                type: 'post',
+                url: '/News/FileUpload',
+                success: function (data) {
+                    var serverData = data.split(":");
+                    if (serverData[0] == "ok") {
+                        //把图片路径给隐藏域
+                        $("#hidImage").attr("value", serverData[1]);
+                        $("#menuIconShow").append("<img src='" + serverData[1] + "' width='40px' height='40px' />");
+                    }
+                    else {
+                        $.messager.alert("提示", serverData[1]);
+                    }
+                }
+            });
+        }
+
+
+
+        //修改上传图片
+        function UpdateFileUpload(){
+            if ($("#updateimgIcon").val() == "") {
+                $.messager.alert("提示", "请选择文件");
+                return;
+            }
+            $("#updateForm").ajaxSubmit({
+                type: 'post',
+                url: '/News/FileUpload',
+                success: function (data) {
+                    var serverData = data.split(":");
+                    if (serverData[0] == "ok") {
+                        //把图片路径给隐藏域
+                        $("#updateidImage").attr("value", serverData[1]);
+                        $("#updatemenuIconShow").append("<img src='" + serverData[1] + "' width='40px' height='40px' />");
+                    }
+                    else {
+                        $.messager.alert("提示", serverData[1]);
+                    }
+                }
+            });
+        }
+
+
+
+        //将序列化成json格式后日期(毫秒数)转成日期格式
+        function ChangeDateFormat(cellval) {
+            var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+            var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+            return date.getFullYear() + "-" + month + "-" + currentDate;
+        }
+
+    </script>
+</head>
+
+
+
+<body>
+    <div style="height:520px;width:100%">
+        <table id="tt" style="height:520px;width:100%"></table>
+    </div>
+
+    <!-------------------------详情显示------------------------------->
+    <div id="detailDiv" style="margin-top:0px">
+        <table>
+            <tr>
+                <td>标题:</td>
+                <td><input class="easyui-textbox" style="width:250px;height:32px" id="title" /></td>
+            </tr>
+            <tr>
+                <td>作者:</td>
+                <td><input class="easyui-textbox" style="width: 250px; height: 32px" id="author" /></td>
+            </tr>
+            <tr>
+                <td>发布日期:</td>
+                <td><input class="easyui-textbox" style="width: 250px; height: 32px" id="subDateTime" /></td>
+            </tr>
+            <tr>
+                <td>内容:</td>
+                <td><input class="easyui-textbox" data-options="multiline:true" style="width: 400px; height: 250px" id="Msg" /></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-------------------------详情显示------------------------------>
+
+
+
+    <!---------------------添加域-------------------------->
+    <div id="addDiv">
+        <!--不加action和post会返回，根本就不会进入到AddNewInfo界面-->
+        <form id="addForm"  action="/News/AddNewInfo" mothod="post">
+            <table>
+                <tr>
+                    <td>标题:</td>
+                    <td><input class="easyui-textbox" style="width:250px; height:32px" id="addTitle" name="Title" /></td>
+                </tr>
+                <tr>
+                    <td>作者:</td>
+                    <td><input class="easyui-textbox" style="width: 250px; height: 32px" id="addAuthor" name="Author" /></td>
+                </tr>
+
+                <tr>
+                    <td>上传图片:</td>
+                    <td>
+                        <input type="file" name="MenuIcon" id="imgIcon" />
+                        <input type="button" id="btnUpload" value="上   传" onclick="FileUpload()" />
+                        <!-------------设置隐藏域用于接收图片路径（开始）----------------->
+                        <input id="hidImage" style="display:none" type="text" name="ImagePath" />
+                        <!-------------设置隐藏域用于接收图片路径（结束）----------------->
+
+
+                        <!-------------设置div用于展示上传的图片（开始）----------------->
+                        <div id="menuIconShow">
+                        </div>
+                        <!-------------设置div用于展示上传的图片（结束）----------------->
+                    </td>
+                </tr>
+                <tr>
+                    <td>新闻内容:</td>
+                    <td><textarea id="MsgContent" cols="100" rows="8" style="width: 800px; height: 300px; visibility: hidden;" name="Msg"></textarea></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <!---------------------添加域-------------------------->
+
+
+    <!---------------------编辑域-------------------------->
+    <div id="UpdateDiv">
+        <!--不加action和post会返回，根本就不会进入到AddNewInfo界面-->
+        <form id="updateForm" action="/News/UpdateNewInfo" mothod="post">
+            <table>
+                <tr>
+                    <td></td>
+                    <td><input type="text"  style="display:none;width:250px;height:32px"  id="updateid" name="Id" /></td>
+                </tr>
+                <tr>
+                    <td>标题:</td>
+                    <td><input class="easyui-textbox" style="width:250px;height:32px" id="updateTitle" name="Title" /></td>
+                </tr>
+                <tr>
+                    <td>作者:</td>
+                    <td><input class="easyui-textbox" style="width: 250px; height: 32px" id="updateAuthor" name="Author"/></td>
+                </tr>
+
+                <tr>
+                    <td>上传图片:</td>
+                    <td>
+                        <input type="file" name="MenuIcon" id="updateimgIcon" />
+                        <input type="button" id="updatebtnUpload" value="上   传" onclick="UpdateFileUpload()" />
+
+                        <!-------------设置隐藏域用于接收图片路径（开始）----------------->
+                        <input type="text" style="display:none" id="updateidImage" name="UpdateImagePath" />
+
+                        <!-------------设置隐藏域用于接收图片路径（结束）----------------->
+                        <!-------------设置div用于展示上传的图片（开始）----------------->
+                        <div id="updatemenuIconShow">
+                        </div>
+                        <!-------------设置div用于展示上传的图片（结束）----------------->
+                    </td>
+                </tr>
+                <tr>
+                    <td>新闻内容:</td>
+                    <td><textarea id="UpdateMsg" cols="100" rows="8" style="width: 800px; height: 300px; visibility: hidden;" name="UpdateMsg"></textarea></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <!---------------------编辑域-------------------------->
+
+
+
+
+    </body>
+</html>

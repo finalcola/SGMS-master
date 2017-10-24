@@ -147,6 +147,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\NewController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -247,6 +248,10 @@
     <Content Include="Content\courseImg\高等数学（上）.jpg" />
     <Content Include="Content\courseImg\高等数学（下）.jpg" />
     <Content Include="Content\courseImg\黎曼几何.jpg" />
+    <Content Include="Content\EasyUI\easyui-lang-zh_CN.js" />
+    <Content Include="Content\EasyUI\jquery.easyui.min.js" />
+    <Content Include="Content\EasyUI\themes\default\easyui.css" />
+    <Content Include="Content\EasyUI\themes\icon.css" />
     <Content Include="Content\img\136990283.png" />
     <Content Include="Content\img\a.jpg" />
     <Content Include="Content\img\b.jpg" />
@@ -306,11 +311,22 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\loading.gif" />
+    <Content Include="KinderEditor\kindeditor-min.js" />
+    <Content Include="KinderEditor\kindeditor.js" />
+    <Content Include="KinderEditor\lang\zh_CN.js" />
+    <Content Include="KinderEditor\plugins\code\code.js" />
+    <Content Include="KinderEditor\plugins\code\prettify.css" />
+    <Content Include="KinderEditor\plugins\code\prettify.js" />
+    <Content Include="KinderEditor\themes\default\bg.gif" />
+    <Content Include="KinderEditor\themes\default\default.css" />
+    <Content Include="KinderEditor\themes\default\default.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="KinderEditor\asp.net\file_manager_json.ashx" />
+    <Content Include="KinderEditor\asp.net\upload_json.ashx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap3.3.7.min.js" />
     <Content Include="Scripts\Course\colorpicker.js" />
@@ -338,6 +354,7 @@
     <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.4.js" />
     <Content Include="Scripts\jquery-1.4.4.min.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -550,6 +567,7 @@
     <Content Include="Scripts\kd\themes\qq\editor.gif" />
     <Content Include="Scripts\kd\themes\qq\qq.css" />
     <Content Include="Scripts\kd\themes\simple\simple.css" />
+    <Content Include="Scripts\kindeditor-min.js" />
     <Content Include="Scripts\language\ar_MA.js" />
     <Content Include="Scripts\language\be_FR.js" />
     <Content Include="Scripts\language\be_NL.js" />
@@ -631,6 +649,7 @@
     <Content Include="Scripts\layui\lay\modules\upload.js" />
     <Content Include="Scripts\layui\lay\modules\util.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\MyAjaxForm.js" />
     <Content Include="Scripts\public\docs.min.js" />
     <Content Include="Scripts\public\formValidation.js" />
     <Content Include="Scripts\public\formValidation.min.js" />
@@ -677,12 +696,14 @@
     <Content Include="Views\Course\GetCourseDetail.cshtml" />
     <Content Include="Views\Admin\DeleteCourseInfo.cshtml" />
     <Content Include="Views\Teacher\SelectCourse.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\class\" />
     <Folder Include="Content\student\" />
     <Folder Include="Content\teacher\" />
+    <Folder Include="FileUploadImage\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\admin\" />
     <Folder Include="Scripts\class\" />
@@ -715,6 +736,10 @@
     <ProjectReference Include="..\hubu.sgms.Model\hubu.sgms.Model.csproj">
       <Project>{de5ecfdf-f4d4-42e7-937b-7ecd165af6fc}</Project>
       <Name>hubu.sgms.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\hubu.sgms.Utils\hubu.sgms.Utils.csproj">
+      <Project>{4c8e3dd6-8268-4c97-812d-a4667ceed670}</Project>
+      <Name>hubu.sgms.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
