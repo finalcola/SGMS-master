@@ -58,6 +58,8 @@
     <Compile Include="ITeacherDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlHelper.cs" />
+    <Compile Include="Impl\StudentDALImpl.cs" />
+    <Compile Include="Impl\TeacherCourseDALImpl.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
