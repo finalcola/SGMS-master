@@ -56,5 +56,10 @@ namespace hubu.sgms.DAL.Impl
             }
             return CourseList;
         }
+
+        public IList<Course_choosing> SelectAllStudentCourse(string department, string major)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
