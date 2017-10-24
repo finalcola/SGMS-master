@@ -19,6 +19,10 @@ namespace hubu.sgms.WebApp.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 返回所有课程信息
+        /// </summary>
+        /// <returns></returns>
         public ActionResult SelectCourse()
         {
             //身份判断
@@ -37,7 +41,10 @@ namespace hubu.sgms.WebApp.Controllers
                 else
                 {
                     //获取数据
-                    return View();
+                    String department = Request["department"];
+                    String major = Request["major"];
+                    IList<Teacher_course> courseList = teacherService.SelectAllCourse(department, major);
+                    return Json(new { courseList = courseList });
                 }
             }
 

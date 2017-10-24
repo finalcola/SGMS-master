@@ -61,6 +61,10 @@
       <Project>{de5ecfdf-f4d4-42e7-937b-7ecd165af6fc}</Project>
       <Name>hubu.sgms.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\hubu.sgms.Utils\hubu.sgms.Utils.csproj">
+      <Project>{4c8e3dd6-8268-4c97-812d-a4667ceed670}</Project>
+      <Name>hubu.sgms.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
