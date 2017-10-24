@@ -50,8 +50,13 @@
     <Compile Include="Impl\CourseDALImpl.cs" />
     <Compile Include="Impl\HomeDALImpl.cs" />
     <Compile Include="Impl\LoginDALImpl.cs" />
+    <Compile Include="Impl\StudentDALImpl.cs" />
+    <Compile Include="Impl\TeacherCourseDALImpl.cs" />
     <Compile Include="Impl\TeacherDALImpl.cs" />
+    <Compile Include="IStudengDAL.cs" />
+    <Compile Include="ITeacherCourseDAL.cs" />
     <Compile Include="ITeacherDAL.cs" />
+    <Compile Include="NewsDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlHelper.cs" />
   </ItemGroup>
@@ -60,6 +65,10 @@
     <ProjectReference Include="..\hubu.sgms.Model\hubu.sgms.Model.csproj">
       <Project>{de5ecfdf-f4d4-42e7-937b-7ecd165af6fc}</Project>
       <Name>hubu.sgms.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\hubu.sgms.Utils\hubu.sgms.Utils.csproj">
+      <Project>{4c8e3dd6-8268-4c97-812d-a4667ceed670}</Project>
+      <Name>hubu.sgms.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
