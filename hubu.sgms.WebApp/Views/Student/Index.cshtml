@@ -1,0 +1,629 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 学生中心 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>湖北大学学生选课系统</title>
+    <link href="~/Scripts/bs/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Scripts/layui/css/layui.css">
+    <link href="~/Content/student.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Scripts/bs/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bs/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/pcasunzip.js" charset="gb2312"></script>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">学生选课中心</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll  menu">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">个人设置</a>
+                        <dl class="layui-nav-child">
+                            <dd class="z_item"><a href="javascript:;">修改个人信息</a></dd>
+                            <dd class="z_item"><a href="javascript:;">修改密码</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">学生选课</a>
+                        <dl class="layui-nav-child">
+                            <dd class="z_item"><a href="javascript:;">公共选修课</a></dd>  <!--需要实现-->
+                            <dd class="z_item"><a href="javascript:;">挂牌选修课</a></dd>	 <!--需要实现-->
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">成绩信息</a>
+                        <dl class="layui-nav-child">
+                            <dd class="z_item"><a href="javascript:;">成绩查询</a></dd>   <!--需要实现-->
+                            @*<dd class="z_item"><a href="javascript:;">成绩认定</a></dd>
+                            <dd class="z_item"><a href="javascript:;">缓考申请</a></dd>
+                            <dd class="z_item"><a href="javascript:;">补考报名</a></dd>*@
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item z_item "><a href="javascript:;">学籍信息</a></li>
+                    @*<li class="layui-nav-item z_item"><a href="javascript:;">教学评价</a></li>
+                    <li class="layui-nav-item z_item"><a href="javascript:;">毕业设计</a></li>
+                    <li class="layui-nav-item z_item"><a href="javascript:;">考务安排</a></li>
+                    <li class="layui-nav-item z_item"><a href="javascript:;">考级报名</a></li>*@
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div class='info'>
+                <div class="z_content">
+                    <!--修改个人信息-->
+                    <div class="container">
+                        <form id="defaultForm" class="form-horizontal" action="javascript:void(0);" style="margin-top: 10px;">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">用户名</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="student_name" placeholder="用户名" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">身份证号</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="student_id_card" placeholder="身份证号" />
+                                </div>
+                            </div>
+                            <!--级联菜单城市选择-->
+                            <div class="form-group">
+                                <label for="" class='col-lg-3 control-label'>联系地址:</label>
+                                <div class="col-lg-2">
+                                    <select name="user.province" id="province" class="form-control"></select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <select name="user.city" id="city" class="form-control"></select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <select name="user.area" id="area" class="form-control"></select>
+                                </div>
+                            </div>
+                            <!--级联菜单城市选择-->
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">手机号</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="student_phone" placeholder="手机号" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">邮箱</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="email" placeholder="邮箱" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">个人描述</label>
+                                <div class="col-lg-6">
+                                    <textarea rows="3" class="form-control" name="student_other"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-2 col-lg-offset-4">
+                                    <button type="button" onclick="changeStuInfo();" class="btn btn-success " name="signup" value="Sign up" class="z_button">&nbsp;&nbsp;提交&nbsp;&nbsp;</button>
+                                </div>
+                                <div class="col-lg-6">
+                                    <button type="reset" class="btn btn-warning" name="reset" value="重置" class="z_button">&nbsp;&nbsp;重置&nbsp;&nbsp;</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="z_content">
+                    <!--修改密码-->
+                    <!--<iframe src="stu_changepass.html" width="100%" height="500px"></iframe>-->
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class='embed-responsive-item' src="~/Student/ChangePassPage" width="100%" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" scrolling="no" border="0" frameborder="0"></iframe>
+                    </div>
+                </div>
+                <div class="z_content">
+                    <!--公共选修课-->
+                    <!--<div class="embed-responsive embed-responsive-16by9">
+                    <iframe class='embed-responsive-item' src="stu_chosepublicclass.html" width="100%" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" scrolling="no" border="0" frameborder="0"></iframe>
+                        </div>-->
+                    <div class="z_container">
+                        <div class="z_course">
+                            <div class="layui-form">
+                                <table class="layui-table">
+                                    <colgroup>
+                                        <col width=9%>
+                                        <col width=12%>
+                                        <col width=5%>
+                                        <col width=18%>
+                                        <col width=11%>
+                                        <col width=10%>
+                                        <col width=10%>
+                                        <col width=10%>
+                                        <col width=10%>
+                                        <col width=5%>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>课程编号</th>
+                                            <th>课程名称</th>
+                                            <th>学分</th>
+                                            <th>开课学院</th>
+                                            <th>任课老师</th>
+                                            <th>已选人数</th>
+                                            <th>限选人数</th>
+                                            <th>上课地点</th>
+                                            <th>上课时间</th>
+                                            <th>状态</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>A10001</td>
+                                            <td>名著欣赏</td>
+                                            <td>3.0</td>
+                                            <td>文学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>A10001</td>
+                                            <td>名著欣赏</td>
+                                            <td>3.0</td>
+                                            <td>文学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button class="layui-btn layui-btn-normal" style="width: 150px;margin:10px 0 20px 44%">确定     </button>
+                            </div>
+                        </div>
+                        <!--右边已选课程-->
+                        <div class="z_selectcourse">
+                            <div class="layui-form">
+                                <table class="layui-table">
+                                    <colgroup>
+                                        <col width=20%>
+                                        <col width=35%>
+                                        <col width=20%>
+                                        <col width=25%>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>课程编号</th>
+                                            <th>课程名称</th>
+                                            <th>学分</th>
+                                            <th>状态</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>名著欣赏</td>
+                                            <td>3.0</td>
+                                            <td><button>删除</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td><button>删除</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="z_content">
+                    <!--挂牌选修课-->
+                    <div class="z_container">
+                        <div class="z_course">
+                            <div class="layui-form">
+                                <table class="layui-table">
+                                    <colgroup>
+                                        <col width=9%>
+                                        <col width=12%>
+                                        <col width=5%>
+                                        <col width=18%>
+                                        <col width=11%>
+                                        <col width=10%>
+                                        <col width=10%>
+                                        <col width=10%>
+                                        <col width=10%>
+                                        <col width=5%>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>课程编号</th>
+                                            <th>课程名称</th>
+                                            <th>学分</th>
+                                            <th>开课学院</th>
+                                            <th>任课老师</th>
+                                            <th>已选人数</th>
+                                            <th>限选人数</th>
+                                            <th>上课地点</th>
+                                            <th>上课时间</th>
+                                            <th>状态</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td>计算机与信息工程学院</td>
+                                            <th>张某某</th>
+                                            <td>70</td>
+                                            <td>120</td>
+                                            <td>4-203</td>
+                                            <td>5-0706</td>
+                                            <td><input type="checkbox" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button class="layui-btn layui-btn-normal" style="width: 150px;margin:10px 0 20px 44%">确定     </button>
+                            </div>
+                        </div>
+                        <!--右边已选课程-->
+                        <div class="z_selectcourse">
+                            <div class="layui-form">
+                                <table class="layui-table">
+                                    <colgroup>
+                                        <col width=20%>
+                                        <col width=35%>
+                                        <col width=20%>
+                                        <col width=25%>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>课程编号</th>
+                                            <th>课程名称</th>
+                                            <th>学分</th>
+                                            <th>状态</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td><button>删除</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>10001</td>
+                                            <td>javaweb</td>
+                                            <td>3.0</td>
+                                            <td><button>删除</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="z_content">
+                    <!--成绩查询-->
+                    <div class="z_container">
+                        <div class="form-group">
+                            <label for="" class='col-md-1 control-label'>开课时间:</label>
+                            <div class="col-md-2">
+                                <select name="p" class="form-control">
+                                    <option value="0" selected="selected">--请选择--</option>
+                                    <option value="1">2017-2018-1</option>
+                                    <option value="2">2016-2017-2</option>
+                                    <option value="3">2016-2017-1</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class='col-md-1 control-label'>课程性质:</label>
+                            <div class="col-md-2">
+                                <select name="p" class="form-control">
+                                    <option value="0" selected="selected">--请选择--</option>
+                                    <option value="1">专业必修课</option>
+                                    <option value="2">专业选修课</option>
+                                    <option value="3">公共课</option>
+                                    <option value="3">全部</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class='col-md-1 control-label'>显示方式:</label>
+                            <div class="col-md-2">
+                                <select name="p" class="form-control">
+                                    <option value="0" selected="selected">--请选择--</option>
+                                    <option value="1">显示全部成绩</option>
+                                    <option value="2">显示最好成绩</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-md-offset-1">
+                            <input type="submit" class='btn btn-info' value="查询" style="width: 140px;" />
+                        </div>
+                    </div>
+                    <hr style="visibility: hidden;" />	<hr />
+                    <div class="container">
+                        <div class="layui-form">
+                            <table class="layui-table">
+                                <colgroup>
+                                    <col width=20%>
+                                    <col width=20%>
+                                    <col width=20%>
+                                    <col width=20%>
+                                    <col width=20%>
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>课程名称</th>
+                                        <th>成绩</th>
+                                        <th>学分</th>
+                                        <th>是否及格</th>
+                                        <th>备注</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>javaweb</td>
+                                        <td>90</td>
+                                        <td>3.0</td>
+                                        <td>是</td>
+                                        <th>正常考试</th>
+                                    </tr>
+                                    <tr>
+                                        <td>javaweb</td>
+                                        <td>90</td>
+                                        <td>3.0</td>
+                                        <td>是</td>
+                                        <th>正常考试</th>
+                                    </tr>
+                                    <tr>
+                                        <td>javaweb</td>
+                                        <td>90</td>
+                                        <td>3.0</td>
+                                        <td>是</td>
+                                        <th>正常考试</th>
+                                    </tr>
+                                    <tr>
+                                        <td>javaweb</td>
+                                        <td>90</td>
+                                        <td>3.0</td>
+                                        <td>是</td>
+                                        <th>正常考试</th>
+                                    </tr>
+                                    <tr>
+                                        <td>javaweb</td>
+                                        <td>90</td>
+                                        <td>3.0</td>
+                                        <td>是</td>
+                                        <th>正常考试</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="z_content">
+                    成绩认定
+                </div>
+                <div class="z_content">缓考申请</div>
+                <div class="z_content">补考报名</div>
+                <div class="z_content">学籍信息</div>
+                <div class="z_content">教学评价</div>
+                <div class="z_content">毕业设计</div>
+                <div class="z_content">考务安排</div>
+                <div class="z_content">考级报名</div>
+            </div>
+
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            <center>湖北大学教务管理系统</center>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/Scripts/layui/layui.js"></script>
+    <script type="text/javascript" src="~/Scripts/dist/js/formValidation.js"></script>
+    <script type="text/javascript" src="~/Scripts/dist/js/framework/bootstrap.js"></script>
+    <script type="text/javascript" src="~/Scripts/dist/js/language/zh_CN.js"></script>
+    <script src="~/Scripts/student.js"></script>
+</body>
+</html>
+

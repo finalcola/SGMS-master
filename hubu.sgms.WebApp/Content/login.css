@@ -1,0 +1,38 @@
+.z_mylogo{
+	height: 100px;
+	margin-top: 50PX;
+	margin-bottom: 60px;
+	/*background: yellow;*/
+}
+.z_mysubmit{
+	color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+    width: 100%;
+}
+.z_mylink{
+	width: 50%;
+	margin: 0 auto;
+	margin-top: 40px;
+}
+.warn {
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	background:url(../img/regPic.fw.png) 0 -28px no-repeat;
+}
+.correct {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	background:url(../img/regPic.fw.png) 0 0 no-repeat;
+}
+.error {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	background: url(../img/regPic.fw.png) 0px -14px no-repeat;
+}
+s{
+	margin-top: 10px;
+}

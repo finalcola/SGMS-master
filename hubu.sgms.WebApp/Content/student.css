@@ -1,0 +1,30 @@
+a{
+  		text-decoration: none!important;
+  	}
+  	.info .z_content{
+	display: none;
+}
+
+.info .z_content:first-child{
+	display: block;
+}
+.z_button{
+			width: 140px;
+		}
+		.z_container{
+				width: 95%;
+				margin: 0 auto;
+				margin-top: 10px;
+			}
+			.z_course{
+				width: 70%;
+				float: left;
+			}
+			.z_selectcourse{
+				float: left;
+				width: 28%;
+				margin-left: 2%;
+			}
+			.layui-form input[type="checkbox"]{
+				display:block;
+			}

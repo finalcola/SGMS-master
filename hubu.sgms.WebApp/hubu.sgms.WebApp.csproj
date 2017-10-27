@@ -148,6 +148,7 @@
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NewController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -155,6 +156,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\admin.css" />
     <Content Include="Content\admin\bootstrap-grid.min.css" />
     <Content Include="Content\admin\bootstrap.min.css" />
     <Content Include="Content\admin\default.css" />
@@ -297,6 +299,8 @@
     <Content Include="Content\img\swal2-error.png" />
     <Content Include="Content\img\unslider-arrow.png" />
     <Content Include="Content\admin\admin.css" />
+    <Content Include="Content\index.css" />
+    <Content Include="Content\login.css" />
     <Content Include="Content\public\bootstrap-grid.min.css" />
     <Content Include="Content\public\formValidation.css" />
     <Content Include="Content\public\formValidation.min.css" />
@@ -305,6 +309,7 @@
     <Content Include="Content\public\new_file.css" />
     <Content Include="Content\public\student.css" />
     <Content Include="Content\public\style.css" />
+    <Content Include="Content\student.css" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -327,8 +332,25 @@
     </Content>
     <Content Include="KinderEditor\asp.net\file_manager_json.ashx" />
     <Content Include="KinderEditor\asp.net\upload_json.ashx" />
+    <Content Include="Scripts\bs\css\bootstrap-theme.css.map" />
+    <Content Include="Scripts\bs\css\bootstrap.css.map" />
+    <Content Include="Scripts\bs\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\bs\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Scripts\bs\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Scripts\bs\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap3.3.7.min.js" />
+    <Content Include="Scripts\bs\css\bootstrap-theme.css" />
+    <Content Include="Scripts\bs\css\bootstrap-theme.min.css" />
+    <Content Include="Scripts\bs\css\bootstrap.css" />
+    <Content Include="Scripts\bs\css\bootstrap.min.css" />
+    <Content Include="Scripts\bs\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\bs\js\bootstrap.js" />
+    <Content Include="Scripts\bs\js\bootstrap.min.js" />
+    <Content Include="Scripts\bs\js\docs.min.js" />
+    <Content Include="Scripts\bs\js\holder.min.js" />
+    <Content Include="Scripts\bs\js\jquery.min.js" />
+    <Content Include="Scripts\bs\js\npm.js" />
     <Content Include="Scripts\Course\colorpicker.js" />
     <Content Include="Scripts\Course\elements.js" />
     <Content Include="Scripts\Course\jquery-1.7.min.js" />
@@ -338,6 +360,59 @@
     <Content Include="Scripts\Course\pikaday.js" />
     <Content Include="Scripts\Course\sweet-alert.js" />
     <Content Include="Scripts\Course\sweetalert2.min.js" />
+    <Content Include="Scripts\dist\css\formValidation.css" />
+    <Content Include="Scripts\dist\css\formValidation.min.css" />
+    <Content Include="Scripts\dist\js\formValidation.js" />
+    <Content Include="Scripts\dist\js\formValidation.min.js" />
+    <Content Include="Scripts\dist\js\framework\bootstrap.js" />
+    <Content Include="Scripts\dist\js\framework\bootstrap.min.js" />
+    <Content Include="Scripts\dist\js\framework\foundation.js" />
+    <Content Include="Scripts\dist\js\framework\foundation.min.js" />
+    <Content Include="Scripts\dist\js\framework\pure.js" />
+    <Content Include="Scripts\dist\js\framework\pure.min.js" />
+    <Content Include="Scripts\dist\js\framework\semantic.js" />
+    <Content Include="Scripts\dist\js\framework\semantic.min.js" />
+    <Content Include="Scripts\dist\js\framework\uikit.js" />
+    <Content Include="Scripts\dist\js\framework\uikit.min.js" />
+    <Content Include="Scripts\dist\js\language\ar_MA.js" />
+    <Content Include="Scripts\dist\js\language\be_FR.js" />
+    <Content Include="Scripts\dist\js\language\be_NL.js" />
+    <Content Include="Scripts\dist\js\language\bg_BG.js" />
+    <Content Include="Scripts\dist\js\language\ca_ES.js" />
+    <Content Include="Scripts\dist\js\language\cs_CZ.js" />
+    <Content Include="Scripts\dist\js\language\da_DK.js" />
+    <Content Include="Scripts\dist\js\language\de_DE.js" />
+    <Content Include="Scripts\dist\js\language\en_US.js" />
+    <Content Include="Scripts\dist\js\language\es_CL.js" />
+    <Content Include="Scripts\dist\js\language\es_ES.js" />
+    <Content Include="Scripts\dist\js\language\eu_ES.js" />
+    <Content Include="Scripts\dist\js\language\fa_IR.js" />
+    <Content Include="Scripts\dist\js\language\fi_FI.js" />
+    <Content Include="Scripts\dist\js\language\fr_FR.js" />
+    <Content Include="Scripts\dist\js\language\gr_EL.js" />
+    <Content Include="Scripts\dist\js\language\he_IL.js" />
+    <Content Include="Scripts\dist\js\language\hi_IN.js" />
+    <Content Include="Scripts\dist\js\language\hu_HU.js" />
+    <Content Include="Scripts\dist\js\language\id_ID.js" />
+    <Content Include="Scripts\dist\js\language\it_IT.js" />
+    <Content Include="Scripts\dist\js\language\ja_JP.js" />
+    <Content Include="Scripts\dist\js\language\nl_NL.js" />
+    <Content Include="Scripts\dist\js\language\no_NO.js" />
+    <Content Include="Scripts\dist\js\language\pl_PL.js" />
+    <Content Include="Scripts\dist\js\language\pt_BR.js" />
+    <Content Include="Scripts\dist\js\language\pt_PT.js" />
+    <Content Include="Scripts\dist\js\language\ro_RO.js" />
+    <Content Include="Scripts\dist\js\language\ru_RU.js" />
+    <Content Include="Scripts\dist\js\language\sk_SK.js" />
+    <Content Include="Scripts\dist\js\language\sq_AL.js" />
+    <Content Include="Scripts\dist\js\language\sr_RS.js" />
+    <Content Include="Scripts\dist\js\language\sv_SE.js" />
+    <Content Include="Scripts\dist\js\language\th_TH.js" />
+    <Content Include="Scripts\dist\js\language\tr_TR.js" />
+    <Content Include="Scripts\dist\js\language\ua_UA.js" />
+    <Content Include="Scripts\dist\js\language\vi_VN.js" />
+    <Content Include="Scripts\dist\js\language\zh_CN.js" />
+    <Content Include="Scripts\dist\js\language\zh_TW.js" />
     <Content Include="Scripts\framework\bootstrap.js" />
     <Content Include="Scripts\framework\bootstrap.min.js" />
     <Content Include="Scripts\framework\foundation.js" />
@@ -348,6 +423,8 @@
     <Content Include="Scripts\framework\semantic.min.js" />
     <Content Include="Scripts\framework\uikit.js" />
     <Content Include="Scripts\framework\uikit.min.js" />
+    <Content Include="Scripts\index.js" />
+    <Content Include="Scripts\jcarousellite.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -648,8 +725,10 @@
     <Content Include="Scripts\layui\lay\modules\tree.js" />
     <Content Include="Scripts\layui\lay\modules\upload.js" />
     <Content Include="Scripts\layui\lay\modules\util.js" />
+    <Content Include="Scripts\login.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\MyAjaxForm.js" />
+    <Content Include="Scripts\pcasunzip.js" />
     <Content Include="Scripts\public\docs.min.js" />
     <Content Include="Scripts\public\formValidation.js" />
     <Content Include="Scripts\public\formValidation.min.js" />
@@ -665,6 +744,7 @@
     <Content Include="Scripts\public\student.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\student.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -697,6 +777,8 @@
     <Content Include="Views\Admin\DeleteCourseInfo.cshtml" />
     <Content Include="Views\Teacher\SelectCourse.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Student\ChangePassPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -726,7 +808,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\hubu.sgms.BLL\hubu.sgms.BLL.csproj">
-      <Project>{8A7AB288-F125-4A63-852E-D3820E165C80}</Project>
+      <Project>{8a7ab288-f125-4a63-852e-d3820e165c80}</Project>
       <Name>hubu.sgms.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\hubu.sgms.DAL\hubu.sgms.DAL.csproj">
