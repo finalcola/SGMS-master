@@ -10,5 +10,7 @@ namespace hubu.sgms.BLL
     public interface ILoginService
     {
         Login GetUser(string username, string password);
+
+        void ChangePass(string username, string password);
     }
 }

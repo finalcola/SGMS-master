@@ -12,6 +12,12 @@ namespace hubu.sgms.WebApp.Controllers
         // GET: Student
         public ActionResult Index()
         {
+            //student_address: location,
+            //student_name: $("#student_name").val(),
+            //student_id_card: $("#student_id_card").val(),
+            //student_phone: $("#student_phone").val(),
+            //student_email: $("#student_email").val(),
+            //student_other: $("#student_other").val()
             Login login = (Login)Session["loginInfo"];
             if (login == null)
             {
@@ -24,7 +30,8 @@ namespace hubu.sgms.WebApp.Controllers
             return View();
         }
 
-        public ActionResult ChangeInfo()
+        public ActionResult ChangeInfo(string student_name, string student_address, string student_id_card,
+            string student_phone, string student_other, string student_email)
         {
             return Json(new { status = 1 });
         }
@@ -34,9 +41,6 @@ namespace hubu.sgms.WebApp.Controllers
             return View();
         }
 
-        public ActionResult ChangePass()
-        {
-            return Json(new { status = 1 });
-        }
+        
     }
 }

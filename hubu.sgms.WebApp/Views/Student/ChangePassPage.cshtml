@@ -39,17 +39,17 @@
 <body>
     <div class="container">
         <form id="defaultForm" class="form-horizontal">
-            <div class="form-group">
+            @*<div class="form-group">
                 <label class="col-md-4 control-label">用户名</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" name="username" placeholder="用户名" />
+                    <input type="text" class="form-control" id="username" name="username" placeholder="用户名" />
                 </div>
-            </div>
+            </div>*@
 
             <div class="form-group">
                 <label class="col-md-4 control-label">密码</label>
                 <div class="col-md-4">
-                    <input type="password" class="form-control" name="password" placeholder="密码" />
+                    <input type="password" class="form-control" id="password" name="password" placeholder="密码" />
                 </div>
             </div>
 
@@ -81,23 +81,23 @@
 	            validating: 'glyphicon glyphicon-refresh'
 	        },
 	        fields: {
-	            username: {
-	                message: '信息格式填写错误',
-	                validators: {
-	                    notEmpty: {
-	                        message: '信息不能为空'
-	                    },
-	                  /*  stringLength: {
-	                        min: 3,
-	                        max: 12,
-	                        message: '用户名长度必须在3~12位之间'
-	                    },*/
-	                    regexp: {
-	                        regexp: /^[u0391-uFFE5w]+$/,
-	                        message: '用户名只能包括中文字、英文字母、数字和下划线'
-	                    }
-	                }
-	            },
+	            //username: {
+	            //    message: '信息格式填写错误',
+	            //    validators: {
+	            //        notEmpty: {
+	            //            message: '信息不能为空'
+	            //        },
+	            //        stringLength: {
+	            //            min: 3,
+	            //            max: 12,
+	            //            message: '用户名长度必须在3~12位之间'
+	            //        },
+	            //        regexp: {
+	            //            regexp: /^[u0391-uFFE5w]+$/,
+	            //            message: '用户名只能包括中文字、英文字母、数字和下划线'
+	            //        }
+	            //    }
+	            //},
 
 	            password: {
 	                validators: {
@@ -142,19 +142,19 @@
         });
 
         function changePass() {
-            var username = $("#username").val();
+            //var username = $("#username").val();
             var password = $("#password").val();
 
             $.ajax({
-                url: "/Student/ChangePass",
+                url: "/Login/ChangePass",
                 method: "post",
-                data: { username: username, password: password },
+                data: { password: password },
                 success: function (data) {
                     if (data.status == 1) {
                         alert("修改成功!");
                     }
                     else {
-                        alert("failed!");
+                        alert("failed!\n"+data.msg);
                     }
                 }
             });

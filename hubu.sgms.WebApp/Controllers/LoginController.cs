@@ -47,5 +47,34 @@ namespace hubu.sgms.WebApp.Controllers
                 return Json(new { status = "0", msg = "登录失败" } );//跳转到后台管理页面
             }
         }
+
+        public ActionResult ChangePass(string password)
+        {
+            if(password==null || "".Equals(password))
+            {
+                return Json(new { status = 0, msg = "缺少密码!" });
+            }
+
+            Login login = (Login)Session["loginInfo"];
+            if (login == null)
+            {
+                //未登录
+                return Json(new { status = 0, msg = "请先登录!" });
+            }
+
+            //try
+            //{
+            //    string username = login.username;
+            //    loginService.ChangePass(username, password);
+            //    return Json(new { status = 1, msg = "OK!" });
+            //}
+            //catch (Exception)
+            //{
+            //    return Json(new { status = 0, msg = "Failed!" });
+            //}
+            string username = login.username;
+            loginService.ChangePass(username, password);
+            return Json(new { status = 1, msg = "OK!" });
+        }
     }
 }

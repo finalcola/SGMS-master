@@ -10,5 +10,7 @@ namespace hubu.sgms.DAL
     public interface ILoginDAL
     {
         Login GetUser(string username, string password);
+
+        void ChangePass(string username, string password);
     }
 }
