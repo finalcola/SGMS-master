@@ -102,10 +102,14 @@ namespace hubu.sgms.Utils
             }
 
             int count = 0;
-            Type type = typeof(object);
+            Type type = obj.GetType();
             PropertyInfo[] propertyInfoArray = type.GetProperties();
             foreach(PropertyInfo propertyInfo in propertyInfoArray)
             {
+                if (!typeof(System.String).IsAssignableFrom(propertyInfo.PropertyType))
+                {
+                    continue;
+                }
                 string propertyName = propertyInfo.Name;
                 Object value = dataRow[propertyName];
                 if (value != null)

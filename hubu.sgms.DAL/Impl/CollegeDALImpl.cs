@@ -1,4 +1,5 @@
 ﻿using hubu.sgms.Model;
+using hubu.sgms.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,6 +12,13 @@ namespace hubu.sgms.DAL.Impl
 {
     public class CollegeDALImpl : ICollegeDAL
     {
+        private static ICollegeDAL collegeDAL = new CollegeDALImpl();
+
+        public static ICollegeDAL Instance()
+        {
+            return collegeDAL;
+        }
+
         public string SelectId(string collegeName)
         {
             //数据库中的college_namew应从text改为varchar
@@ -51,6 +59,30 @@ namespace hubu.sgms.DAL.Impl
             }
 
             return collegeList;
+        }
+
+        public College SelectById(string id)
+        {
+            string sql = "select * from College where college_id=@id";
+            SqlParameter[] parameters = {
+                new SqlParameter("@id",id)
+            };
+            DataTable dataTable = DBUtils.getDBUtils().getRecords(sql,parameters);
+            College college = new College();
+            college.college_id = id;
+            if (dataTable.Rows.Count > 0)
+            {
+                DataRow row = dataTable.Rows[0];
+                BeanUils.SetStringValues(college, row);
+                college.sort = Convert.ToInt32(row["sort"]);
+                college.student_number = Convert.ToInt32(row["student_number"]);
+                college.class_number = Convert.ToInt32(row["class_number"]);
+                college.teacher_number = Convert.ToInt32(row["teacher_number"]);
+
+            }
+
+            return college;
+            
         }
     }
 }

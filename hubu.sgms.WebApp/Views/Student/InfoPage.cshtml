@@ -1,0 +1,130 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>学籍信息</title>
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <style type="text/css">
+        
+    </style>
+</head>
+
+<body>
+    @{ var student = ViewData["student"] as hubu.sgms.Model.Student;}
+    @* student_id,student_name,student_sex,student_age,student_id_card,
+        student_major,student_grade,student_address,status,class_id,college_id *@
+    <header class="container">
+        <div class="page-header">
+            <h1>
+                学籍信息
+                <small id="student_name">@student.student_name</small>
+            </h1>
+        </div>
+    </header>
+    <div id="body" class="container">
+        
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">性别</h3>
+            </div>
+            <div class="panel-body">
+                @student.student_sex
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">年龄</h3>
+            </div>
+            <div class="panel-body">
+                @student.student_age
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">名族</h3>
+            </div>
+            <div class="panel-body">
+                @student.student_native
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">身份证</h3>
+            </div>
+            <div class="panel-body">
+                @student.student_id_card
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">学院</h3>
+            </div>
+            <div class="panel-body">
+                @student.College.name
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">专业名</h3>
+            </div>
+            <div class="panel-body">
+                @student.student_major
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">班级</h3>
+            </div>
+            <div class="panel-body">
+                @student.class_id
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">年级</h3>
+            </div>
+            <div class="panel-body">
+                @student.student_grade
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">家庭地址</h3>
+            </div>
+            <div class="panel-body">
+                @student.student_birthplace
+            </div>
+        </div>
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">宿舍</h3>
+            </div>
+            <div class="panel-body">
+                @student.student_address
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap3.3.7.min.js"></script>
+    
+    <script type="text/javascript">
+    </script>
+</body>
+
+</html>
+
+

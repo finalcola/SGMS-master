@@ -38,9 +38,9 @@ namespace hubu.sgms.DAL.Impl
             {
                 BeanUils.SetStringValues(student, dataTable.Rows[0]);
                 DataRow row = dataTable.Rows[0];
-                if (row["status"] != null)
+                if (row["student_age"] != null)
                 {
-                    student.status = Int32.Parse(row["status"].ToString());
+                    student.student_age = Int32.Parse(row["student_age"].ToString());
                 }
                 if (row["status"] != null)
                 {
