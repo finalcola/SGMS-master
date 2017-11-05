@@ -39,12 +39,29 @@ namespace hubu.sgms.WebApp.Controllers
                 }
                 //return Content("success:登陆成功！");
                 //TODO  不同角色的处理
-                return Json(new { status = "1", successUrl = "/Admin/Index" });//跳转到后台管理页面
+                string successUrl = null;
+                string role = loginInfo.role;
+                switch (role)
+                {
+                    case "admin":
+                        successUrl = "/Admin/Index";
+                        break;
+                    case "teacher":
+                        successUrl = "/Teacher/Index";
+                        break;
+                    case "student":
+                        successUrl = "/Student/Index"; 
+                        break;
+                    default:
+                        return Json(new { status = "0", msg = "身份不合法!" });
+                }
+
+                return Json(new { status = "1", successUrl = successUrl });//跳转到后台管理页面
             }
             else
             {
                 //return Content("error:登陆失败！");
-                return Json(new { status = "0", msg = "登录失败" } );//跳转到后台管理页面
+                return Json(new { status = "0", msg = "用户名或密码错误" } );
             }
         }
 

@@ -23,8 +23,13 @@ namespace hubu.sgms.BLL.Impl
         /// <param name="id"></param>
         /// <returns></returns>
         /// 
-
         public Course SelectCourseById(int id)
+        {
+            Course course = courseDAL.SelectCourseById(id);
+            return course;
+        }
+
+        public Course SelectCourseById(string id)
         {
             Course course = courseDAL.SelectCourseById(id);
             return course;
@@ -97,6 +102,11 @@ namespace hubu.sgms.BLL.Impl
             return collegeDAL.SelectColleges();
         }
 
+        public College SelectCollegeById(string collegeId)
+        {
+            return collegeDAL.SelectById(collegeId);
+        }
+
         /// <summary>
         /// 选课
         /// </summary>
@@ -115,6 +125,13 @@ namespace hubu.sgms.BLL.Impl
             return true;
         }
 
+        #region 删除学生选课表
+        public void DeleteCourseChoosing(string stuId, string courseId)
+        {
+            courseDAL.DeleteCourseChoosing(stuId, courseId);
+        }
+        #endregion
+
         /// <summary>
         /// 获取课程类型列表
         /// </summary>
@@ -130,6 +147,16 @@ namespace hubu.sgms.BLL.Impl
                 courses.Add(course);
             }
             return courses;
+        }
+
+        public IList<Teacher_course> SelectTeacherCourseList(string courseType, string collegeId)
+        {
+            return teacherCourseDAL.SelectCourseList(courseType, collegeId);
+        }
+
+        public IList<Course_choosing> SelectCourseChoosingListByStu(string stuId)
+        {
+            return courseDAL.SelectCourseChoosingListByStu(stuId);
         }
     }
 }

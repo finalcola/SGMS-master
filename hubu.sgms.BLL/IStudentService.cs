@@ -11,5 +11,8 @@ namespace hubu.sgms.BLL
     {
 
         Student GetStudentById(string id);
+
+        IList<Course_choosing> SelectGrades(string stuId, int year);
+        
     }
 }

@@ -780,6 +780,8 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\ChangePassPage.cshtml" />
     <Content Include="Views\Student\InfoPage.cshtml" />
+    <Content Include="Views\Student\ChooseCoursePage.cshtml" />
+    <Content Include="Views\Student\GradeInfoPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

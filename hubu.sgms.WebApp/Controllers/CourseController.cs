@@ -177,25 +177,24 @@ namespace hubu.sgms.WebApp.Controllers
         {
             if(teacherCourseId == null || "".Equals(teacherCourseId))
             {
-                return Json(JsonUtils.CreatJsonObj(0, "课程id不能为空", null));
+                return Json(JsonUtils.CreatJsonObj(1, "课程id不能为空", null));
             }
             //获取登录信息
             Login login = (Login)Session["loginInfo"];
             if (login == null)
             {
                 //跳转到登录页面
-                Session["prePage"] = "/Course/ChooseCourseView";//将当前页面地址放入session，登录后返回到该页面
-                return RedirectToAction("Index", "Login");
+                return Json(JsonUtils.CreatJsonObj(1, "您还未登录!", null));
             }
             string stuId = login.username;//用登录名作为学生表的主键
 
             try
             {
                 courseService.ChooseCourse(stuId, teacherCourseId);
-                return Json(JsonUtils.CreatJsonObj(1, "OK", null));
+                return Json(JsonUtils.CreatJsonObj(0, "OK", null));
             } catch (Exception)
             {
-                return Json(JsonUtils.CreatJsonObj(0, "添加课程失败", null));
+                return Json(JsonUtils.CreatJsonObj(1, "添加课程失败", null));
             }
             
         }

@@ -184,6 +184,33 @@ namespace hubu.sgms.DAL.Impl
         }
         #endregion
 
+        #region 根据id(string类型)查询课程
+        Course ICourseDAL.SelectCourseById(string id)
+        {
+            string sql = "select * from course where course_id = @course_id";
+            SqlParameter[] parameters = {
+                new SqlParameter("@course_id",id+"")
+            };
+            DataTable dataTable = DBUtils.getDBUtils().getRecords(sql, parameters);
+            Course course = new Course();
+            if (dataTable.Rows.Count > 0)
+            {
+                //mdzz
+                DataRow dataRow = dataTable.Rows[0];
+                BeanUils.SetStringValues(course, dataRow);
+                if (dataRow["status"] != null)
+                {
+                    course.status = Convert.ToInt32(dataRow["status"]);
+                }
+                if (dataRow["course_credit"] != null)
+                {
+                    course.course_credit = Convert.ToDecimal(dataRow["course_credit"]);
+                }
+            }
+            return course;
+        }
+        #endregion
+
 
         #region 根据课程类型查询课程的基本信息列表（course_id,course_name,course_credit,course_hour,college_id）
         public IList<Course> SelectCoursesBaseInfo(CourseType courseType, int status,
@@ -409,11 +436,25 @@ namespace hubu.sgms.DAL.Impl
             Course_choosing course_Choosing = new Course_choosing();
             BeanUils.TransFields(student, course_Choosing);
             BeanUils.TransFields(courseInfo, course_Choosing);
+            //学生课程表id由教师选课表id和学生id联合组成
+            course_Choosing.course_choosing_id = courseInfo.teacher_course_id + student.student_id;
+            //status默认为1
             string sql = "insert into Course_choosing(course_choosing_id,student_id,student_name,teacher_course_id,teacher_id,teacher_name,course_id,course_name,classroom_id,status,course_credit) "
                 + " values(@course_choosing_id,@student_id,@student_name,@teacher_course_id,@teacher_id,@teacher_name,@course_id,@course_name,@classroom_id,@status,@course_credit)";
             IList<SqlParameter> sqlParameterList = BeanUils.SetInSQL(sql, course_Choosing);
             DBUtils.getDBUtils().cud(sql, sqlParameterList.ToArray());
         }
+
+        #region 删除学生选课
+        public void DeleteCourseChoosing(string stuId, string courseId)
+        {
+            string sql = "delete from Course_choosing where student_id=@stuId and course_id=@courseId ";
+            List<SqlParameter> paramList = new List<SqlParameter>();
+            paramList.Add(new SqlParameter("@stuId", stuId));
+            paramList.Add(new SqlParameter("@courseId", courseId));
+            DBUtils.getDBUtils().cud(sql, paramList.ToArray());
+        }
+        #endregion
 
 
         /// <summary>
@@ -484,10 +525,19 @@ namespace hubu.sgms.DAL.Impl
         /// </summary>
         /// <param name="stuId"></param>
         /// <returns>封装成绩字段和课程名，不查询其他信息</returns>
-        public IList<Course_choosing> SelectGrade(int stuId)
+        public IList<Course_choosing> SelectGrade(string stuId, int year)
         {
-            string sql = "select course_name,usual_grade,test_grade,total_grade from Course_choosing where student_id='" + stuId + "' ";
-            DataTable dataTable = DBUtils.getDBUtils().getRecords(sql);
+            //上半学期和下半学期
+            string year01 = (year % 100) + "01";//将201702转化为1702格式
+            string year02 = (year % 100) + "02";
+            string sql = "select c.course_name,usual_grade,test_grade,total_grade,c.course_credit from Course_choosing cs , Course c "
+                + " where student_id = @stuId and cs.course_id = c.course_id and c.course_opentime in (@year01, @year02)";
+            List<SqlParameter> paramList = new List<SqlParameter>();
+            paramList.Add(new SqlParameter("@stuId", stuId));
+            paramList.Add(new SqlParameter("@year01", year01));
+            paramList.Add(new SqlParameter("@year02", year02));
+
+            DataTable dataTable = DBUtils.getDBUtils().getRecords(sql,paramList.ToArray());
             IList<Course_choosing> courses = new List<Course_choosing>();
             foreach (DataRow row in dataTable.Rows)
             {
@@ -498,17 +548,49 @@ namespace hubu.sgms.DAL.Impl
                 }
                 if (row["usual_grade"] != null)
                 {
-                    course.usual_grade = Convert.ToDecimal(row["usual_grade"]);
+                    try
+                    {
+                        course.usual_grade = Convert.ToDecimal(row["usual_grade"]);
+                    }
+                    catch (Exception)
+                    {
+                        course.usual_grade = null;
+                    }
 
                 }
                 if (row["test_grade"] != null)
                 {
-                    course.test_grade = Convert.ToDecimal(row["test_grade"]);
+                    try
+                    {
+                        course.test_grade = Convert.ToDecimal(row["test_grade"]);
+                    }
+                    catch (Exception)
+                    {
+                        course.usual_grade = null;
+                    }
                 }
                 if (row["total_grade"] != null)
                 {
-                    course.total_grade = Convert.ToDecimal(row["total_grade"]);
+                    try
+                    {
+                        course.total_grade = Convert.ToDecimal(row["total_grade"]);
+                    }
+                    catch (Exception)
+                    {
+                        course.usual_grade = null;
+                    }
 
+                }
+                if (row["course_credit"] != null)
+                {
+                    try
+                    {
+                        course.course_credit = Convert.ToDecimal(row["course_credit"]);
+                    }
+                    catch (Exception)
+                    {
+                        course.course_credit = null;
+                    }
                 }
 
                 courses.Add(course);
@@ -538,5 +620,6 @@ namespace hubu.sgms.DAL.Impl
             return courseTypes;
         }
 
+       
     }
 }
