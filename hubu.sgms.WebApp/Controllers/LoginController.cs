@@ -13,6 +13,7 @@ namespace hubu.sgms.WebApp.Controllers
     {
 
         ILoginService loginService = new LoginServiceImpl();
+        ITeacherService teacherService = new TeacherServiceImpl();
         // GET: Login
         public ActionResult Index()
         {
@@ -22,6 +23,13 @@ namespace hubu.sgms.WebApp.Controllers
         public ActionResult UserLogin()
         {
             //添加相应的验证码代码
+
+            //验证系统是否是开启状态 0--关闭 1--开启
+            Status status = teacherService.GetAllStatus();
+            if(status.global_status == "0")
+            {
+                return Json(new { status = "3", msg = "系统已经关闭，请联系管理员！" });
+            }
 
             string username = Request["username"];
             string password = Request["password"];

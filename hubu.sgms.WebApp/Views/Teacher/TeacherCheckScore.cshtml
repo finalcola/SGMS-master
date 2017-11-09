@@ -1,0 +1,374 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="~/Scripts/layui/css/layui.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/layui/layui.js"></script>
+    <script src="~/Scripts/layer/2.1/layer.js"></script>
+    <title></title>
+    <style>
+        label {
+            padding-left: 20px;
+        }
+
+        .info {
+            margin-top: 10px;
+        }
+
+        .container-flud {
+            width: 94%;
+            margin: 0 auto;
+        }
+
+        .container {
+            width: 93%;
+            margin: 0 auto;
+        }
+
+        .layui-table td, .layui-table th {
+            font-size: 12px;
+        }
+
+        tbody tr td input {
+            width: 100%;
+            height: 100%;
+        }
+
+        th {
+            padding: 5PX !important;
+        }
+
+        td {
+            padding: 2PX !important;
+        }
+
+        .z_select {
+            width: 100%;
+            display: table-column-group !important;
+        }
+
+        .mybox {
+            width: 100%;
+            height: 30px;
+            margin: 20px 0 10px 0;
+        }
+
+        .mybox2 {
+            width: 100px;
+            height: 30px;
+            margin: 0 auto;
+        }
+
+        .myselect {
+            float: left;
+            width: 60%;
+        }
+
+        .mylabel {
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <label>课程号：</label><span id="number"></span>
+            <label>课程名称：</label><span id="name"></span>
+            <label>开课单位：</label><span id="department">计算机与信息工程学院</span>
+            <label>授课老师：</label><span id="teacher"></span>
+            <label>设置成绩比例(期中:期末)</label>
+            <select id="scaleSelect">
+                <option>4:6</option>
+                <option>3:7</option>
+                <option>5:5</option>
+            </select>
+            <!--button class="layui-btn-primary layui-btn-small pull-right" id="set">设  置</!--button>-->
+        </div>
+    </div>
+    <div class="container-flud">
+        <div class="layui-form">
+            <form id="myform" action="/Teacher/SetScore" method="post">
+                <table class="layui-table">
+                    <colgroup>
+                        <col width="6%">
+                        <col width="10%">
+                        <col width="9%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="7%">
+                        <col width="7%">
+                        <col width="7%">
+                        <col width="7%">
+                        <col width="7%">
+                        <col width="5%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>学生学号</th>
+                            <th>学生姓名</th>
+                            <th>班级名称</th>
+                            <th>考试性质</th>
+                            <th>平时成绩</th>
+                            <th>期末成绩</th>
+                            <th>总成绩</th>
+                            <th>成绩标志</th>
+                            <th>录入人</th>
+                            <th>修改时间</th>
+                        </tr>
+                    </thead>
+                    <tbody id="details">
+                        <!-- <tr>
+                 <td>2015221119200022</td>
+                 <td>张张张</td>
+                 <td>软件工程1501班</td>
+                 <td>正常考试</td>
+                 <td><input type="text" /></td>
+                 <td><input type="text" /></td>
+                 <td><input type="text" /></td>
+                 <td><select class="z_select"><option>--请选择--</option></select></td>
+                 <td></td>
+                 <td></td>
+             </tr>  -->
+                    </tbody>
+                </table>
+                <input id="myflagId"name="myflag" type="text" value="" style="display:none"/>
+                <input id="mycourseid" name="mycourse" type="text" value="" style="display:none"/>                 
+                <input onclick="saveForm()" type="button" id="saveId" value="暂存" class="btn btn-info"/>
+                <input onclick="commitForm()" type="button" id="commitId" value="提交"  class="btn btn-info"/>
+                <a href="/Teacher/TeacherSelectCourse"><input type="button" value="返回" class="btn btn-default"></a>
+            </form>
+        </div>
+    </div>
+    <script> 
+
+        //全局变量
+        var flag = 0;
+
+        //加载信息
+        $(function () {
+            $.ajax({
+                url: '/Teacher/GetStudentInfo',
+                type: 'post',
+                async: false,
+                success: function (result) {
+                    //alert("success");
+                    var resultData = result.studentList;
+                    var list = "";                      
+                   
+                    $.each(resultData, function (i, data) {
+                        flag++;
+                        list += "<tr id=\"mytr" + flag + "\" class=\"a\">";                      
+                        list += "<td>" + data["student_id"] + "</td>";
+                        list += "<td>" + data["student_name"] + "</td>";
+                        list += "<td>" + data["_class"] + "</td>";
+                        list += "<td>" + "**" + "</td>";
+                        if (data["usual_grade"] == null) {
+                            list += "<td>" + "<input type=\"text\"  class=\"uuu\" value=\"\" name=\"usual_grade" + flag  + "\"/>" + "</td>";
+                        }
+                        else {
+                            list += "<td>" + "<input type=\"text\"  class=\"uuu\" value=\"" + data["usual_grade"] + "\" name=\"usual_grade" + flag + "\"/>" + "</td>";
+                           // list += "<td>" + "<input type=\"text\" onblur=\"doCalculate()\" class=\"uuu\" value='123' name=\"usual_grade" + flag + "\"/>" + "</td>";                 
+                        }    
+                        if (data["test_grade"] == null) {
+                           list += "<td>" + "<input type=\"text\"   class=\"ttt\" name=\"test_grade" + flag + "\"/>" + "</td>";
+                        }
+                        else {
+                            list += "<td>" + "<input type=\"text\"  class=\"ttt\" value=" + data["test_grade"] + " name=\"test_grade" + flag +  "\">" + "</td>";
+                        }  
+                        if (data["total_grade"] == null) {
+                            list += "<td>" + "<input type=\"text\"class=\"tot\" name=\"total_grade" + flag + "\" readonly/>" + "</td>";
+                        }
+                        else {
+                            list += "<td>" + "<input type=\"text\"  class=\"tot\" value=" + data["total_grade"] + " name=\"total_grade" + flag + "\" readonly>" + "</td>";
+                        }  
+                        list += "<td>" + "**" + "</td>";
+                        list += "<td>" + "**" + "</td>";
+                        list += "<td>" + "**" + "</td>";
+                        list += "<td style=\"display:none\">" + "<input type=\"text\" value=" + data["student_id"] + " name=\"student_id" + flag + "\" />" + "</td>"
+                        list += "</tr>";
+                        
+                    });
+                    $("#details").html(list);
+                    $("#number").html(resultData[0].course_id);
+                    $("#name").html(resultData[0].course_name);
+                    //$("#department").html(resultData[0].course_id);
+                    $("#teacher").html(resultData[0].teacher_name);
+
+                    //有多少条记录
+                    $("#myflagId").val(flag);
+
+                    //课程号
+                    $("#mycourseid").val(resultData[0].course_id);
+
+                    //当前课程打分的状态mystatusid
+                    //$("#mystatusid").val(status.status.status);
+
+                    //获取不到此记录说明可以继续打分
+                    if (result.status != null && result.status !="" && result.status.status == "0") {
+                        $("input").attr("disabled","disabled");
+                    }
+
+                    //计算成绩                   
+                    $("input").blur(function () {
+                        //获取成绩比例
+                        var options = $("#scaleSelect option:selected").val();
+                        var optionStr = options.substring(0, 1);
+                        var scaleInt = parseInt(optionStr) * 0.1;
+                        
+                        //获取平时成绩
+                        var usual = $(this).parent().parent().find(".uuu").val();
+                        /* if (usual == '' || usual == null) {*/
+                        if (usual == null || '' == usual) {
+                            $(this).parents("tr").find(".tot").val("");
+                            return;
+                        }
+                        else if (isNaN(usual) || usual < 0 || usual > 100) {
+                            $(this).parents("tr").find(".tot").val("");                       
+                            $("#saveId").attr("disabled", "disabled");
+                            $("#commitId").attr("disabled", "disabled");
+                            alert('请输入0~100之间的数！');
+                            return;
+                        } 
+                        var usualInt = parseInt(usual)
+
+                        //获取期末成绩
+                        var test = $(this).parent().parent().find(".ttt").val();
+                        if (test == null || '' == test) {
+                            $(this).parents("tr").find(".tot").val("");
+                            return;
+                        }
+                        else if (isNaN(test) || test < 0 || test > 100) {
+                            $(this).parents("tr").find(".tot").val("");
+                            $("#saveId").attr("disabled", "disabled");
+                            $("#commitId").attr("disabled", "disabled");
+                            alert('请输入0~100之间的数！');
+                            return;
+                        }         
+                        var testInt = parseInt(test)
+
+                        //设置总成绩
+                        var total = usualInt * scaleInt + testInt * (1 - scaleInt);
+                        $(this).parents("tr").find(".tot").val(total);
+                        $("#saveId").removeAttr("disabled");
+                        $("#commitId").removeAttr("disabled");
+
+                    });
+                },
+                error: function() {
+                    alert("网络连接出错");
+                }
+            });
+
+        })
+
+        //保存表单
+        function saveForm() {
+            layer.msg("保存成功", {
+                icon: 1,
+                time: 1000
+            });
+            var myform = $("#myform");            
+            myform.submit();            
+        }
+
+        //提交表单
+        function commitForm() {
+            layer.confirm("您确认提交审核？", {
+                btn: ['提交', '取消']
+            }, function () {
+                layer.msg("提交成功", {
+                    icon: 1,
+                    time: 1000
+                }, function () {
+                    if ($("#myjudge").val() == "1") {
+                        alert("包含非法字符！");
+                        return;
+                    }
+                    var formid = $("#myform");        
+                    $("#mycourseid").append("<input name=\"mystatus\" type=\"text\" value=\"0\" />");
+                    formid.submit();
+                     
+                });                         
+            }, function () {
+                layer.close();
+            });
+            
+        }
+
+            //设置默认比例
+            /*$.ajax({
+                type: 'post',
+                async: false,
+                url: '/Teacher/GetScale',
+                success: function (result) {
+                    $("#scale").val(resultData[0].scale);
+                }
+            });*/
+        
+        /*function getStatus() {
+            $.ajax({
+                type: 'post',
+                url: '/Teacher/GetScale',
+                success: function(result) {
+                    var resultData2 = result.status;
+                    if (resultData2.scale == "" || resultData2.scale == null) {
+                        alert('请先设置成绩比例');
+                    }
+                    $("#scale").val(resultData2[0].scale);
+                }
+            });
+        }*/
+
+       /* function setScale() {
+            var myscale = $("#myselect1")
+            $.ajax({
+                type: 'post',
+                url: '/Teacher/SetScale',
+                data: {myscale:myscale},
+                success: function (result) {                    
+                    alert('设置成功');
+                    var resultData3 = result.status;
+                    $("#scale").val(resultData3[0].scale);
+                    //window.location.href = this;
+                }
+            });
+        }*/
+
+        
+
+        //计算总分数
+        /*function doCalculate() {
+
+            //获取成绩比例
+            var options = $("#scaleSelect option:selected").val();
+            var optionStr = options.substring(0,1);        
+            var scaleInt = parseInt(optionStr) * 0.1;
+
+            //获取平时成绩
+            var usual = $(this).val();
+            alert(usual);
+           // var test11 = usual.parentElement("tr").val;
+            //$(this).parent().parent().find(".ttt").val(usual);
+                //alert(test11);
+            //alert(scaleInt);
+            /*var usual = $(this).parent().parent().find(".uuu").val();
+            if (usual == '' || usual == null) {
+                return;
+            }       
+            alert("123");
+            var usualInt = parsInt(usual);
+            var test = parsInt($(this).parents("tr").find(".ttt").val());
+            var total = usual * scale + test * (1 - scale);
+            $(this).parents("tr").find(".tot").val(total);
+            alert(total);
+        }*/
+    </script>
+</body>
+</html>

@@ -72,7 +72,10 @@ namespace hubu.sgms.DAL
                 }
             }
             DataTable dataTable = new DataTable();
-            sqlDataAdapter.Fill(dataTable);   //将查询结果填充
+            if(sqlDataAdapter != null)
+            {
+                sqlDataAdapter.Fill(dataTable);   //将查询结果填充
+            }           
             conn.Close();
             return dataTable;   //返回内存中的数据表(虚拟表)
         }

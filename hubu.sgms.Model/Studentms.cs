@@ -22,6 +22,7 @@ namespace hubu.sgms.Model
         public virtual DbSet<Student> Student { get; set; }
         public virtual DbSet<Teacher> Teacher { get; set; }
         public virtual DbSet<Teacher_course> Teacher_course { get; set; }
+        public virtual DbSet<Status> Status { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -513,6 +514,22 @@ namespace hubu.sgms.Model
 
             modelBuilder.Entity<Teacher_course>()
                 .Property(e => e.yuliu2)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Status>()
+                .Property(e => e.Id)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Status>()
+               .Property(e => e.courseid)
+               .IsUnicode(false);
+
+            modelBuilder.Entity<Status>()
+                .Property(e => e.status)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Status>()
+                .Property(e => e.global_status)
                 .IsUnicode(false);
         }
     }

@@ -1,0 +1,95 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>教师后台管理系统</title>
+    <link rel="stylesheet" href="~/Scripts/layui/css/layui.css" />
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/layui/layui.js"></script>
+    <style>
+        .info .z_content {
+            display: none;
+        }
+
+            .info .z_content:first-child {
+                display: block;
+            }
+    </style>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">教师后台管理系统</div>
+        </div>
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll  menu">
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">个人设置</a>
+                        <dl class="layui-nav-child">
+                            <dd class="z_item"><a href="javascript:;">修改密码</a></dd>
+                            <dd class="z_item"><a href="javascript:;">修改个人信息</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item z_item"><a href="javascript:getCourseList();">课程管理</a></li>
+                  <!--  <li class="layui-nav-item z_item"><a href="javascript:;">成绩管理</a></li>-->
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div class='info' id="exhibitor">
+                <div class="z_content">
+                    修改密码
+                </div>
+                <div class="z_content">
+                    修改个人信息
+                </div>
+                <div class="z_content">
+                    <div class="embed-responsive">
+                        <iframe id="courseiframe" class='embed-responsive-item' width="100%" height="100%" style="min-height: 800px;" src="" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" border="0" frameborder="0"></iframe>
+                    </div>
+                </div>
+                <!--<div class="z_content">
+                    <div class="embed-responsive">
+                        <iframe class='embed-responsive-item' width="100%" height="100%" style="min-height: 500px;" src="" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" border="0" frameborder="0"></iframe>
+                    </div>
+                </div>-->
+            </div>
+
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            <center>湖北大学教务管理系统</center>
+        </div>
+    </div>
+    <script>
+        //JavaScript代码区域
+        layui.use('element', function () {
+            var element = layui.element;
+
+        });
+        //点击左边显示右边对应内容
+        $('.menu .z_item').click(function () {
+            idx = $(this).index('.menu .z_item');
+
+            $('.info .z_content').eq(idx).show();
+            $('.info .z_content').not($('.info .z_content').eq(idx)).hide();
+        });
+
+        function getCourseList() {
+            $("#courseiframe").attr("src","/Teacher/TeacherSelectCourse");
+        }
+        
+    </script>
+</body>
+</html>
+
