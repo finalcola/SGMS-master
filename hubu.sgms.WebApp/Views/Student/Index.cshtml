@@ -38,13 +38,32 @@
                         <a href="javascript:;">学生选课</a>
                         <dl class="layui-nav-child">
                             <dd class="z_item"><a href="javascript:;">公共选修课</a></dd>  <!--需要实现-->
-                            <dd class="z_item"><a href="javascript:;">挂牌选修课</a></dd>	 <!--需要实现-->
+                            <dd class="z_item"><a href="javascript:;">专业选修课</a></dd>	 <!--需要实现-->
                         </dl>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;">成绩信息</a>
+                        <a href="javascript:;">成绩查询</a>
+                        @{ var student = ViewData["student"] as hubu.sgms.Model.Student;}
                         <dl class="layui-nav-child">
-                            <dd class="z_item"><a href="javascript:;">成绩查询</a></dd>   <!--需要实现-->
+                            @{
+                                string stuYearStr = student.student_grade;
+                                int stuYear = Convert.ToInt32(stuYearStr);
+                                //如果year是17而不是2017格式
+                                if (stuYear < 2000)
+                                {
+                                    stuYear += 2000;
+                                }
+                                int nowYear = DateTime.Now.Year;
+                                int count = 1;
+                                int i = stuYear;
+                                while (i <= nowYear && count <= 4)
+                                {
+                                    <dd class="z_item"><a href="javascript:;">@i</a></dd>
+                                    i++;
+                                    count++;
+                                }
+                            }
+                            @*<dd class="z_item"><a href="javascript:;">成绩查询</a></dd>*@   <!--需要实现-->
                             @*<dd class="z_item"><a href="javascript:;">成绩认定</a></dd>
                             <dd class="z_item"><a href="javascript:;">缓考申请</a></dd>
                             <dd class="z_item"><a href="javascript:;">补考报名</a></dd>*@
@@ -134,429 +153,36 @@
                 @* 公共选修课 *@
                 <div class="z_content">
                     <!--公共选修课-->
-                    <!--<div class="embed-responsive embed-responsive-16by9">
-                    <iframe class='embed-responsive-item' src="stu_chosepublicclass.html" width="100%" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" scrolling="no" border="0" frameborder="0"></iframe>
-                        </div>-->
-                    <div class="z_container">
-                        <div class="z_course">
-                            <div class="layui-form">
-                                <table class="layui-table">
-                                    <colgroup>
-                                        <col width=9%>
-                                        <col width=12%>
-                                        <col width=5%>
-                                        <col width=18%>
-                                        <col width=11%>
-                                        <col width=10%>
-                                        <col width=10%>
-                                        <col width=10%>
-                                        <col width=10%>
-                                        <col width=5%>
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th>课程编号</th>
-                                            <th>课程名称</th>
-                                            <th>学分</th>
-                                            <th>开课学院</th>
-                                            <th>任课老师</th>
-                                            <th>已选人数</th>
-                                            <th>限选人数</th>
-                                            <th>上课地点</th>
-                                            <th>上课时间</th>
-                                            <th>状态</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>A10001</td>
-                                            <td>名著欣赏</td>
-                                            <td>3.0</td>
-                                            <td>文学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>A10001</td>
-                                            <td>名著欣赏</td>
-                                            <td>3.0</td>
-                                            <td>文学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <button class="layui-btn layui-btn-normal" style="width: 150px;margin:10px 0 20px 44%">确定     </button>
-                            </div>
-                        </div>
-                        <!--右边已选课程-->
-                        <div class="z_selectcourse">
-                            <div class="layui-form">
-                                <table class="layui-table">
-                                    <colgroup>
-                                        <col width=20%>
-                                        <col width=35%>
-                                        <col width=20%>
-                                        <col width=25%>
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th>课程编号</th>
-                                            <th>课程名称</th>
-                                            <th>学分</th>
-                                            <th>状态</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>名著欣赏</td>
-                                            <td>3.0</td>
-                                            <td><button>删除</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td><button>删除</button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                    <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class='embed-responsive-item' src="~/Student/ChooseCoursePage?courseTypeName=公共选修课" width="100%" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" scrolling="no" border="0" frameborder="0"></iframe>
                     </div>
+                    
                 </div>
-                @* 选修课 *@
+                @* 专业选修课 *@
                 <div class="z_content">
-                    <!--挂牌选修课-->
                     <div class="z_container">
-                        <div class="z_course">
-                            <div class="layui-form">
-                                <table class="layui-table">
-                                    <colgroup>
-                                        <col width=9%>
-                                        <col width=12%>
-                                        <col width=5%>
-                                        <col width=18%>
-                                        <col width=11%>
-                                        <col width=10%>
-                                        <col width=10%>
-                                        <col width=10%>
-                                        <col width=10%>
-                                        <col width=5%>
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th>课程编号</th>
-                                            <th>课程名称</th>
-                                            <th>学分</th>
-                                            <th>开课学院</th>
-                                            <th>任课老师</th>
-                                            <th>已选人数</th>
-                                            <th>限选人数</th>
-                                            <th>上课地点</th>
-                                            <th>上课时间</th>
-                                            <th>状态</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>                              
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td>计算机与信息工程学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td>计算机与信息工程学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td>计算机与信息工程学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td>计算机与信息工程学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td>计算机与信息工程学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td>计算机与信息工程学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td>计算机与信息工程学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td>计算机与信息工程学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td>计算机与信息工程学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td>计算机与信息工程学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td>计算机与信息工程学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td>计算机与信息工程学院</td>
-                                            <th>张某某</th>
-                                            <td>70</td>
-                                            <td>120</td>
-                                            <td>4-203</td>
-                                            <td>5-0706</td>
-                                            <td><input type="checkbox" /></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <button class="layui-btn layui-btn-normal" style="width: 150px;margin:10px 0 20px 44%">确定     </button>
-                            </div>
-                        </div>
-                        <!--右边已选课程-->
-                        <div class="z_selectcourse">
-                            <div class="layui-form">
-                                <table class="layui-table">
-                                    <colgroup>
-                                        <col width=20%>
-                                        <col width=35%>
-                                        <col width=20%>
-                                        <col width=25%>
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th>课程编号</th>
-                                            <th>课程名称</th>
-                                            <th>学分</th>
-                                            <th>状态</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td><button>删除</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>10001</td>
-                                            <td>javaweb</td>
-                                            <td>3.0</td>
-                                            <td><button>删除</button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class='embed-responsive-item' src="~/Student/ChooseCoursePage?courseTypeName=专业选修课" width="100%" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" scrolling="no" border="0" frameborder="0"></iframe>
                         </div>
                     </div>
                 </div>
                 @* 成绩查询 *@
-                <div class="z_content">
-                    <!--成绩查询-->
-                    <div class="z_container">
-                        <div class="form-group">
-                            <label for="" class='col-md-1 control-label'>开课时间:</label>
-                            <div class="col-md-2">
-                                <select name="p" class="form-control">
-                                    <option value="0" selected="selected">--请选择--</option>
-                                    <option value="1">2017-2018-1</option>
-                                    <option value="2">2016-2017-2</option>
-                                    <option value="3">2016-2017-1</option>
-                                </select>
+                @{
+                    count = 1;
+                    i = stuYear;
+                    while (i <= nowYear && count <= 4)
+                    {
+                        <div class="z_content">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class='embed-responsive-item' src="~/Student/GradeInfoPage?year=@i" width="90%"></iframe>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="" class='col-md-1 control-label'>课程性质:</label>
-                            <div class="col-md-2">
-                                <select name="p" class="form-control">
-                                    <option value="0" selected="selected">--请选择--</option>
-                                    <option value="1">专业必修课</option>
-                                    <option value="2">专业选修课</option>
-                                    <option value="3">公共课</option>
-                                    <option value="3">全部</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class='col-md-1 control-label'>显示方式:</label>
-                            <div class="col-md-2">
-                                <select name="p" class="form-control">
-                                    <option value="0" selected="selected">--请选择--</option>
-                                    <option value="1">显示全部成绩</option>
-                                    <option value="2">显示最好成绩</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-md-offset-1">
-                            <input type="submit" class='btn btn-info' value="查询" style="width: 140px;" />
-                        </div>
-                    </div>
-                    <hr style="visibility: hidden;" />	<hr />
-                    <div class="container">
-                        <div class="layui-form">
-                            <table class="layui-table">
-                                <colgroup>
-                                    <col width=20%>
-                                    <col width=20%>
-                                    <col width=20%>
-                                    <col width=20%>
-                                    <col width=20%>
-                                    <col>
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th>课程名称</th>
-                                        <th>成绩</th>
-                                        <th>学分</th>
-                                        <th>是否及格</th>
-                                        <th>备注</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>javaweb</td>
-                                        <td>90</td>
-                                        <td>3.0</td>
-                                        <td>是</td>
-                                        <th>正常考试</th>
-                                    </tr>
-                                    <tr>
-                                        <td>javaweb</td>
-                                        <td>90</td>
-                                        <td>3.0</td>
-                                        <td>是</td>
-                                        <th>正常考试</th>
-                                    </tr>
-                                    <tr>
-                                        <td>javaweb</td>
-                                        <td>90</td>
-                                        <td>3.0</td>
-                                        <td>是</td>
-                                        <th>正常考试</th>
-                                    </tr>
-                                    <tr>
-                                        <td>javaweb</td>
-                                        <td>90</td>
-                                        <td>3.0</td>
-                                        <td>是</td>
-                                        <th>正常考试</th>
-                                    </tr>
-                                    <tr>
-                                        <td>javaweb</td>
-                                        <td>90</td>
-                                        <td>3.0</td>
-                                        <td>是</td>
-                                        <th>正常考试</th>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                        i++;
+                        count++;
+                    }
+                }
+                
+                @* 学籍信息 *@
                 <div class="z_content">
                     <div class="embed-responsive embed-responsive-16by9">
                         <iframe class='embed-responsive-item' src="~/Student/InfoPage" width="100%" ></iframe>

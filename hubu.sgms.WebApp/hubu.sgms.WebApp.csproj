@@ -783,6 +783,8 @@
     <Content Include="Views\Teacher\TeacherManager.cshtml" />
     <Content Include="Views\Teacher\TeacherCheckScore.cshtml" />
     <Content Include="Views\Teacher\TeacherSelectCourse.cshtml" />
+    <Content Include="Views\Student\ChooseCoursePage.cshtml" />
+    <Content Include="Views\Student\GradeInfoPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

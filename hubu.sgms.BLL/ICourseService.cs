@@ -35,6 +35,7 @@ namespace hubu.sgms.BLL
         Course SelectCourseById(int id);
         #endregion
 
+        Course SelectCourseById(string id);
 
         #region 查询最新的size门课程
         /// <summary>
@@ -99,12 +100,23 @@ namespace hubu.sgms.BLL
         IList<College> SelectColleges();
 
         /// <summary>
+        /// 根据id查询学院信息
+        /// </summary>
+        /// <param name="collegeId"></param>
+        /// <returns></returns>
+        College SelectCollegeById(string collegeId);
+
+        /// <summary>
         /// 选课
         /// </summary>
         /// <param name="stuId">学生id</param>
         /// <param name="teacherCourseId">教师选课记录表的id</param>
         /// <returns></returns>
         bool ChooseCourse(string stuId, string teacherCourseId);
+
+        #region 删除学生选课
+        void DeleteCourseChoosing(string stuId, string courseId);
+        #endregion
 
 
         /// <summary>
@@ -113,5 +125,21 @@ namespace hubu.sgms.BLL
         /// <returns></returns>
         IList<Course> SelectCourseTypes();
 
+        /// <summary>
+        /// 根据课程类型和学院查询所有老师排课表
+        /// </summary>
+        /// <param name="courseType"></param>
+        /// <param name="collegeId"></param>
+        /// <returns></returns>
+        IList<Teacher_course> SelectTeacherCourseList(string courseType, string collegeId);
+
+        /// <summary>
+        /// 查询学生已选的课程
+        /// </summary>
+        /// <param name="stuId"></param>
+        /// <returns></returns>
+        IList<Course_choosing> SelectCourseChoosingListByStu(string stuId);
+
+        
     }
 }

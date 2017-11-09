@@ -1,0 +1,216 @@
+﻿@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择课程</title>
+    <link href="~/Scripts/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/Content/student.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Scripts/bs/js/jquery.min.js"></script>
+    <script src="~/Scripts/layui/layui.all.js"></script>
+    <style>
+        small {
+            float: left !important;
+        }
+
+        body {
+            background: white;
+        }
+
+        .z_submit {
+            width: 270px;
+            height: 38px;
+            border: none;
+            background: rgb(91, 192, 222);
+        }
+
+        #defaultForm {
+            margin-top: 70px;
+        }
+    </style>
+</head>
+<body>
+    @{ var teacher_courses = ViewData["teacher_courses"] as IList<hubu.sgms.Model.Teacher_course>;}
+    @{ var course_choosings = ViewData["course_choosings"] as IList<hubu.sgms.Model.Course>;}
+    <div class="z_container">
+        <!--左边待选课程列表-->
+        <div class="z_course">
+            <div class="layui-form">
+                <table class="layui-table">
+                    <colgroup>
+                        <col width=9%>
+                        <col width=12%>
+                        <col width=5%>
+                        <col width=18%>
+                        <col width=11%>
+                        <col width=10%>
+                        <col width=10%>
+                        <col width=5%>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>课程编号</th>
+                            <th>课程名称</th>
+                            <th>学分</th>
+                            <th>开课学院</th>
+                            <th>任课老师</th>
+                            <th>上课时间</th>
+                            <th>上课课时</th>
+                            <th>状态</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courseList">
+                        @{ 
+                            foreach(hubu.sgms.Model.Teacher_course course in teacher_courses)
+                            {
+                                <tr id="t_course-@course.teacher_course_id">
+                                    <td>@course.course_id</td>
+                                    <td>@course.Course.course_name</td>
+                                    <td>@course.Course.course_credit</td>
+                                    <td>@course.College.name</td>
+                                    <td>@course.teacher_name</td>
+                                    <td>@course.Course.course_opentime</td>
+                                    <td>@course.Course.course_hour</td>
+                                    <td>
+                                    <button class="layui-btn" onclick="choose(@course.teacher_course_id,@course.course_id,'@course.College.name',@course.Course.course_credit);">选课</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        @*<tr>
+                            <td>A10001</td>
+                            <td>名著欣赏</td>
+                            <td>3.0</td>
+                            <td>文学院</td>
+                            <th>张某某</th>
+                            <td>70</td>
+                            <td>120</td>
+                            <td>4-203</td>
+                            <td>5-0706</td>
+                            <td><input type="checkbox" /></td>
+                        </tr>*@
+                        
+                    </tbody>
+                </table>
+                @*<button class="layui-btn layui-btn-normal" style="width: 150px;margin:10px 0 20px 44%">确定     </button>*@
+            </div>
+        </div>
+        <!--右边已选课程-->
+        <div class="z_selectcourse">
+            <div class="layui-form">
+                <table class="layui-table">
+                    <colgroup>
+                        <col width=20%>
+                        <col width=35%>
+                        <col width=20%>
+                        <col width=25%>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>课程编号</th>
+                            <th>课程名称</th>
+                            <th>学分</th>
+                            <th>状态</th>
+                        </tr>
+                    </thead>
+                    <tbody id="choosedCourseList">
+                        @{ 
+                            foreach(hubu.sgms.Model.Course course in course_choosings)
+                            {
+                                <tr id="course-choosed-@course.course_id">
+                                    <td>@course.course_id</td>
+                                    <td>@course.course_name</td>
+                                    <td>@course.course_credit</td>
+                                    <td>
+                                        <button class="layui-btn" onclick="deleteCourse(@course.course_id);">删除</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        @*<tr>
+                            <td>10001</td>
+                            <td>名著欣赏</td>
+                            <td>3.0</td>
+                            <td><button onclick="deleteCourse();">删除</button></td>
+                        </tr>*@
+                        @*<tr><td>10001</td><td>javaweb</td><td>3.0</td><td><button>删除</button></td></tr>*@
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+            });
+        })
+
+        function choose(t_course_id, course_id, name, credit) {
+            console.log("选择课程...");
+            layer.load(1);//加载层
+            $.ajax({
+                url: "/Student/ChooseCourse",
+                type: "post",
+                data: { teacherCourseId: t_course_id },
+                async: false,
+                error: function () {
+                    layer.alert("请求发生错误", { icon: 5 });
+                    //location.reload();
+                    layer.closeAll('loading');
+                },
+                success: function (data) {
+                    console.log("添加成功");
+                    
+                    if (data.status == 1 || data.status == '1') {
+                        var eleId = "#t_course-" + t_course_id;
+                        $(eleId).remove();
+                        var html = '<tr><td>' + course_id + '</td><td>' + name
+                            + '</td><td>' + credit + '</td><td><button class="layui-btn" onclick="deleteCourse(' + course_id + ');">删除</button></td></tr>';
+                        $("#choosedCourseList").append(html);
+                        layer.msg("添加成功", { icon: 6 });
+                    } else {
+                        layer.alert('添加失败:\n' + data.message, { icon: 5 });
+                    }
+                    layer.closeAll('loading');
+                }
+            });
+        }
+
+        function deleteCourse(courseId) {
+            console.log("delete..");
+            layer.msg('确定要删除该课程吗？', {
+                time: 0 //不自动关闭
+                , btn: ['yes', 'no']
+                , yes: function (index) {
+                    layer.close(index);
+                    $.ajax({
+                        url: "/Student/DeleteCourseChooseing",
+                        type: "post",
+                        async: false,
+                        data: { courseId: courseId },
+                        beforeSend: function () {
+                            layer.load(1);//加载层
+                        },
+                        success: function (data) {
+                            layer.closeAll('loading');
+
+                            if (data.status == 1) {
+                                location.reload();
+                            } else {
+                                layer.alert('删除失败:\n' + data.message, { icon: 5 });
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
+

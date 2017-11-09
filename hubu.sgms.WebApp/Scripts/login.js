@@ -13,14 +13,14 @@ $(document).ready(function() {
 	                validators: {
 	                    notEmpty: {
 	                        message: '信息不能为空'
-	                    },
+	                    }
 	                   /* stringLength: {
 	                        min: 3,
 	                        max: 12,
 	                        message: '用户名长度必须在3~12位之间'
 	                    },*/
 	                    regexp: {
-	                        regexp:/\w{10,20}$/,
+	                        regexp:/\w{5,20}$/,
 	                        message: '学号不正确，请重新输入'
 	                    }
 	                }

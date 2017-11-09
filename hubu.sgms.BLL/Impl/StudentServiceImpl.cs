@@ -20,6 +20,7 @@ namespace hubu.sgms.BLL.Impl
 
         private IStudengDAL studentDAL = StudentDALImpl.Instance();
         private ICollegeDAL collegeDAL = CollegeDALImpl.Instance();
+        private ICourseDAL courseDAL = new CourseDALIml();
 
         public Student GetStudentById(string id)
         {
@@ -32,5 +33,12 @@ namespace hubu.sgms.BLL.Impl
 
             return student;
         }
+
+
+        public IList<Course_choosing> SelectGrades(string stuId, int year)
+        {
+            return courseDAL.SelectGrade(stuId,year);
+        }
     }
+
 }
