@@ -34,5 +34,15 @@ namespace hubu.sgms.DAL.Impl
             }
             return login;
         }
+
+        public void ChangePass(string username, string password)
+        {
+            string sql = "update Login set password=@password where username=@username";
+            SqlParameter[] pars = {
+                new SqlParameter("@username",username),
+                new SqlParameter("@password",password)
+            };
+            DBUtils.getDBUtils().cud(sql, pars);
+        }
     }
 }

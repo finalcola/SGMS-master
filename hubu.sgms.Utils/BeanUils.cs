@@ -54,13 +54,13 @@ namespace hubu.sgms.Utils
         public static IList<SqlParameter> SetInSQL(string sqlToSet, Object bean) {
             IList<SqlParameter> sqlParameterList = new List<SqlParameter>();
 
-            string[] paramArray = sqlToSet.Split(new char[] { '@'});
+            string[] paramArray = sqlToSet.Split('@');
             List<string> paramList = new List<string>();
             for(int i = 1; i < paramArray.Length; i++)
             {
-                if (paramArray[i].IndexOf(',') != -1)
+                if (paramArray[i].IndexOf(',') != -1 || paramArray[i].IndexOf(')') != -1)
                 {
-                    paramArray[i] = paramArray[i].Substring(0, paramArray[i].IndexOf(','));//去掉末尾的","
+                    paramArray[i] = paramArray[i].Substring(0, paramArray[i].Length-1);//去掉末尾的","或者")"
                     paramList.Add(paramArray[i]);
                 }                
             }
@@ -72,15 +72,17 @@ namespace hubu.sgms.Utils
                 if (propertyInfo != null)
                 {
                     Object value = propertyInfo.GetValue(bean);
-                    if (value == null)
-                    {
-                        throw new Exception("bean中没有'"+paramStr+"'该属性，无法注入");
-                    }
-                    else
-                    {
-                        sqlToSet.Replace("@" + paramStr, value + "");
-                        sqlParameterList.Add(new SqlParameter("@" + paramStr, value));
-                    }
+                    //if (value == null)
+                    //{
+                    //    throw new Exception("bean中没有'"+paramStr+"'该属性，无法注入");
+                    //}
+                    //else
+                    //{
+                    //    sqlToSet.Replace("@" + paramStr, value + "");
+                    //    sqlParameterList.Add(new SqlParameter("@" + paramStr, value));
+                    //}
+                    sqlToSet.Replace("@" + paramStr, value + "");
+                    sqlParameterList.Add(new SqlParameter("@" + paramStr, value));
                 }
                 
             }
@@ -102,11 +104,21 @@ namespace hubu.sgms.Utils
             }
 
             int count = 0;
-            Type type = typeof(object);
+            Type type = obj.GetType();
             PropertyInfo[] propertyInfoArray = type.GetProperties();
             foreach(PropertyInfo propertyInfo in propertyInfoArray)
             {
+                if (!typeof(System.String).IsAssignableFrom(propertyInfo.PropertyType))
+                {
+                    continue;
+                }
                 string propertyName = propertyInfo.Name;
+
+                //开头存在下划线_的情况，应删除开头下划线
+                if (propertyName.StartsWith("_"))
+                {
+                    propertyName=propertyName.Substring(1);
+                }
                 Object value = dataRow[propertyName];
                 if (value != null)
                 {

@@ -11,7 +11,7 @@ $('input[name=username]').blur(function(){
 	val=this.value;
 	
 	//if(!val.match(/^[a-zA-z]\w{3,15}$/)){
-	if(!val.match(/^[1-9]{1}\d{9,15}$/)){
+	if(!val.match(/^[1-9]{1}\d{5,15}$/)){
 		$(this).data({'s':0});
 		$(this).next().show();	
 		$(this).next().next().hide();

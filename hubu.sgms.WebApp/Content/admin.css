@@ -1,0 +1,23 @@
+/*全局样式*/
+a{
+	text-decoration: none!important;
+}
+/*显示对应信息*/
+.info .z_content{
+	display: none;
+}
+
+.info .z_content:first-child{
+	display: block;
+}
+/*文本编辑*/
+.ke-container{
+	width: 700px!important;
+	margin: 0 auto!important;
+}
+.z_myform{
+	margin-top: 10px;
+}
+	#defaultForm{
+  		margin-top: 10px;
+  	}

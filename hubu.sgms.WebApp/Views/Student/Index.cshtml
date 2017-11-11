@@ -1,0 +1,207 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 学生中心 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>湖北大学学生选课系统</title>
+    <link href="~/Scripts/bs/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Scripts/layui/css/layui.css">
+    <link href="~/Content/student.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Scripts/bs/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bs/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/pcasunzip.js" charset="gb2312"></script>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">学生选课中心</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll  menu">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">个人设置</a>
+                        <dl class="layui-nav-child">
+                            <dd class="z_item"><a href="javascript:;">修改个人信息</a></dd>
+                            <dd class="z_item"><a href="javascript:;">修改密码</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">学生选课</a>
+                        <dl class="layui-nav-child">
+                            <dd class="z_item"><a href="javascript:;">公共选修课</a></dd>  <!--需要实现-->
+                            <dd class="z_item"><a href="javascript:;">专业选修课</a></dd>	 <!--需要实现-->
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">成绩查询</a>
+                        @{ var student = ViewData["student"] as hubu.sgms.Model.Student;}
+                        <dl class="layui-nav-child">
+                            @{
+                                string stuYearStr = student.student_grade;
+                                int stuYear = Convert.ToInt32(stuYearStr);
+                                //如果year是17而不是2017格式
+                                if (stuYear < 2000)
+                                {
+                                    stuYear += 2000;
+                                }
+                                int nowYear = DateTime.Now.Year;
+                                int count = 1;
+                                int i = stuYear;
+                                while (i <= nowYear && count <= 4)
+                                {
+                                    <dd class="z_item"><a href="javascript:;">@i</a></dd>
+                                    i++;
+                                    count++;
+                                }
+                            }
+                            @*<dd class="z_item"><a href="javascript:;">成绩查询</a></dd>*@   <!--需要实现-->
+                            @*<dd class="z_item"><a href="javascript:;">成绩认定</a></dd>
+                            <dd class="z_item"><a href="javascript:;">缓考申请</a></dd>
+                            <dd class="z_item"><a href="javascript:;">补考报名</a></dd>*@
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item z_item "><a href="javascript:;">学籍信息</a></li>
+                    @*<li class="layui-nav-item z_item"><a href="javascript:;">教学评价</a></li>
+                    <li class="layui-nav-item z_item"><a href="javascript:;">毕业设计</a></li>
+                    <li class="layui-nav-item z_item"><a href="javascript:;">考务安排</a></li>
+                    <li class="layui-nav-item z_item"><a href="javascript:;">考级报名</a></li>*@
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div class='info'>
+                @* 修改个人信息 *@
+                <div class="z_content">
+                    <!--修改个人信息-->
+                    <div class="container">
+                        <form id="defaultForm" class="form-horizontal" action="javascript:void(0);" style="margin-top: 10px;">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">用户名</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="student_name" placeholder="用户名" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">身份证号</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="student_id_card" placeholder="身份证号" />
+                                </div>
+                            </div>
+                            <!--级联菜单城市选择-->
+                            <div class="form-group">
+                                <label for="" class='col-lg-3 control-label'>联系地址:</label>
+                                <div class="col-lg-2">
+                                    <select name="user.province" id="province" class="form-control"></select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <select name="user.city" id="city" class="form-control"></select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <select name="user.area" id="area" class="form-control"></select>
+                                </div>
+                            </div>
+                            <!--级联菜单城市选择-->
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">手机号</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="student_phone" placeholder="手机号" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">邮箱</label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" name="email" placeholder="邮箱" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">个人描述</label>
+                                <div class="col-lg-6">
+                                    <textarea rows="3" class="form-control" name="student_other"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-2 col-lg-offset-4">
+                                    <button type="button" onclick="changeStuInfo();" class="btn btn-success " name="signup" value="Sign up" class="z_button">&nbsp;&nbsp;提交&nbsp;&nbsp;</button>
+                                </div>
+                                <div class="col-lg-6">
+                                    <button type="reset" class="btn btn-warning" name="reset" value="重置" class="z_button">&nbsp;&nbsp;重置&nbsp;&nbsp;</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                @* 修改密码 *@
+                <div class="z_content">
+                    <!--修改密码-->
+                    <!--<iframe src="stu_changepass.html" width="100%" height="500px"></iframe>-->
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class='embed-responsive-item' src="~/Student/ChangePassPage" width="100%" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" scrolling="no" border="0" frameborder="0"></iframe>
+                    </div>
+                </div>
+                @* 公共选修课 *@
+                <div class="z_content">
+                    <!--公共选修课-->
+                    <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class='embed-responsive-item' src="~/Student/ChooseCoursePage?courseTypeName=公共选修课" width="100%" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" scrolling="no" border="0" frameborder="0"></iframe>
+                    </div>
+                    
+                </div>
+                @* 专业选修课 *@
+                <div class="z_content">
+                    <div class="z_container">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class='embed-responsive-item' src="~/Student/ChooseCoursePage?courseTypeName=专业选修课" width="100%" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" scrolling="no" border="0" frameborder="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+                @* 成绩查询 *@
+                @{
+                    count = 1;
+                    i = stuYear;
+                    while (i <= nowYear && count <= 4)
+                    {
+                        <div class="z_content">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class='embed-responsive-item' src="~/Student/GradeInfoPage?year=@i" width="90%"></iframe>
+                            </div>
+                        </div>
+                        i++;
+                        count++;
+                    }
+                }
+                
+                @* 学籍信息 *@
+                <div class="z_content">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class='embed-responsive-item' src="~/Student/InfoPage" width="100%" ></iframe>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            <center>湖北大学教务管理系统</center>
+        </div>
+    </div>
+    <script type="text/javascript" src="~/Scripts/layui/layui.js"></script>
+    <script type="text/javascript" src="~/Scripts/dist/js/formValidation.js"></script>
+    <script type="text/javascript" src="~/Scripts/dist/js/framework/bootstrap.js"></script>
+    <script type="text/javascript" src="~/Scripts/dist/js/language/zh_CN.js"></script>
+    <script src="~/Scripts/student.js"></script>
+</body>
+</html>
+

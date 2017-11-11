@@ -21,5 +21,8 @@ namespace hubu.sgms.DAL
         /// </summary>
         /// <returns></returns>
         IList<College> SelectColleges();
+
+        College SelectById(string id);
+
     }
 }

@@ -83,12 +83,18 @@
             //    return false;
             //}
             var status = data.status;
+            if (!status || status == '3') {
+                alert("系统已经关闭，请联系管理员！");
+                return;
+            }
             if (!status || status == '0') {
                 alert("登陆失败");
+                return;
             } else if (data.successUrl != null) {
                 window.location.href = data.successUrl;//跳转到返回的url
             } else {
                 alert("登陆失败");
+                return;
             }
             
         }

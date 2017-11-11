@@ -1,0 +1,90 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择课程</title>
+    <link href="~/Scripts/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/Content/student.css" rel="stylesheet" />
+</head>
+<body>
+    @{ var courses = ViewData["courses"] as IList<hubu.sgms.Model.Course_choosing>;}
+
+    <div class="z_container">
+        <div class="layui-form">
+            <table class="layui-table">
+                <colgroup>
+                    <col width=20%>
+                    <col width=10%>
+                    <col width=10%>
+                    <col width=10%>
+                    <col width=10%>
+                    <col width=10%>
+                    <col width=10%>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>课程名称</th>
+                        <th>平时成绩</th>
+                        <th>期末成绩</th>
+                        <th>总成绩</th>
+                        <th>学分</th>
+                        <th>是否及格</th>
+                        <th>备注</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        @{ 
+                            foreach (hubu.sgms.Model.Course_choosing course in courses)
+                            {
+                                <td>@course.course_name</td>
+                                <td>
+                                    @{ 
+                                        var grade1 = course.usual_grade == null ? "暂无" : course.usual_grade.ToString();
+                                    }
+                                    @grade1
+                                </td>
+                                <td>
+                                    @{
+                                        var grade2 = course.test_grade == null ? "暂无" : course.test_grade.ToString();
+                                    }
+                                    @grade2
+                                </td>
+                                <td>
+                                    @{
+                                        var grade3 = course.total_grade == null ? "暂无" : course.total_grade.ToString();
+                                    }
+                                    @grade3
+                                </td>
+                                <td>@course.course_credit</td>
+                                <td>
+                                    @{var passed = course.total_grade > 60 ? "是" : "否";}
+                                    @passed
+                                </td>
+                                <td>正常考试</td>
+                            }
+                        }
+                    </tr>
+                    @*<tr>
+                        <td>javaweb</td>
+                        <td>90</td>
+                        <td>3.0</td>
+                        <td>是</td>
+                        <th>正常考试</th>
+                    </tr>*@
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

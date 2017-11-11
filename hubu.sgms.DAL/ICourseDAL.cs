@@ -36,6 +36,8 @@ namespace hubu.sgms.DAL
         Course SelectCourseById(int id);
         #endregion
 
+        Course SelectCourseById(string id);
+
 
         #region 查询最新的size门课程
         /// <summary>
@@ -136,6 +138,13 @@ namespace hubu.sgms.DAL
         void ChooseCourse(Student student, Teacher_course courseInfo);
 
         /// <summary>
+        /// 删除已选课程
+        /// </summary>
+        /// <param name="stuId"></param>
+        /// <param name="courseId"></param>
+        void DeleteCourseChoosing(string stuId, string courseId);
+
+        /// <summary>
         /// 查询学生选课记录
         /// </summary>
         /// <param name="stuId">学生id</param>
@@ -150,17 +159,19 @@ namespace hubu.sgms.DAL
         Course_choosing SelectCourseChoosingDetails(string courseChoosingId);
 
         /// <summary>
-        /// 查询学生的各科成绩
+        /// 查询学生在year年的各科成绩
         /// </summary>
         /// <param name="stuId"></param>
+        /// <param name="year">年度</param>
         /// <returns>封装成绩字段和课程名，不查询其他信息</returns>
-        IList<Course_choosing> SelectGrade(int stuId);
+        IList<Course_choosing> SelectGrade(string stuId,int year);
 
         /// <summary>
         /// 获取课程类型列表
         /// </summary>
         /// <returns></returns>
         IList<String> SelectCourseTypes();
+        
         
     }
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using hubu.sgms.Model;
 using System.Data;
 using hubu.sgms.Utils;
+using System.Data.SqlClient;
 
 namespace hubu.sgms.DAL.Impl
 {
@@ -46,6 +47,33 @@ namespace hubu.sgms.DAL.Impl
                 return teacher_Course;
             }
             return null;
+        }
+
+        public IList<Teacher_course> SelectCourseList(string courseType, string collegeId)
+        {
+            string collegeSql = " ";
+            if (collegeId != null && !"".Equals(collegeId))
+            {
+                collegeSql = " college_id='" + collegeId + "' and ";
+            }
+            string sql = "select * from Teacher_course where "+collegeSql+" course_id in (select course_id from Course where course_type=@courseType)";
+            SqlParameter[] pars = {
+                new SqlParameter("@courseType",courseType)
+            };
+            DataTable dataTable = DBUtils.getDBUtils().getRecords(sql, pars);
+            IList<Teacher_course> courseList = new List<Teacher_course>();
+            foreach(DataRow row in dataTable.Rows)
+            {
+                Teacher_course course = new Teacher_course();
+                BeanUils.SetStringValues(course, row);
+                if (row["status"] != null)
+                {
+                    course.status = Convert.ToInt32(row["status"]);
+                }
+                courseList.Add(course);
+            }
+
+            return courseList;
         }
     }
 }

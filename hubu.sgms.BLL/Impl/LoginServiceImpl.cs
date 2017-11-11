@@ -18,6 +18,13 @@ namespace hubu.sgms.BLL.Impl
             return loginDAL.GetUser(username,password);
             
         }
-     
+
+
+        public void ChangePass(string username, string password)
+        {
+            loginDAL.ChangePass(username, password);
+        }
+
+
     }
 }
