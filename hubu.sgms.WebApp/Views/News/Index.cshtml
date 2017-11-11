@@ -119,8 +119,7 @@
                     text: "确定",
                     iconCls: "icon-ok",
                     handler: function () {
-                        //  document.getElementById("addForm").submit();
-                  
+                         document.getElementById("addForm").submit();
                     }
                 }, {
                     text: "取消",
@@ -334,7 +333,7 @@
     <!---------------------添加域-------------------------->
     <div id="addDiv">
         <!--不加action和post会返回，根本就不会进入到AddNewInfo界面-->
-        <form id="addForm"  action="/News/AddNewInfo" mothod="post">
+        <form id="addForm" mothod="post" action="/News/AddNewInfo" >
             <table>
                 <tr>
                     <td>标题:</td>

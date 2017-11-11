@@ -697,6 +697,8 @@
     <Content Include="Views\Admin\DeleteCourseInfo.cshtml" />
     <Content Include="Views\Teacher\SelectCourse.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\News\AddNewInfo.cshtml" />
+    <Content Include="Views\News\UpdateNewInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

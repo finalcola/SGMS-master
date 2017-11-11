@@ -21,7 +21,7 @@
     </div><!--contenttitle-->
 
     <form id="formid" class="stdform stdform2" action="/Admin/SubmitUpdateCourseInfo" method="post" onsubmit="return submitInfo()">
-        <p>
+        <p style="display:none">
             <label>课程编号</label>
             <span class="field"><input value="@ViewData["courseId"]" type="text" name="course_id" id="course_id" class="longinput" readonly="readonly" style="width:200px;" />系统自动编排，无法更改</span>
             
