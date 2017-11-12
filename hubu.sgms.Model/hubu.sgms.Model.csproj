@@ -50,14 +50,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Administrator.cs" />
+    <Compile Include="Arrange_course.cs" />
+    <Compile Include="BlogCategory.cs" />
     <Compile Include="Class.cs" />
+    <Compile Include="Classroom.cs" />
     <Compile Include="College.cs" />
     <Compile Include="Course.cs" />
     <Compile Include="Course_choosing.cs" />
+    <Compile Include="Course_Time.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="Major.cs" />
     <Compile Include="news.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Province.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="Studentms.cs" />
