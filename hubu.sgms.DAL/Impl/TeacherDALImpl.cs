@@ -166,6 +166,51 @@ namespace hubu.sgms.DAL.Impl
             return status;
         }
 
+
+        public IList<Teacher> SelTeacherByCollegeId(string CollegeId)
+        {
+            string sql = "select Teacher_id,Teacher_name from Teacher where college_id=@collegeid ";
+            SqlParameter[] pars = {
+                new SqlParameter("@collegeid",CollegeId),
+
+             };
+            DataTable dataTable = DBUtils.getDBUtils().getRecords(sql, pars);
+
+            IList<Teacher> teacherList = new List<Teacher>();
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                Teacher t = new Teacher();
+                t.teacher_id = dataTable.Rows[i]["teacher_id"].ToString();
+                t.teacher_name = dataTable.Rows[i]["teacher_name"].ToString();
+                teacherList.Add(t);
+            }
+            return teacherList;
+        }
+
+        public Teacher SelTeacherByTeacherId(string TeacherId)
+        {
+            string sql = "select Teacher_name from Teacher where Teacher_id=@id";
+
+            SqlParameter[] pars = {
+                new SqlParameter("@id",TeacherId),
+
+        };
+
+            DataTable dataTable = DBUtils.getDBUtils().getRecords(sql, pars);
+
+            Teacher t = null;
+
+
+            if (dataTable.Rows.Count > 0)
+            {
+                t = new Teacher();
+                DataRow dataRow = dataTable.Rows[0];
+
+                t.teacher_name = dataRow["teacher_name"].ToString();
+
+            }
+
+            return t;
+        }
     }
-   
 }

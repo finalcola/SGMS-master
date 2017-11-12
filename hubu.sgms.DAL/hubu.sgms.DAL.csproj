@@ -42,20 +42,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBUtils.cs" />
+    <Compile Include="IArrange_CourseDAL.cs" />
+    <Compile Include="IClassDAL.cs" />
+    <Compile Include="IClassroomDAL.cs" />
     <Compile Include="ICollegeDAL.cs" />
     <Compile Include="ICourseDAL.cs" />
+    <Compile Include="ICourse_TimeDAL.cs" />
     <Compile Include="IHomeDAL.cs" />
     <Compile Include="ILoginDAL.cs" />
+    <Compile Include="IMajorDAL.cs" />
+    <Compile Include="Impl\Arrange_CourseDALImpl.cs" />
+    <Compile Include="Impl\ClassDALImpl.cs" />
+    <Compile Include="Impl\ClassroomDALImpl.cs" />
     <Compile Include="Impl\CollegeDALImpl.cs" />
     <Compile Include="Impl\CourseDALImpl.cs" />
+    <Compile Include="Impl\Course_TimeDALImpl.cs" />
     <Compile Include="Impl\HomeDALImpl.cs" />
     <Compile Include="Impl\LoginDALImpl.cs" />
+    <Compile Include="Impl\MajorDALImpl.cs" />
+    <Compile Include="Impl\RoleDALImpl.cs" />
     <Compile Include="Impl\StudentDALImpl.cs" />
     <Compile Include="Impl\TeacherCourseDALImpl.cs" />
     <Compile Include="Impl\TeacherDALImpl.cs" />
+    <Compile Include="Impl\Teacher_CourseDALImpl.cs" />
+    <Compile Include="IRoleInfoDAL.cs" />
     <Compile Include="IStudengDAL.cs" />
     <Compile Include="ITeacherCourseDAL.cs" />
     <Compile Include="ITeacherDAL.cs" />
+    <Compile Include="ITeacher_CourseDAL.cs" />
     <Compile Include="NewsDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlHelper.cs" />

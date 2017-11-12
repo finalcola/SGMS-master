@@ -24,5 +24,9 @@ namespace hubu.sgms.DAL
 
         College SelectById(string id);
 
+        IList<College> SelCollegeforArrangeCourse();
+
+
+        College SelCollegeById(string id);
     }
 }

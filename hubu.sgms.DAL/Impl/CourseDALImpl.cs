@@ -620,6 +620,50 @@ namespace hubu.sgms.DAL.Impl
             return courseTypes;
         }
 
-       
+
+        public IList<Course> SelCourseforArrangeCourse(string course_type, string college)
+        {
+            string sql = "select course_id,course_name from course where college_id=@college and course_type=@course_type";
+
+            SqlParameter[] pars = {
+                new SqlParameter("@course_type",course_type),
+                new SqlParameter("@college",college)
+        };
+            //查询
+            DataTable dataTable = DBUtils.getDBUtils().getRecords(sql, pars);
+
+            //存放结果
+            IList<Course> courseList = new List<Course>();
+
+            //遍历
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                Course c = new Course();
+                c.course_id = dataTable.Rows[i]["course_id"].ToString();
+                c.course_name = dataTable.Rows[i]["course_name"].ToString();
+                courseList.Add(c);
+            }
+
+            // foreach (DataRow dataRow in dataTable["name"].Rows)
+            //  {
+            //  c.college_id = dataRow["college_id"].ToString();
+            //       c.name = dataRow["name"].ToString();
+            //       collegeList.Add(c);
+            //   }
+            return courseList;
+        }
+
+
+        public  CourseType GetCourseType(string name)
+        {
+            foreach (CourseType courseType in Enum.GetValues(typeof(CourseType)))
+            {
+                if (courseType.ToString().Equals(name))
+                {
+                    return courseType;
+                }
+            }
+            return CourseType.PublicElective;
+        }
     }
 }

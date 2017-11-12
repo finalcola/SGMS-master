@@ -16,6 +16,8 @@ namespace hubu.sgms.DAL
         /// <returns></returns>
         IList<Teacher_course> SelectAllCourse(string teacher_id);
 
+        Teacher SelTeacherByTeacherId(string TeacherId);
+
         /// <summary>
         /// 查询所有选课信息
         /// </summary>
@@ -60,5 +62,8 @@ namespace hubu.sgms.DAL
         /// <param name="mystatus"></param>
         /// <param name="courseid"></param>
         void SetStatus(string mystatus, string courseid);
+
+        IList<Teacher> SelTeacherByCollegeId(string CollegeId);
+
     }
 }

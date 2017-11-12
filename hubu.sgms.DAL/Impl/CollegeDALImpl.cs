@@ -36,6 +36,7 @@ namespace hubu.sgms.DAL.Impl
             return collegeId;
         }
 
+
         public IList<College> SelectColleges()
         {
             string sql = "select college_id,name,sort,student_number,teacher_number,class_number from College order by sort asc";
@@ -84,5 +85,55 @@ namespace hubu.sgms.DAL.Impl
             return college;
             
         }
+
+        public IList<College> SelCollegeforArrangeCourse()
+        {
+            string sql = "select distinct college.college_id ,college.name from college,course where course.college_id=college.college_id and course.college_id in (select  college_id from Course )";
+            DataTable dataTable = DBUtils.getDBUtils().getRecords(sql);
+
+            IList<College> collegeList = new List<College>();
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                College c = new College();
+                c.college_id = dataTable.Rows[i]["college_id"].ToString();
+                c.name = dataTable.Rows[i]["name"].ToString();
+                collegeList.Add(c);
+            }
+            // foreach (DataRow dataRow in dataTable["name"].Rows)
+            //  {
+            //  c.college_id = dataRow["college_id"].ToString();
+            //       c.name = dataRow["name"].ToString();
+            //       collegeList.Add(c);
+            //   }
+            return collegeList;
+        }
+
+
+        public College SelCollegeById(string id)
+        {
+            string sql = "select name from college where college_id=@id";
+
+            SqlParameter[] pars = {
+                new SqlParameter("@id",id),
+
+        };
+
+            DataTable dataTable = DBUtils.getDBUtils().getRecords(sql, pars);
+
+            College c = null;
+
+
+            if (dataTable.Rows.Count > 0)
+            {
+                c = new College();
+                DataRow dataRow = dataTable.Rows[0];
+
+                c.name = dataRow["name"].ToString();
+
+            }
+
+            return c;
+        }
+
     }
 }

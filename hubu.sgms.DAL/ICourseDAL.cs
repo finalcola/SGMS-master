@@ -14,6 +14,11 @@ namespace hubu.sgms.DAL
     /// </summary>
     public interface ICourseDAL
     {
+        CourseType GetCourseType(string name);
+       
+
+        IList<Course> SelCourseforArrangeCourse(string course_type, string college);
+
         #region 分页查询相应类别的基本课程信息
         /// <summary>
         /// 分页查询相应类别的课程
@@ -249,4 +254,9 @@ namespace hubu.sgms.DAL
             return courses;
         }
     }
+
+
+
+
+
 }
