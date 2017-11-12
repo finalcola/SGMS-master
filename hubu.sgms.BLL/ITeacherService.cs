@@ -9,6 +9,10 @@ namespace hubu.sgms.BLL
 {
     public interface ITeacherService
     {
+
+        IList<Teacher> SelTeacherByCollegeId(string CollegeId);
+        Teacher SelTeacherByTeacherId(string TeacherId);
+
         /// <summary>
         /// 查询所有的课程信息
         /// </summary>
@@ -59,6 +63,5 @@ namespace hubu.sgms.BLL
         /// <param name="mystatus"></param>
         /// <param name="courseid"></param>
         void SetStatus(string mystatus, string courseid);
-
     }
 }

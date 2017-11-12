@@ -40,17 +40,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IArrange_CourseService.cs" />
+    <Compile Include="IClassroomService.cs" />
+    <Compile Include="IClassService.cs" />
+    <Compile Include="ICollegeService.cs" />
     <Compile Include="ICourseService.cs" />
+    <Compile Include="ICourse_TimeService.cs" />
     <Compile Include="IHomeService.cs" />
     <Compile Include="ILoginService.cs" />
+    <Compile Include="IMajorService.cs" />
+    <Compile Include="Impl\Arrange_CourseServiceImpl.cs" />
+    <Compile Include="Impl\ClassroomServiceImpl.cs" />
+    <Compile Include="Impl\ClassServiceImpl.cs" />
+    <Compile Include="Impl\CollegeServiceImpl.cs" />
     <Compile Include="Impl\CourseServiceImpl.cs" />
+    <Compile Include="Impl\Course_TimeServiceImpl.cs" />
     <Compile Include="Impl\HomeServiceImpl.cs" />
     <Compile Include="Impl\LoginServiceImpl.cs" />
+    <Compile Include="Impl\MajorServiceImpl.cs" />
+    <Compile Include="Impl\RoleInfoServiceImpl.cs" />
     <Compile Include="Impl\StudentServiceImpl.cs" />
     <Compile Include="Impl\TeacherServiceImpl.cs" />
+    <Compile Include="Impl\Teacher_CourseServiceImpl.cs" />
     <Compile Include="INewsServices.cs" />
+    <Compile Include="IRoleInfoService.cs" />
     <Compile Include="IStudentService.cs" />
     <Compile Include="ITeacherService.cs" />
+    <Compile Include="ITeacher_CourseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

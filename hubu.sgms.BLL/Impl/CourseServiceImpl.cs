@@ -158,5 +158,15 @@ namespace hubu.sgms.BLL.Impl
         {
             return courseDAL.SelectCourseChoosingListByStu(stuId);
         }
+
+        public IList<College> SelCollegeforArrangeCourse()
+        {
+            return collegeDAL.SelCollegeforArrangeCourse();
+        }
+
+        public IList<Course> SelCourseforArrangeCourse(string course_type, string college)
+        {
+            return courseDAL.SelCourseforArrangeCourse(course_type, college);
+        }
     }
 }

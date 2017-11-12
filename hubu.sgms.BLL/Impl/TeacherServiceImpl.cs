@@ -47,5 +47,15 @@ namespace hubu.sgms.BLL.Impl
         {
             teacherDAL.SetStatus(mystatus, courseid);
         }
+
+        public IList<Teacher> SelTeacherByCollegeId(string CollegeId)
+        {
+            return teacherDAL.SelTeacherByCollegeId(CollegeId);
+        }
+
+        public Teacher SelTeacherByTeacherId(string TeacherId)
+        {
+            return teacherDAL.SelTeacherByTeacherId(TeacherId);
+        }
     }
 }

@@ -140,6 +140,10 @@ namespace hubu.sgms.BLL
         /// <returns></returns>
         IList<Course_choosing> SelectCourseChoosingListByStu(string stuId);
 
-        
+
+        IList<College> SelCollegeforArrangeCourse();
+
+        IList<Course> SelCourseforArrangeCourse(string course_type, string college);
+
     }
 }
