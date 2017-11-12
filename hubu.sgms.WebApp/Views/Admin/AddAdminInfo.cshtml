@@ -1,0 +1,97 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="~/Content/admin/style.default.css" type="text/css" />
+    <link rel="stylesheet" href="~/Content/admin/pikaday.css" />
+    <script src="~/Scripts/Course/pikaday.js"></script>
+    <script src="~/Scripts/Course/jquery.min.js"></script>
+    <script src="~/Scripts/Course/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="~/Content/admin/sweetalert2.min.css">
+</head>
+<body class="withvernav">
+    <div style="height:50px;background-color:#31425D;text-align:center" align="Center">
+        <h1 vertical-align="middle" style="line-height:45px ">添加管理员信息</h1>
+    </div>
+    <!--form表单中固定有submit按钮，onsubmit表示在提交时所做的js判断-->
+    <form id="formid" class="stdform stdform2" action="/Admin/SubmitAddAdminInfo" method="post">
+        <p>
+            <label>姓名</label>
+            <span class="field"><input type="text" name="adminName" id="adminName" class="longinput" style="width:200px;" /></span>
+        </p>
+        <p>
+            <label>性别</label>
+            <span class="field" style="width:400px;">
+                <select id="adminSex" name="adminSex">
+                    <option value="" style="display: none;" disabled selected>性别</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                    <option value="未知">未知</option>
+                </select>
+            </span>
+        </p>
+        <p>
+            <label>卡号</label>
+            <span class="field"><input type="text" name="adminIDCard" id="adminIDCard" class="longinput" style="width:200px;" /></span>
+        </p>
+        <p>
+            <label>所属部门</label>
+            <span class="field" style="width:500px;">
+                <select name="adminDepartment" id="adminDepartment">
+                    <option value="" style="display: none;" disabled selected>所属部门</option>
+                    <option value="信管处">信管处</option>
+                </select>
+            </span>
+        </p>
+
+        <!--上传照片-->
+
+        <p>
+            <label>电话号码</label>
+            <span class="field"><input type="text" name="adminContact" id="adminContact" class="longinput" style="width:200px;" /></span>
+        </p>
+        <p>
+            <label>个人描述</label>
+            <span class="field"><input type="text" name="adminOther" id="adminOther" class="longinput" style="width:500px;" /></span>
+        </p>
+        <p>
+            <label>状态</label>
+            <span class="field" style="width:400px;">
+                <select name="adminStatus" id="adminStatus">
+                    <option value="" style="display: none;" disabled selected>状态</option>
+                    <option value="1">正常</option>
+                    <option value="2">休假</option>
+                    <option value="3">退休</option>
+                </select>
+            </span>
+        </p>
+        <div class="showcase sweet" style="height:50px;background-color:white" align="Center">
+            <button class="submit" align="Center" style="width:120px;margin-top: 10px;">添加管理员信息</button>
+        </div>
+    </form>
+
+    <script>
+        $('.showcase.sweet button').on('click', function () {
+    	    var adminName = document.getElementById("adminName").value;
+            var adminSex = document.getElementById("adminSex").value;
+            var adminIDCard = document.getElementById("adminIDCard").value;
+            var adminDepartment = document.getElementById("adminDepartment").value;
+            var adminContact = document.getElementById("adminContact").value;
+            var adminOther = document.getElementById("adminOther").value;
+            var adminStatus = document.getElementById("adminStatus").value;
+
+            if (adminName == '' || adminSex == '' || adminIDCard == '' || adminDepartment == '' || adminContact == '' || adminOther == '' || adminStatus == '') {
+                swal('提交错误', '请检查信息是否完整', 'error');
+                return false;
+            } else {
+                document.getElementById("formid").submit();
+            }
+  	    });
+    </script>
+</body>
+</html>

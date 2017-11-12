@@ -143,6 +143,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ArrangeController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
@@ -153,6 +154,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Box.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Province.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -776,15 +780,27 @@
     <Content Include="Views\Course\GetCourseDetail.cshtml" />
     <Content Include="Views\Admin\DeleteCourseInfo.cshtml" />
     <Content Include="Views\Teacher\SelectCourse.cshtml" />
-    <Content Include="Views\News\Index.cshtml" />
-    <Content Include="Views\Student\Index.cshtml" />
-    <Content Include="Views\Student\ChangePassPage.cshtml" />
-    <Content Include="Views\Student\InfoPage.cshtml" />
-    <Content Include="Views\Teacher\TeacherManager.cshtml" />
     <Content Include="Views\Teacher\TeacherCheckScore.cshtml" />
+    <Content Include="Views\Teacher\TeacherManager.cshtml" />
     <Content Include="Views\Teacher\TeacherSelectCourse.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\Student\ChangePassPage.cshtml" />
     <Content Include="Views\Student\ChooseCoursePage.cshtml" />
     <Content Include="Views\Student\GradeInfoPage.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Student\InfoPage.cshtml" />
+    <Content Include="Views\Admin\AddAdminInfo.cshtml" />
+    <Content Include="Views\Admin\AddStudentInfo.cshtml" />
+    <Content Include="Views\Admin\AddTeacherInfo.cshtml" />
+    <Content Include="Views\Admin\AdminAlterStudentInfo.cshtml" />
+    <Content Include="Views\Admin\AdminAlterTeacherInfo.cshtml" />
+    <Content Include="Views\Admin\AdminDeleteStudent.cshtml" />
+    <Content Include="Views\Admin\AdminDeleteTeacher.cshtml" />
+    <Content Include="Views\Admin\AdminUpdateStudentInfo.cshtml" />
+    <Content Include="Views\Admin\AdminUpdateTeacherInfo.cshtml" />
+    <Content Include="Views\Admin\AlterAdminInfo.cshtml" />
+    <Content Include="Views\Admin\DeleteAdmin.cshtml" />
+    <Content Include="Views\Arrange\CAArrangeCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -792,7 +808,6 @@
     <Folder Include="Content\student\" />
     <Folder Include="Content\teacher\" />
     <Folder Include="FileUploadImage\" />
-    <Folder Include="Models\" />
     <Folder Include="Scripts\admin\" />
     <Folder Include="Scripts\class\" />
     <Folder Include="Scripts\kd\attached\" />
@@ -847,7 +862,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58627</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

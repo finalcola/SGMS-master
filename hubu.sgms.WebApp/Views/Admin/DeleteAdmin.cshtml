@@ -1,0 +1,134 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>删除管理员信息</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/admin/bootstrap-grid.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/admin/htmleaf-demo.css">
+    <style type="text/css">
+        .loader {
+            width: 128px;
+            height: 128px;
+            line-height: 128px;
+            border-radius: 50%;
+            border-top: 5px solid #eb6c18;
+            color: #fff;
+            text-align: center;
+            position: relative;
+            margin: 30px auto;
+            -webkit-animation: 2s loading1 ease-in-out infinite;
+            animation: 2s loading1 ease-in-out infinite;
+        }
+
+            .loader:before,
+            .loader:after {
+                content: "";
+                display: block;
+                width: 128px;
+                height: 128px;
+                border-radius: 50%;
+                position: absolute;
+                top: -5px;
+                left: 0;
+            }
+
+            .loader:before {
+                border-top: 5px solid #c3c659;
+                -webkit-transform: rotate(120deg);
+                transform: rotate(120deg);
+            }
+
+            .loader:after {
+                border-top: 5px solid #b93be6;
+                -webkit-transform: rotate(240deg);
+                transform: rotate(240deg);
+            }
+
+            .loader .loader-inner {
+                display: block;
+                width: 128px;
+                height: 128px;
+                position: absolute;
+                top: -5px;
+                left: 0;
+                -webkit-animation: 2s loading2 linear infinite;
+                animation: 2s loading2 linear infinite;
+            }
+
+        @@-webkit-keyframes loading1 {
+            50% {
+                -webkit-transform: rotate(180deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes loading1 {
+            50% {
+                -webkit-transform: rotate(180deg);
+                transform: rotate(180deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @@-webkit-keyframes loading2 {
+            50% {
+                -webkit-transform: rotate(-180deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(-360deg);
+            }
+        }
+
+        @@keyframes loading2 {
+            50% {
+                -webkit-transform: rotate(-180deg);
+                transform: rotate(-180deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="htmleaf-container">
+        <div class="demo">
+            <div class="container">
+                <div class="row text-center">
+                    <h3 class="dark">正在加载...</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="loader">
+                            <span class="loader-inner">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+            onload=function(){
+                setTimeout(go, 3000);
+            };
+            function go(){
+                location.href = "http://localhost:58627/Admin/AlterAdminInfo";
+            }
+    </script>
+</body>
+</html>

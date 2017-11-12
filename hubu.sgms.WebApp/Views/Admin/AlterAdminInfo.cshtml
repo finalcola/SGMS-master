@@ -1,0 +1,166 @@
+﻿@{
+    Layout = null;
+}
+@using hubu.sgms.BLL;
+@using hubu.sgms.BLL.Impl;
+@using hubu.sgms.Model;
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/style.default.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/pageGroup.css" />
+    <script type="text/javascript" src="js/jquery-1.7.min.js"></script>
+    <script type="text/javascript" src="js/pageGroup.js"></script>
+    <link href="~/Content/bootstrap3.3.7.min.css" rel="stylesheet" />
+    <script src="~/Scripts/Course/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="~/Content/Admin/example.css">
+    <script src="^/Course/sweet-alert.js"></script>
+    <link rel="stylesheet" href="~/Content/admin/sweet-alert.css">
+    <title>查询管理员信息</title>
+    <style type="text/css">
+        .container-fluid {
+            padding: 0;
+        }
+            .container-fluid nav {
+                padding-left: 10%;
+            }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <form id="formid" class="navbar-form navbar-left" role="search" method="post" action="/Admin/AlterAdminInfo">
+                    <label>管理员状态: </label>
+                    <span class="field" style="width:400px;">
+                        <select name="status" id="status" class="btn-info">
+                            <option value="0" style="display: none;" disabled selected>状态</option>
+                            <option value="1">正常</option>
+                            <option value="2">休假</option>
+                            <option value="3">退休</option>
+                        </select>
+                    </span> &nbsp;
+                    <div class="form-group">
+                        <input id="adminName" name="adminName" type="text" class="form-control" placeholder="请输入管理员姓名" />
+                    </div>
+                    <input id="searchCourseBtn" type="submit" class="btn btn-info" value="查询" />
+                </form>
+                <a href="/Admin/AddAdminInfo" class="dropdown-toggle">添加新管理员</a>
+            </div>
+        </nav>
+    </div>
+
+    <div id="body">
+        <div class="container">
+            <!--展示管理员信息的表格-->
+            <table class="table table-hover table-bordered" id="diasplaycourseInfo">
+                <colgroup>
+                    <col class="con0" style="width: 4%" />
+                    <col class="con1" style="width: 4%" />
+                    <col class="con0" style="width: 4%" />
+                    <col class="con0" style="width: 4%" />
+                    <col class="con0" style="width: 4%" />
+                </colgroup>
+                <thead>
+                    <tr class="warning">
+                        <th>管理员姓名</th>
+                        <th>管理员性别</th>
+                        <th>联系方式</th>
+                        <th>所属部门</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="courseList">
+                    @if (ViewData["adminList"] != null)
+                     {
+                        foreach (Administrator item in (List<Administrator>)ViewData["adminList"])
+                        {
+                            <tr>
+                                <td class="center">@item.administrator_name</td>
+                                <td class="center">@item.administratort_sex</td>
+                                <td class="center">@item.administrator_contact</td>
+                                <td class="center">@item.administrator_department</td>
+                                <td class="center">
+                                    <a href='#' onclick="adminDetail('@item.administrator_id')" class="detail">详情</a> &nbsp; 
+                                    <a href="#" onclick="adminEdit('@item.administrator_id')" class="edit">修改</a> &nbsp;
+                                    <a href='#' onclick="adminDelete('@item.administrator_id')" class="delete">删除</a>
+                                </td>
+                            </tr>
+                        }
+                     }
+                </tbody>
+            </table>
+
+            <div id="pageid">
+                <ul class="pager">
+                    <li class="previous"><a href="#" onclick="prePage();">&larr; Older</a></li>
+                    <li class="next"><a href="#" onclick="nextPage();">Newer &rarr;</a></li>
+                </ul>
+                <center>第<span id="page">1</span>页，共<span id="totalPage">1</span>页</center>
+            </div>
+            <!--分页按钮  pagination  pager-->
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap3.3.7.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+
+        // 上一页按钮的点击事件
+        function prePage() {
+            if (page == 1) {
+                return false;
+            } else {
+                page--;
+                refreshCourseList();
+            }
+        }
+
+
+
+        // 下一页按钮的点击事件
+        function nextPage() {
+            if (page == totalPage) {
+                return false;
+            } else {
+                page++;
+                refreshCourseList();
+            }
+        }
+        
+
+        /**
+         * 修改管理员信息
+         * param  administratorId	管理员ID
+         */
+        function adminEdit(administratorId) {
+            window.location.href = "/Admin/UpdateAdminInfo?administratorId=" + administratorId;
+        }
+
+        /**
+         * 查看管理员详情
+         * param  administratorId	管理员ID
+         */
+        function adminDetail(administratorId) {
+            window.location.href = "/Admin/ViewAdminInfo?administratorId=" + administratorId;
+        }
+
+        /**
+         * 删除管理员
+         * param  administratorId	管理员ID
+         */
+        function adminDelete(administratorId) {
+            if (confirm("你确定删除该教师信息？")) {
+                window.location.href = "/Admin/DeleteAdmin?administratorId=" + administratorId;
+            } else {
+                return false;
+            }
+        }
+
+    </script>
+</body >
+</html >
