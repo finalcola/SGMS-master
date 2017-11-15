@@ -34,7 +34,6 @@
             $("#Msg").textbox('textbox').attr('readonly', true);
         });
 
-  
         //初始化表格
         function initTable() {
             $("#tt").datagrid({
@@ -54,6 +53,8 @@
                 rownumbers: true,//行号
                 pageList: [10, 15, 20],      //允许一页多少条数据
                 queryParams: {},          //异步请求可以额外传递的数据
+                striped: true,      //条纹化
+                pagination:true, 	//设置为 true，则在数据网格（datagrid）底部显示分页工具栏。
                 columns: [[
                { field: 'ck', checkbox: true, align: 'left', width: 50 },    // 设置cheakbox
                { field: 'Title', title: '标题', width: 120 },
@@ -200,22 +201,22 @@
         //显示新闻详情
         function showDetail(index) {
             //弹出div
-            $("#detailDiv").css("display", "block");
-            $.post("/News/ShowModelById", { id: index }, function (data) {
-                $("#title").textbox("setValue", data.Title);
-                $("#author").textbox("setValue", data.Author);
-                $("#subDateTime").textbox("setValue", ChangeDateFormat(data.SubDateTime));
-                $("#Msg").textbox("setValue", data.Msg);
-            });
-            //弹出dialog
-            $("#detailDiv").dialog({
-                title: "新闻详情",
-                modal: true,
-                width: 500,
-                height: 500,
-            });
+           // $("#detailDiv").css("display", "block");
+              window.location.href = "/News/AdminShowDetail?id=" + index;
+                /*    $("#title").textbox("setValue", data.Title);
+                    $("#author").textbox("setValue", data.Author);
+                    $("#subDateTime").textbox("setValue", ChangeDateFormat(data.SubDateTime));
+                    $("#Msg").textbox("setValue", data.Msg);
+                });
+                //弹出dialog
+                $("#detailDiv").dialog({
+                    title: "新闻详情",
+                    modal: true,
+                    width: 1000,
+                    height: 500,
+                });*/
+            
         }
-
 
         //删除新闻
         function deleteNewInfo(index){
@@ -305,7 +306,7 @@
     </div>
 
     <!-------------------------详情显示------------------------------->
-    <div id="detailDiv" style="margin-top:0px">
+    <div id="detailDiv" style="margin-top:0px;background:url(/images/hubunew.jpg)">
         <table>
             <tr>
                 <td>标题:</td>
@@ -325,7 +326,6 @@
             </tr>
         </table>
     </div>
-
     <!-------------------------详情显示------------------------------>
 
 
@@ -412,9 +412,6 @@
         </form>
     </div>
     <!---------------------编辑域-------------------------->
-
-
-
 
     </body>
 </html>

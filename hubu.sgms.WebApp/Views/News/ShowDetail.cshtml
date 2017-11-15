@@ -1,0 +1,88 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>新闻详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="/Content/News/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" href="/Content/News/css/style.css" type="text/css" media="all" />
+    <script src="/Content/News/js/jquery.min.js"></script>
+    <script src="/Content/News/js/jquery.easydropdown.js"></script>
+    <link href="/Content/News/css/nav.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+    <div style="background-color:powderblue;height: 1000px;width: 100%;">
+
+        <div id="home" class="header">
+            <a href="javascript:history.back(-1)">返回</a>
+            <h1 align="center" >湖北大学</h1>
+        </div>
+
+
+        <div style="width: 800px;margin-left:280px ">
+            <div class="single-left-grid">
+                <h4 align="center" id="title">@ViewData["Title"]</h4>
+                <h5 align="center" id="author">作者：@ViewData["Author"]</h5>
+                <h5 align="center" id="subDateTime">时间：@ViewData["SubDateTime"]</h5>
+                <p class="text" id="Msg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@ViewData["Msg"]</p>
+            </div>
+
+            <div align="center">
+                <img id="picture" src="@ViewData["ImagePath"]" alt="" />
+            </div>
+        </div>
+
+
+        <div class="post" style="width: 800px;margin-left:280px ">
+            <h3>Latest News</h3>
+
+            <div class="post-grids" style="height:120px;">
+                <div class="col-md-4 post-left">
+                    <a href="#"><img height="100" width="200" src="@ViewData["ImagePathup"]" alt="" /></a>
+                </div>
+                <div class="col-md-8 post-right">
+                    <h4><a id="up" href="#">@ViewData["Titleup"]</a></h4>
+                    <p class="text">@ViewData["Msgup"]</p>
+                </div>
+            </div>
+
+
+            <div class="post-grids">
+                <div class="col-md-4 post-left">
+                    <a href="#"><img height="100" width="200" src="@ViewData["ImagePathnext"]" alt="" /></a>
+                </div>
+                <div class="col-md-8 post-right">
+                    <h4><a id="next" href="#">@ViewData["Titlenext"]</a></h4>
+                    <p class="text">@ViewData["Msgnext"]</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="up-arrow">
+            <a class="scroll" href="#home">Back to Top</a>
+        </div>
+
+
+        <div class="copyright">
+            <p>Copyright &copy; 2017.湖北大学 All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        $('#next').click(function () {
+            if(@ViewData["Id"]< @ViewData["count"])
+                window.location.href = "/News/ShowDetail?id=" +(@ViewData["Id"]+1);
+        });
+
+        $('#up').click(function(){
+            if(@ViewData["Id"]>1)
+                window.location.href = "/News/ShowDetail?id=" +(@ViewData["Id"]-1);
+        });
+    </script>
+</body>
+</html>	

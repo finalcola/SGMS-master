@@ -21,7 +21,6 @@ namespace hubu.sgms.WebApp.Controllers
             return View();
         }
 
-
         /// <summary>
         /// 分页展示数据
         /// </summary>
@@ -40,7 +39,6 @@ namespace hubu.sgms.WebApp.Controllers
             var json = Json(dataJson, JsonRequestBehavior.AllowGet);
             return json;
         }
-
 
         /// <summary>
         /// 根据id查询记录
@@ -175,5 +173,207 @@ namespace hubu.sgms.WebApp.Controllers
             }
         }
 
+        /// <summary>
+        /// 详细查看
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ShowDetail(int id)
+        {
+            List<News> newInfoList = NewInfoBll.GetEntityList();
+
+            ViewData["count"] = newInfoList[newInfoList.Count - 1].Id;
+            //得到数据库中的第一条记录和最后一条记录
+            int first = newInfoList[0].Id;
+            int last = newInfoList[newInfoList.Count - 1].Id;
+
+            //给当前新闻赋值
+            News newInfo = NewInfoBll.GetEntityModel(id);
+            ViewData["Id"] = newInfo.Id;
+            ViewData["Title"] = newInfo.Title;
+            ViewData["Author"] = newInfo.Author;
+            ViewData["ImagePath"] = newInfo.ImagePath;
+            ViewData["Msg"] = newInfo.Msg;
+            ViewData["SubDateTime"] = newInfo.SubDateTime;
+
+            //找到当前新闻的上一条新闻和下一条新闻的id
+            int next = 0;
+            int prior = 0;
+            if (id == first || id == last)
+            {
+
+                if (newInfo.Id == first)   //第一条新闻没有上一条新闻
+                {
+                    next = newInfoList[1].Id;
+                }
+                if (newInfo.Id == last)   //最后一条新闻没有下一条新闻
+                {
+                    prior = newInfoList[newInfoList.Count - 2].Id;
+                }
+            }
+            else {
+                for (int i = 0; i < newInfoList.Count; i++)
+                {
+                    if (newInfoList[i].Id == newInfo.Id)
+                    {
+                        next = newInfoList[i - 1].Id;
+                        prior = newInfoList[i + 1].Id;
+                    }
+                }
+            }
+
+            //判断当前新闻是否为第一条新闻或者最后一条新闻
+            if (id== first)
+            {
+                ViewData["Titleup"] = "湖北大学";
+                ViewData["ImagePathup"] = "/FileUploadImage/logo.jpg";
+                ViewData["Msgup"] = "湖北大学（Hubei University）简称湖大（HUBU） ，坐落于湖北省武汉市，是湖北省人民政府与教育部共建的省属重点综合性大学，入选“中西部高校基础能力建设工程”，是湖北省“2011计划”牵头高校，武器装备科研生产二级保密资格高校，中国政府奖学金来华留学生和港澳台学生接收高校，是教育部和英国大使馆批准设立的湖北省唯一的雅思（IELTS）考试考点单位";
+            }
+            else
+            {
+                News upnewInfo = NewInfoBll.GetEntityModel(prior);
+                ViewData["Titleup"] = upnewInfo.Title;
+                ViewData["ImagePathup"] = upnewInfo.ImagePath;
+                if (upnewInfo.Msg.Length > 70)
+                {
+                    ViewData["Msgup"] = upnewInfo.Msg.Substring(0, 70);
+                }
+                else
+                {
+                    ViewData["Msgup"] = upnewInfo.Msg;
+                }
+                ViewData["Msgup"] = ViewData["Msgup"] + "......";
+            }
+
+
+            //为最后一页，没有下一页
+            if (id == last)
+            {
+                ViewData["Titlenext"] = "湖北大学";
+                ViewData["ImagePathnext"] = "/FileUploadImage/logo.jpg";
+                ViewData["Msgnext"] = "湖北大学（Hubei University）简称湖大（HUBU） ，坐落于湖北省武汉市，是湖北省人民政府与教育部共建的省属重点综合性大学，入选“中西部高校基础能力建设工程”，是湖北省“2011计划”牵头高校，武器装备科研生产二级保密资格高校，中国政府奖学金来华留学生和港澳台学生接收高校，是教育部和英国大使馆批准设立的湖北省唯一的雅思（IELTS）考试考点单位";
+
+            }
+            else
+            {
+                News nextnewInfo = NewInfoBll.GetEntityModel(next);
+                ViewData["Titlenext"] = nextnewInfo.Title;
+                ViewData["ImagePathnext"] = nextnewInfo.ImagePath;
+                if (nextnewInfo.Msg.Length > 70)
+                {
+                    ViewData["Msgnext"] = nextnewInfo.Msg.Substring(0, 70);
+                }
+                else
+                {
+                    ViewData["Msgnext"] = nextnewInfo.Msg;
+                }
+                ViewData["Msgnext"] = ViewData["Msgnext"] + "......";
+            }
+           
+
+            return View();
+        }
+
+        /// <returns></returns>
+        public ActionResult AdminShowDetail(int id)
+        {
+            List<News> newInfoList = NewInfoBll.GetEntityList();
+
+            ViewData["count"] = newInfoList[newInfoList.Count-1].Id;
+            //得到数据库中的第一条记录和最后一条记录
+            int first = newInfoList[0].Id;
+            int last = newInfoList[newInfoList.Count - 1].Id;
+
+            //给当前新闻赋值
+            News newInfo = NewInfoBll.GetEntityModel(id);
+            ViewData["Id"] = newInfo.Id;
+            ViewData["Title"] = newInfo.Title;
+            ViewData["Author"] = newInfo.Author;
+            ViewData["ImagePath"] = newInfo.ImagePath;
+            ViewData["Msg"] = newInfo.Msg;
+            ViewData["SubDateTime"] = newInfo.SubDateTime;
+
+            //找到当前新闻的上一条新闻和下一条新闻的id
+            int next = 0;
+            int prior = 0;
+            if (id == first || id == last)
+            {
+
+                if (newInfo.Id == first)   //第一条新闻没有上一条新闻
+                {
+                    next = newInfoList[1].Id;
+                }
+                if (newInfo.Id == last)   //最后一条新闻没有下一条新闻
+                {
+                    prior = newInfoList[newInfoList.Count - 2].Id;
+                }
+            }
+            else {
+                for (int i = 0; i < newInfoList.Count; i++)
+                {
+                    if (newInfoList[i].Id == newInfo.Id)
+                    {
+                        next = newInfoList[i - 1].Id;
+                        prior = newInfoList[i + 1].Id;
+                    }
+                }
+            }
+
+            //判断当前新闻是否为第一条新闻或者最后一条新闻
+            if (id == first)
+            {
+                ViewData["Titleup"] = "湖北大学";
+                ViewData["ImagePathup"] = "/FileUploadImage/logo.jpg";
+                ViewData["Msgup"] = "湖北大学（Hubei University）简称湖大（HUBU） ，坐落于湖北省武汉市，是湖北省人民政府与教育部共建的省属重点综合性大学，入选“中西部高校基础能力建设工程”，是湖北省“2011计划”牵头高校，武器装备科研生产二级保密资格高校，中国政府奖学金来华留学生和港澳台学生接收高校，是教育部和英国大使馆批准设立的湖北省唯一的雅思（IELTS）考试考点单位";
+            }
+            else
+            {
+                News upnewInfo = NewInfoBll.GetEntityModel(prior);
+                ViewData["Titleup"] = upnewInfo.Title;
+                ViewData["ImagePathup"] = upnewInfo.ImagePath;
+                if (upnewInfo.Msg.Length > 70)
+                {
+                    ViewData["Msgup"] = upnewInfo.Msg.Substring(0, 70);
+                }
+                else
+                {
+                    ViewData["Msgup"] = upnewInfo.Msg;
+                }
+                ViewData["Msgup"] = ViewData["Msgup"] + "......";
+            }
+
+
+            //为最后一页，没有下一页
+            if (id == last)
+            {
+                ViewData["Titlenext"] = "湖北大学";
+                ViewData["ImagePathnext"] = "/FileUploadImage/logo.jpg";
+                ViewData["Msgnext"] = "湖北大学（Hubei University）简称湖大（HUBU） ，坐落于湖北省武汉市，是湖北省人民政府与教育部共建的省属重点综合性大学，入选“中西部高校基础能力建设工程”，是湖北省“2011计划”牵头高校，武器装备科研生产二级保密资格高校，中国政府奖学金来华留学生和港澳台学生接收高校，是教育部和英国大使馆批准设立的湖北省唯一的雅思（IELTS）考试考点单位";
+
+            }
+            else
+            {
+                News nextnewInfo = NewInfoBll.GetEntityModel(next);
+                ViewData["Titlenext"] = nextnewInfo.Title;
+                ViewData["ImagePathnext"] = nextnewInfo.ImagePath;
+                if (nextnewInfo.Msg.Length > 70)
+                {
+                    ViewData["Msgnext"] = nextnewInfo.Msg.Substring(0, 70);
+                }
+                else
+                {
+                    ViewData["Msgnext"] = nextnewInfo.Msg;
+                }
+                ViewData["Msgnext"] = ViewData["Msgnext"] + "......";
+            }
+
+
+            return View();
+        }
+
+        public ActionResult ShowMore()
+        {
+            return View();
+        }
     }
 }
+

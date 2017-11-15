@@ -2,6 +2,7 @@
 using hubu.sgms.BLL.Impl;
 using hubu.sgms.DAL;
 using hubu.sgms.Model;
+using NewWeb.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,26 @@ namespace hubu.sgms.WebApp.Controllers
     public class HomeController : Controller
     {
         IHomeService homeService = new HomeServiceImpl();
+        INewsServices NewInfoBll = new INewsServices();
 
+        //刷新首页的时候就显示新闻
         public ActionResult Index()
-        {          
+        {
+            List<News> newInfoList = NewInfoBll.GetEntityList();
+            for(int j=1;j<9;j++)
+            {
+                ViewData["title"+j] = newInfoList[newInfoList.Count - j].Title;
+                ViewData["time"+j] = newInfoList[newInfoList.Count - j].SubDateTime;
+                @ViewData["id"+j] = newInfoList[newInfoList.Count - j].Id;
+            }
+            @ViewData["msg1"] = newInfoList[newInfoList.Count - 1].Msg;
+            @ViewData["msg2"] = newInfoList[newInfoList.Count - 2].Msg;
+            @ViewData["msg3"] = newInfoList[newInfoList.Count - 3].Msg;
             return View();
         }
+
+
+
 
         /// <summary>
         /// 1-专业必修课,2-专业选修课,3-公共必修课,4-公共选修课
@@ -48,7 +64,11 @@ namespace hubu.sgms.WebApp.Controllers
                 status = code
             });
             
-        }  
+        }
+        
+        
+        
+          
 
     }
 

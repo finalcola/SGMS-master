@@ -146,44 +146,44 @@
                     </div>
                     <ul>
                         <li>
-                            <s></s>
-                            <a href="#" title="关于2017年国庆节放假期间本科教学安排调整的通知">关于2017年国庆节放假期间本科教学安排调整的通知</a><img src="~/Content/img/new.gif" />
-                            <p>2017-09-20</p>
+                            <s></s> 
+                            <a onclick="showDetail(@ViewData["id1"])" href="#" title="@ViewData["title1"]">@ViewData["title1"]</a><img src="~/Content/img/new.gif" />
+                            <p>@ViewData["time1"]</p>
                         </li>
                         <li>
                             <s></s>
-                            <a href="#" title="湖北大学推荐2018届优秀本科毕业生免试攻读研究生名单审核结...">湖北大学推荐2018届优秀本科毕业生免试攻读研究生名单审核结...</a><img src="~/Content/img/new.gif" />
-                            <p>2017-05-29</p>
+                            <a onclick="showDetail(@ViewData["id2"])" href="#" title="@ViewData["title2"].">@ViewData["title2"]</a><img src="~/Content/img/new.gif" />
+                            <p>@ViewData["time2"]</p>
                         </li>
                         <li>
                             <s></s>
-                            <a href="#" title="2017-2018-1学期补考考试安排通知">2017-2018-1学期补考考试安排通知</a>
-                            <p>2017-02-05</p><img src="~/Content/img/new.gif" />
+                            <a onclick="showDetail(@ViewData["id3"])" href="#" title="@ViewData["title3"]">@ViewData["title3"]</a>
+                            <p>@ViewData["time3"]</p><img src="~/Content/img/new.gif" />
                         </li>
                         <li>
                             <s></s>
-                            <a href="#" title="2017-2018-1学期部分课程停开和第二阶段选课通知">2017-2018-1学期部分课程停开和第二阶段选课通知</a>
-                            <p>2017-05-05</p><img src="~/Content/img/new.gif" />
+                            <a onclick="showDetail(@ViewData["id4"])" href="#" title="@ViewData["title4"]">@ViewData["title4"]</aonclick="showDetail(@ViewData["id1"])">
+                            <p>@ViewData["time4"]</p><img src="~/Content/img/new.gif" />
                         </li>
                         <li>
                             <s></s>
-                            <a href="#" title="关于做好2017-2018-1学期重新学习工作的通知">关于做好2017-2018-1学期重新学习工作的通知</a>
-                            <p>2017-05-05</p>
+                            <a onclick="showDetail(@ViewData["id5"])" href="#" title="@ViewData["title5"]">@ViewData["title5"]</a>
+                            <p>@ViewData["time5"]</p>
                         </li>
                         <li>
                             <s></s>
-                            <a href="#" title="关于组织2017级部分新生参加《大学英语》分级教学测试的通知">关于组织2017级部分新生参加《大学英语》分级教学测试的通知</a>
-                            <p>2017-05-05</p>
+                            <a onclick="showDetail(@ViewData["id6"])" href="#" title="@ViewData["title6"]">@ViewData["title6"]</a>
+                            <p>@ViewData["time6"]</p>
                         </li>
                         <li>
                             <s></s>
-                            <a href="#" title="关于做好2017-2018-1学期补考工作的通知">关于做好2017-2018-1学期补考工作的通知</a>
-                            <p>2017-05-05</p>
+                            <a onclick="showDetail(@ViewData["id7"])" href="#" title="@ViewData["title7"]">@ViewData["title7"]</a>
+                            <p>@ViewData["time7"]</p>
                         </li>
                         <li>
                             <s></s>
-                            <a href="#" title="转发首届“武汉大学生文创大赛”项目征集方案">转发首届“武汉大学生文创大赛”项目征集方案</a>
-                            <p>2017-05-05</p>
+                            <a onclick="showDetail(@ViewData["id8"])" href="#" title="@ViewData["title8"]">@ViewData["title8"]</a>
+                            <p>@ViewData["time8"]</p>
                         </li>
                     </ul>
                 </div>
@@ -200,11 +200,11 @@
                                 <div id="marquee" class="marquee">
                                     <div id="holder" style="font-size: 15px;">
                                         <ul>
-                                            <li><b>[公告一]赵凌云校长指导本科教学</b>5月10日上午，校长赵凌云在副校长杨鲜兰的陪同下，深入教务处调研、指导本科教学工作。赵凌云校长指出，本科教学工作是学校的枢纽和核心，全校上下都要高度重视本科教学工作，切实履行好人才培养的职责使命，全面提高人才培养质量。他强调，接下来，要切实做好本科教学审核评估工作，认真落实各项评估工作任务分工，以评促建，推动学校发展。</li>
+                                            <li><b>[公告一]@ViewData["msg1"]</li>
                                             <br />
-                                            <li><b>[公告二]尚钢书记调研本科教学</b>2月19日上午，党委书记尚钢到教务处调研本科教学工作，处领导班子全体成员参加。尚钢书记首先对教务处2016年的工作给予了肯定，并对2017年的工作提出了期望和要求。他指出，本科教学工作是学校工作的重中之重，是学校安身立命和发展之本，教务处除了做好日常教学管理与服务以外，要重点做好以下三个方面的工作。</li>
+                                            <li><b>[公告二]@ViewData["msg2"]</li>
                                             <br />
-                                            <li><b>[公告三]党委书记尚钢调研本科教学工作</b>12月1日上午，党委书记尚钢到教务处调研本科教学工作，处领导班子全体成员参加。教务处处长章天金就本科教学工作整体情况、面临的问题和困难及下一步工作打算等方面向尚钢书记作了汇报，其他处领导也分别介绍了分管的工作。</li>
+                                            <li><b>[公告三]@ViewData["msg3"]</li>
                                             <br />
                                         </ul>
                                     </div>
@@ -728,13 +728,24 @@
             var links = document.getElementById(divId).getElementsByTagName("a");
 
             $.each(array, function (i) {
-               
+
                 links[i+1].innerHTML = array[i].course_name;
                 document.getElementById(imgId + (i + 1) + "").src = rootImg + array[i].course_photo;
-                
+
             });
 
-            
+
+        }
+
+              //显示新闻详情
+        function showDetail(index) {
+          
+              window.location.href = "/News/ShowDetail?id=" + index;
+
+        }
+
+        function showMore(){
+            window.location.href = "/News/ShowMore" 
         }
     </script>
 </body>

@@ -54,6 +54,7 @@
                         <dl class="layui-nav-child">
                             <dd class="z_item"><a href="javascript:;">查询课程信息</a></dd>
                             <dd class="z_item"><a href="javascript:;">添加课程信息</a></dd>
+                            <dd class="z_item"><a href="javascript:;">排课</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -72,7 +73,7 @@
                 <div class="z_content">
                     <!--发布新闻公告-->
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class='embed-responsive-item' src="/News/Index" noResize scrolling="no" width="100%" height="530px" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" border="0" frameborder="0"></iframe>
+                        <iframe id="news" class='embed-responsive-item' src="/News/Index" noResize scrolling="no" width="100%" height="1000px"   style="min-height:530px" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" border="0" frameborder="0"></iframe>
                     </div>
                 </div>
 
@@ -84,7 +85,7 @@
                 <div class="z_content">
                     <!--修改密码-->
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class='embed-responsive-item' src="/Admin/StudentChangePassword" width="100%" height="100%" style="min-height:1200px" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" border="0" frameborder="0"></iframe>
+                        <iframe class='embed-responsive-item' src="/Admin/StudentChangePassword" width="100%" height="530px" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" border="0" frameborder="0"></iframe>
                     </div>
                 </div>
 
@@ -115,6 +116,13 @@
                 <div class="z_content">
                     <div class="embed-responsive embed-responsive-16by9">
                         <iframe class='embed-responsive-item' src='/Admin/AddCourseInfo' noResize scrolling="no"  width="100%" height="530px" style="min-height:1200px" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" border="0" frameborder="0"></iframe>
+                    </div>
+                </div>
+
+                <!--排课-->
+                <div class="z_content">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class='embed-responsive-item' src='/Arrange/CAArrangeCourse' noResize scrolling="no" width="100%" height="530px" style="min-height:1200px" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" border="0" frameborder="0"></iframe>
                     </div>
                 </div>
 
