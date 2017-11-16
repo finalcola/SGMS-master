@@ -55,7 +55,7 @@ namespace hubu.sgms.WebApp.Controllers
                         successUrl = "/Admin/Index";
                         break;
                     case "teacher":
-                        successUrl = "/Teacher/Index";
+                        successUrl = "/Teacher/TeacherManager";
                         break;
                     case "student":
                         successUrl = "/Student/Index"; 

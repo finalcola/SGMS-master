@@ -851,6 +851,8 @@
     <Content Include="Views\News\ShowDetail.cshtml" />
     <Content Include="Views\News\AdminShowDetail.cshtml" />
     <Content Include="Views\News\ShowMore.cshtml" />
+    <Content Include="Views\Teacher\TeacherSelectCourse2.cshtml" />
+    <Content Include="Views\Teacher\TeacherCheckScore2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

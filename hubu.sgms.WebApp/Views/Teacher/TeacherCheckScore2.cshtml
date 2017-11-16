@@ -83,12 +83,6 @@
             <label>课程名称：</label><span id="name"></span>
             <label>开课单位：</label><span id="department"></span>
             <label>授课老师：</label><span id="teacher"></span>
-            <label>设置成绩比例(期中:期末)</label>
-            <select id="scaleSelect">
-                <option>4:6</option>
-                <option>3:7</option>
-                <option>5:5</option>
-            </select>
             <!--button class="layui-btn-primary layui-btn-small pull-right" id="set">设  置</!--button>-->
         </div>
     </div>
@@ -140,8 +134,6 @@
                 </table>
                 <input id="myflagId"name="myflag" type="text" value="" style="display:none"/>
                 <input id="mycourseid" name="mycourse" type="text" value="" style="display:none"/>                 
-                <input onclick="saveForm()" type="button" id="saveId" value="暂存" class="btn btn-info"/>
-                <input onclick="commitForm()" type="button" id="commitId" value="提交"  class="btn btn-info"/>
                 <a href="/Teacher/TeacherSelectCourse"><input type="button" value="返回" class="btn btn-default"></a>
             </form>
         </div>
@@ -154,7 +146,7 @@
         //加载信息
         $(function () {
             $.ajax({
-                url: '/Teacher/GetStudentInfo',
+                url: '/Teacher/GetStudentInfo2',
                 type: 'post',
                 async: false,
                 success: function (result) {
@@ -211,9 +203,9 @@
                     //$("#mystatusid").val(status.status.status);
 
                     //获取不到此记录说明可以继续打分
-                    if (result.status != null && result.status !="" && result.status.status == "0") {
-                        $("input").attr("disabled","disabled");
-                    }
+                 
+                    $("input").attr("disabled","disabled");
+                    
 
                     //计算成绩                   
                     $("input").blur(function () {

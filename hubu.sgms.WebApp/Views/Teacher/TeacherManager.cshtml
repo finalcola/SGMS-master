@@ -38,7 +38,7 @@
                         </dl>
                     </li>
                     <li class="layui-nav-item z_item"><a href="javascript:getCourseList();">课程管理</a></li>
-                  <!--  <li class="layui-nav-item z_item"><a href="javascript:;">成绩管理</a></li>-->
+                    <li class="layui-nav-item z_item"><a href="javascript:getCourseList2();">录入情况</a></li>
                 </ul>
             </div>
         </div>
@@ -57,11 +57,11 @@
                         <iframe id="courseiframe" class='embed-responsive-item' width="100%" height="100%" style="min-height: 800px;" src="" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" border="0" frameborder="0"></iframe>
                     </div>
                 </div>
-                <!--<div class="z_content">
+                <div class="z_content">
                     <div class="embed-responsive">
-                        <iframe class='embed-responsive-item' width="100%" height="100%" style="min-height: 500px;" src="" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" border="0" frameborder="0"></iframe>
+                        <iframe id="courseiframe2" class='embed-responsive-item' width="100%" height="100%" style="min-height: 500px;" src="" allowtransparency="true" allowfullscreen="true" allowfullscreenInteractive="true" border="0" frameborder="0"></iframe>
                     </div>
-                </div>-->
+                </div>
             </div>
 
         </div>
@@ -87,6 +87,10 @@
 
         function getCourseList() {
             $("#courseiframe").attr("src","/Teacher/TeacherSelectCourse");
+        }
+
+        function getCourseList2() {
+            $("#courseiframe2").attr("src", "/Teacher/TeacherSelectCourse2");
         }
         
     </script>

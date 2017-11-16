@@ -25,17 +25,30 @@ namespace hubu.sgms.WebApp.Controllers
         /// <returns></returns>
         public ActionResult SelectCourse()
         {
+            Login info = (Login)Session["loginInfo"];
+            if (info == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             string teacher_id = Session["teacher_id"].ToString();
             IList<Teacher_course> courseList = teacherService.SelectAllCourse(teacher_id);
             return Json(new { courseList = courseList });
         }
+
 
         /// <summary>
         /// 学生打分信息
         /// </summary>
         /// <returns></returns>
         public ActionResult GetStudentInfo()
-        {         
+        {
+            Login info = (Login)Session["loginInfo"];
+            if (info == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             string courseId;
             if (Session["course_id"] == null)
             {
@@ -53,6 +66,32 @@ namespace hubu.sgms.WebApp.Controllers
         }
 
         /// <summary>
+        /// 查看当前情况
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetStudentInfo2()
+        {
+            Login info = (Login)Session["loginInfo"];
+            if (info == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            string courseId;
+            if (Session["course_id"] == null)
+            {
+                courseId = Request["courseid"];
+            }
+            else
+            {
+                courseId = Session["course_id"].ToString();
+            }     
+
+            IList<Course_choosing> studentList = teacherService.SelectAllStudentCourse(courseId);
+            return Json(new { studentList = studentList, status = "0" }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
         /// 教师主界面
         /// </summary>
         /// <returns></returns>
@@ -60,7 +99,13 @@ namespace hubu.sgms.WebApp.Controllers
         {
             //教师登录后在session中写入教师id
             //获取教师登录的id
-            Session.Add("teacher_id","1");
+            Login info = (Login)Session["loginInfo"];
+            if(info == null)
+            {
+                return RedirectToAction("Index","Login");
+            }
+
+            Session.Add("teacher_id", info.username);
             return View();
         }
 
@@ -69,7 +114,33 @@ namespace hubu.sgms.WebApp.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult TeacherCheckScore()
-        {           
+        {
+            Login info = (Login)Session["loginInfo"];
+            if (info == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+
+            //此处需要在session中设置课程号
+            string course_id = Request["courseid"];
+            Session.Add("course_id", course_id);
+            return View();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult TeacherCheckScore2()
+        {
+            Login info = (Login)Session["loginInfo"];
+            if (info == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+
             //此处需要在session中设置课程号
             string course_id = Request["courseid"];
             Session.Add("course_id", course_id);
@@ -82,6 +153,27 @@ namespace hubu.sgms.WebApp.Controllers
         /// <returns></returns>
         public ActionResult TeacherSelectCourse()
         {
+            Login info = (Login)Session["loginInfo"];
+            if (info == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+
+            return View();
+        }
+
+        /// <summary>
+        /// 老师查看课程和成绩
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult TeacherSelectCourse2()
+        {
+            Login info = (Login)Session["loginInfo"];
+            if (info == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
@@ -91,10 +183,24 @@ namespace hubu.sgms.WebApp.Controllers
         /// <returns></returns>
         public ActionResult SetScore()
         {
+            Login info = (Login)Session["loginInfo"];
+            if (info == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+
             //设置session
             string courseid = Session["course_id"].ToString();
             //保存成绩
+            if(Request["myflag"] == "" || Request["myflag"] == null)
+            {
+                Response.Write("<script>alert('无效')</script>");
+                return null;
+            }
+
             int count = Convert.ToInt32(Request["myflag"]);
+            
             for(int i=1; i<=count; i++)
             {
                 string mystudent = "student_id" + i;
