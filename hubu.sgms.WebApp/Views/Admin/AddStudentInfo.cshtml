@@ -1,6 +1,9 @@
 ﻿@{
     Layout = null;
 }
+@using hubu.sgms.BLL;
+@using hubu.sgms.BLL.Impl;
+@using hubu.sgms.Model;
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,27 +50,27 @@
             <span class="field" style="width:900px;">
                 <select name="studentDepartment" id="studentDepartment">
                     <option value="" style="display: none;" disabled selected>所属学院</option>
-                    <option value="文学院">文学院</option>
-                    <option value="新闻传播学院">新闻传播学院</option>
-                    <option value="商学院">商学院</option>
-                    <option value="政法与公共管理学院">政法与公共管理学院</option>
-                    <option value="外国语学院">外国语学院</option>
-                    <option value="历史文化学院">历史文化学院</option>
-                    <option value="教育学院">教育学院</option>
-                    <option value="哲学学院">哲学学院</option>
-                    <option value="马克思主义学院">马克思主义学院</option>
-                    <option value="数学与统计学学院">数学与统计学学院</option>
-                    <option value="物理与电子科学学院">物理与电子科学学院</option>
-                    <option value="化学化工学院">化学化工学院</option>
-                    <option value="生命科学学院">生命科学学院</option>
-                    <option value="资源环境学院">资源环境学院</option>
-                    <option value="计算机与信息工程学院">计算机与信息工程学院</option>
-                    <option value="材料科学与工程学院">材料科学与工程学院</option>
-                    <option value="艺术学院">艺术学院</option>
-                    <option value="体育学院">体育学院</option>
-                    <option value="通识教育学院">通识教育学院</option>
-                    <option value="楚才学院">楚才学院</option>
-                    <option value="国际教育学院">国际教育学院</option>
+                    <option value="1">文学院</option>
+                    <option value="2">新闻传播学院</option>
+                    <option value="3">商学院</option>
+                    <option value="4">政法与公共管理学院</option>
+                    <option value="5">外国语学院</option>
+                    <option value="6">历史文化学院</option>
+                    <option value="7">教育学院</option>
+                    <option value="8">哲学学院</option>
+                    <option value="9">马克思主义学院</option>
+                    <option value="10">数学与统计学学院</option>
+                    <option value="11">物理与电子科学学院</option>
+                    <option value="12">化学化工学院</option>
+                    <option value="13">生命科学学院</option>
+                    <option value="14">资源环境学院</option>
+                    <option value="15">计算机与信息工程学院</option>
+                    <option value="16">材料科学与工程学院</option>
+                    <option value="17">艺术学院</option>
+                    <option value="18">体育学院</option>
+                    <option value="19">通识教育学院</option>
+                    <option value="20">楚才学院</option>
+                    <option value="21">国际教育学院</option>
                 </select>
             </span>
         </p>
@@ -75,10 +78,17 @@
             <label>所属专业</label>
             <span class="field" style="width:500px;">
                 <select name="studentMajor" id="studentMajor">
-                    <option value="" style="display: none;" disabled selected>所属专业</option>
-                    <option value="软件工程">软件工程</option>
-                    <option value="计算机科学与技术">计算机科学与技术</option>
-                    <option value="其他">其他</option>
+                    <option value="" selected="selected">请先选择学院</option>
+
+                </select>
+            </span>
+        </p>
+        <p>
+            <label>所属班级</label>
+            <span class="field" style="width:500px;">
+                <select name="classlist" id="classlist">
+                    <option value="" selected="selected">请先选择专业</option>
+
                 </select>
             </span>
         </p>
@@ -102,11 +112,12 @@
                     <option value="正常">正常</option>
                     <option value="楚才">楚才</option>
                     <option value="转专业">转专业</option>
+                    <option value="双学位">双学位</option>
                 </select>
             </span>
         </p>
         <p>
-            <label>家庭住址</label>
+            <label>宿舍住址</label>
             <span class="field"><input type="text" name="studentAddress" id="studentAddress" class="longinput" style="width:400px;" /></span>
         </p>
         <p>
@@ -117,6 +128,9 @@
                     <option value="汉">汉</option>
                     <option value="土家">土家</option>
                     <option value="苗">苗</option>
+                    <option value="维吾尔">维吾尔</option>
+                    <option value="藏">藏</option>
+                    <option value="朝鲜">朝鲜</option>
                     <option value="其他">其他</option>
                 </select>
             </span>
@@ -153,6 +167,7 @@
                     <option value="4">4</option>
                     <option value="5">5</option>
                     <option value="6">6</option>
+                    <option value="更多">更多</option>
                 </select>
             </span>
 </p>
@@ -171,7 +186,7 @@
                     <option value="" style="display: none;" disabled selected>状态</option>
                     <option value="1">正常</option>
                     <option value="2">休学</option>
-                    <option value="3">劝退</option>
+                    <option value="3">留级</option>
                 </select>
             </span>
         </p>
@@ -181,6 +196,60 @@
     </form>
 
     <script>
+
+        /**
+         * 当学院下拉框被点击时,刷新专业下拉框
+         */
+        $(document).ready(function () {
+            $("select[name='studentDepartment']").change(function () {
+                var college = $("#studentDepartment").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Arrange/CAFillMajor",
+                    data: "college=" + college,
+                    success: function (data) {
+                        $("#studentMajor").empty();
+                        if (data.length != 0) {
+                            $.each(data, function (i, item) {
+                                $("<option></option>")
+                                    .val(item["Value"])
+                                    .text(item["Text"])
+                                    .appendTo($("#studentMajor"));
+                            });
+                        }
+                        fillcourselist(college, coursetype);
+                    }
+                });
+            });
+        });
+
+        /**
+         * 当专业下拉框被点击时,刷新班级下拉框
+         */
+        $(document).ready(function () {
+            $("select[name='studentMajor']").change(function () {
+                var major = $("#studentMajor").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/Arrange/CAFillClass",
+                    data: "major=" + major,
+                    success: function (data) {
+                        $("#classlist").empty();
+                        if (data.length != 0) {
+                            $.each(data, function (i, item) {
+                                $("<option></option>")
+                                    .val(item["Value"])
+                                    .text(item["Text"])
+                                    .appendTo($("#classlist"));
+                            });
+                        }
+                    }
+                });
+            });
+        });
+
+        
         $('.showcase.sweet button').on('click', function () {
             var studentName = document.getElementById("studentName").value;
             var studentSex = document.getElementById("studentSex").value;
@@ -199,11 +268,12 @@
             var studentAward = document.getElementById("studentAward").value;
             var studentOther = document.getElementById("studentOther").value;
             var studentStatus = document.getElementById("studentStatus").value;
-//studentName,studentSex,studentIDCard,studentAge,studentDepartment,studentMajor,studentGrade,studentType
-//studentAddress,studentNative,studentBirthplace,studentPoliticsstatus,studentContact,studentFamily,studentAward,studentOther,studentStatus
+
+            var studentClass = document.getElementById("classlist").value;
+
             if (studentName == '' || studentSex == '' || studentIDCard == '' || studentAge == '' || studentDepartment == '' || studentMajor == '' || studentGrade == ''
                 || studentType == '' || studentAddress == '' || studentNative == '' || studentBirthplace == '' || studentPoliticsstatus == '' || studentContact == ''
-                || studentFamily == '' || studentAward == '' || studentOther == '' || studentStatus == '') {
+                || studentFamily == '' || studentAward == '' || studentOther == '' || studentStatus == '' || studentClass == '') {
                 swal('提交错误', '请检查信息是否完整', 'error');
                 return false;
             } else {

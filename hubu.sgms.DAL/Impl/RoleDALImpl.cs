@@ -64,10 +64,12 @@ namespace hubu.sgms.DAL.Impl
         }
 
         // 添加学生信息
-        public string AddStudentInfo(string studentID, string studentName, string studentSex, string studentIDCard, int studentAge, string studentDepartment, string studentMajor, string studentGrade, string studentType, string studentAddress, string studentNative, string studentBirthplace, string studentPoliticsstatus, string studentContact, string studentFamily, string studentAward, string studentOther, int studentStatus)
+        public string AddStudentInfo(string studentID, string studentName, string studentSex, string studentIDCard, int studentAge, string studentDepartment, string studentMajor, string studentGrade, string studentType, string studentAddress, string studentNative, string studentBirthplace, string studentPoliticsstatus, string studentContact, string studentFamily, string studentAward, string studentOther, int studentStatus,string studentClass)
         {
-            string sql = "Insert into Student(student_id,student_name,student_sex,student_age,student_id_card,student_department,student_major,student_grade,student_type,student_address,student_native,student_birthplace,student_politicsstatus,student_contact,student_family,student_award,student_other,status)values" +
-                                            "(@studentID,@studentName,@studentSex,@studentAge,@studentIDCard,@studentDepartment,@studentMajor,@studentGrade,@studentType,@studentAddress,@studentNative,@studentBirthplace,@studentPoliticsstatus,@studentContact,@studentFamily,@studentAward,@studentOther,@studentStatus)";
+            string sql = "Insert into Student(student_id,student_name,student_sex,student_age,student_id_card,student_department,student_major,student_grade,student_type,student_address,student_native,student_birthplace,student_politicsstatus,student_contact,student_family,student_award,student_other,status,class_id,college_id)values" +
+                                            "(@studentID,@studentName,@studentSex,@studentAge,@studentIDCard,(select name from College where college_id=@studentDepartment)," +
+                                                                                                                               "(select major_name from Major where major_id =@studentMajor)," +
+                                                                                                                                             "@studentGrade,@studentType,@studentAddress,@studentNative,@studentBirthplace,@studentPoliticsstatus,@studentContact,@studentFamily,@studentAward,@studentOther,@studentStatus,@studentClass,@studentDepartment)";
             SqlParameter[] parameters = {
                 new SqlParameter("@studentID",studentID),
                 new SqlParameter("@studentName",studentName),
@@ -86,7 +88,8 @@ namespace hubu.sgms.DAL.Impl
                 new SqlParameter("@studentFamily",studentFamily),
                 new SqlParameter("@studentAward",studentAward),
                 new SqlParameter("@studentOther",studentOther),
-                new SqlParameter("@studentStatus",studentStatus)
+                new SqlParameter("@studentStatus",studentStatus),
+                new SqlParameter("@studentClass",studentClass)
             };
 
             int count = DBUtils.getDBUtils().cud(sql, parameters);
@@ -212,30 +215,33 @@ namespace hubu.sgms.DAL.Impl
         }
 
         // 通过条件查找管理员信息
-        public List<Administrator> SelectAllAdminInfo(string adminName, int adminStatus)
+        public List<Administrator> SelectAllAdminInfo(string adminName, string adminDepartment)
         {
+            string sqlNull = "2b婿s1jHh子1hl91";
             string sql = "select * from Administrator";
-            if (adminName == "2b婿s1jHh子1hl91" && adminStatus == 0)
+            
+            if (adminName == sqlNull && adminDepartment == sqlNull)  //都没有输入
             {
-                sql = "select * from Administrator where administrator_name=@adminName and status=@adminStatus or 1=1";
+                sql = "select * from Administrator where administrator_name=@adminName and administrator_department=@adminDepartment or 1=1";
             }
-            else if (adminName == "2b婿s1jHh子1hl91" && adminStatus != 0)
+            else if (adminName == sqlNull && adminDepartment != sqlNull)     //只输入院系
             {
-                sql = "select * from Administrator where (administrator_name=@adminName or 1=1) and status=@adminStatus";
+                sql = "select * from Administrator where (administrator_name=@adminName or 1=1) and administrator_department=@adminDepartment";
             }
-            else if(adminName != "2b婿s1jHh子1hl91" && adminStatus == 0)
+            else if (adminName != sqlNull && adminDepartment == sqlNull) //只输入姓名
             {
-                sql = "select * from Administrator where administrator_name like @adminName and (status=@adminStatus or 1=1)";
+                sql = "select * from Administrator where administrator_name like @adminName and (administrator_department=@adminDepartment or 1=1)";
                 adminName = "%" + adminName + "%";
             }
-            else if(adminName != "2b婿s1jHh子1hl91" && adminStatus != 0)
+            else if(adminName != sqlNull && adminDepartment == sqlNull)  //都输入了
             {
-                sql = "select * from Administrator where administrator_name like @adminName and status=@adminStatus";
+                sql = "select * from Administrator where administrator_name like @adminName and administrator_department=@adminDepartment";
                 adminName = "%" + adminName + "%";
             }
+
             SqlParameter[] parameters = {
                 new SqlParameter("@adminName",adminName),
-                new SqlParameter("@adminStatus",adminStatus)
+                new SqlParameter("@adminDepartment",adminDepartment)
             };
             //查询
             DataTable dataTable = DBUtils.getDBUtils().getRecords(sql, parameters);
@@ -422,48 +428,55 @@ namespace hubu.sgms.DAL.Impl
         }
 
         // 通过条件查找学生信息
-        public List<Student> SelectAllStudentInfo(string studentName, string studentDepartment, string studentSex)
+        public List<Student> SelectAllStudentInfo(string studentName, string studentDepartment, string studentMajor, string studentClass)
         {
+            string sqlNull = "2b婿s1jHh子1hl91";
             string sql = "select * from Student";
-            if(studentDepartment== "2b婿" && studentSex == "2b" && studentName == "2b婿s1jHh子1hl91")      //三个条件全空
+
+            if (studentDepartment != sqlNull && studentMajor == sqlNull && studentName == sqlNull)   //只输入学院信息
             {
-                sql = "select * from Student where student_department=@studentDepartment and student_sex=@studentSex and student_name=@studentName or 1=1";
+                sql = "select * from Student where (college_id=@studentDepartment) and (student_major=(select major_name from Major where major_id=@studentMajor) or 1=1)and" +
+                    "(class_id=@studentClass or 1=1) and (student_name=@studentName or 1=1)";
             }
-            else if(studentDepartment == "2b婿" && studentSex == "2b" && studentName != "2b婿s1jHh子1hl91")     //姓名NotNull
+            if (studentMajor != sqlNull && studentClass == sqlNull && studentName == sqlNull)   //只输入学院，专业
             {
-                sql = "select * from Student where (student_department=@studentDepartment or 1=1) and (student_sex=@studentSex or 1=1) and student_name like @studentName";
+                sql = "select * from Student where (college_id=@studentDepartment) and (student_major=(select major_name from Major where major_id=@studentMajor)) and" +
+                    "(class_id=@studentClass or 1=1) and (student_name=@studentName or 1=1)";
+            }
+            if (studentClass != sqlNull && studentName == sqlNull)   //只输入学院，专业，班级
+            {
+                sql = "select * from Student where (college_id=@studentDepartment) and (student_major=(select major_name from Major where major_id=@studentMajor)) and" +
+                    "(class_id=@studentClass) and (student_name=@studentName or 1=1)";
+            }
+            if (studentDepartment == sqlNull && studentName != sqlNull)   //只输入姓名
+            {
+                sql = "select * from Student where (college_id=@studentDepartment or 1=1) and (student_major=(select major_name from Major where major_id=@studentMajor) or 1=1) and" +
+                    "(class_id=@studentClass or 1=1) and (student_name like @studentName)";
                 studentName = "%" + studentName + "%";
             }
-            else if (studentDepartment == "2b婿" && studentSex != "2b" && studentName == "2b婿s1jHh子1hl91")    //性别NotNull
+            if (studentDepartment != sqlNull && studentMajor == sqlNull && studentName != sqlNull)   //只输入学院，姓名
             {
-                sql = "select * from Student where (student_department=@studentDepartment or 1=1) and student_sex=@studentSex and (student_name=@studentName or 1=1)";
-            }
-            else if (studentDepartment == "2b婿" && studentSex != "2b" && studentName != "2b婿s1jHh子1hl91")    //姓名NotNull 性别NotNull
-            {
-                sql = "select * from Student where (student_department=@studentDepartment or 1=1) and student_sex=@studentSex and student_name like @studentName";
+                sql = "select * from Student where (college_id=@studentDepartment) and (student_major=(select major_name from Major where major_id=@studentMajor) or 1=1) and" +
+                    "(class_id=@studentClass or 1=1) and (student_name like @studentName)";
                 studentName = "%" + studentName + "%";
             }
-            else if (studentDepartment != "2b婿" && studentSex == "2b" && studentName == "2b婿s1jHh子1hl91")    //院系NotNull
+            if (studentMajor != sqlNull && studentClass == sqlNull && studentName != sqlNull)   //只输入学院，专业，姓名
             {
-                sql = "select * from Student where student_department=@studentDepartment and (student_sex=@studentSex or 1=1) and (student_name=@studentName or 1=1)";
-            }
-            else if (studentDepartment != "2b婿" && studentSex == "2b" && studentName != "2b婿s1jHh子1hl91")    //院系NotNull 姓名NoutNull
-            {
-                sql = "select * from Student where student_department=@studentDepartment and (student_sex=@studentSex or 1=1) and student_name like @studentName";
+                sql = "select * from Student where (college_id=@studentDepartment) and (student_major=(select major_name from Major where major_id=@studentMajor)) and" +
+                    "(class_id=@studentClass or 1=1) and (student_name like @studentName)";
                 studentName = "%" + studentName + "%";
             }
-            else if (studentDepartment != "2b婿" && studentSex != "2b" && studentName == "2b婿s1jHh子1hl91")    //院系NotNull 性别NotNull
+            if (studentClass != sqlNull && studentName != sqlNull)  //都输入了
             {
-                sql = "select * from Student where student_department=@studentDepartment and student_sex=@studentSex and (student_name=@studentName or 1=1)";
-            }
-            else if (studentDepartment != "2b婿" && studentSex != "2b" && studentName != "2b婿s1jHh子1hl91")    //都不为空
-            {
-                sql = "select * from Student where student_department=@studentDepartment and student_sex=@studentSex and student_name like @studentName";
+                sql = "select * from Student where (college_id=@studentDepartment) and (student_major=(select major_name from Major where major_id=@studentMajor)) and" +
+                    "(class_id=@studentClass) and (student_name like @studentName)";
                 studentName = "%" + studentName + "%";
             }
+
             SqlParameter[] parameter = {
                 new SqlParameter("@studentDepartment",studentDepartment),
-                new SqlParameter("@studentSex",studentSex),
+                new SqlParameter("@studentMajor",studentMajor),
+                new SqlParameter("@studentClass",studentClass),
                 new SqlParameter("@studentName",studentName)
             };
 

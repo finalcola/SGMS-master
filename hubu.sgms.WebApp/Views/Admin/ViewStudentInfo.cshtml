@@ -1,0 +1,111 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>查看学生信息</title>
+    <link rel="stylesheet" href="~/Content/admin/style.default.css" type="text/css" />
+    <script type="text/javascript" src="~/Scripts/Course/jquery-1.7.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/Course/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/Course/colorpicker.js"></script>
+    <script type="text/javascript" src="~/Scripts/Course/elements.js"></script>
+</head>
+<body>
+    <div style="height:50px;background-color:#31425D;text-align:center" align="Center">
+        <h1 vertical-align="middle" style="line-height:45px ">学生详情</h1>
+    </div><!--contenttitle-->
+    <div class="widgetbox" style="text-align:center">
+        <div class="widgetcontent padding0 statement">
+            <table cellpadding="0" cellspacing="0" border="0" class="stdtable">
+                <colgroup>
+                    <col class="con0" style="width: 3%" />
+                    <col class="con1" style="width: 10%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="head0" style="text-align:center">学生属性</th>
+                        <th class="head1" style="text-align:center">相应信息</th>
+                    </tr>
+                </thead>
+                <!--详细学生信息内容-->
+                <tbody id="CourseInfo">
+                    <tr>
+                        <td>学生姓名</td>
+                        <td>@ViewData["student_name"]</td>
+                    </tr>
+                    <tr>
+                        <td>性别</td>
+                        <td>@ViewData["student_sex"]</td>
+                    </tr>
+                    <tr>
+                        <td>年龄</td>
+                        <td>@ViewData["student_age"]</td>
+                    </tr>
+                    <tr>
+                        <td>卡号</td>
+                        <td>@ViewData["student_id_card"]</td>
+                    </tr>
+                    <tr>
+                        <td>所属院系</td>
+                        <td>@ViewData["student_department"]</td>
+                    </tr>
+                    <tr>
+                        <td>专业名称</td>
+                        <td>@ViewData["student_major"]</td>
+                    </tr>
+                    <tr>
+                        <td>学生年级</td>
+                        <td>@ViewData["student_grade"]</td>
+                    </tr>
+                    <tr>
+                        <td>学生类型</td>
+                        <td>@ViewData["student_type"]</td>
+                    </tr>
+                    <tr>
+                        <td>宿舍地址</td>
+                        <td>@ViewData["student_address"]</td>
+                    </tr>
+                    <tr>
+                        <td>民族</td>
+                        <td>@ViewData["student_native"]</td>
+                    </tr>
+                    <tr>
+                        <td>出生地</td>
+                        <td>@ViewData["student_birthplace"]</td>
+                    </tr>
+                    <tr>
+                        <td>政治面貌</td>
+                        <td>@ViewData["student_politicsstatus"]</td>
+                    </tr>
+                    <tr>
+                        <td>联系方式</td>
+                        <td>@ViewData["student_contact"]</td>
+                    </tr>
+                    <tr>
+                        <td>家庭成员数</td>
+                        <td>@ViewData["student_family"]</td>
+                    </tr>
+                    <tr>
+                        <td>所获荣誉</td>
+                        <td>@ViewData["student_award"]</td>
+                    </tr>
+                    <tr>
+                        <td>学生描述</td>
+                        <td>@ViewData["student_other"]</td>
+                    </tr>
+                    <tr>
+                        <td>状态</td>
+                        <td>@ViewData["status"]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div><!--widgetcontent-->
+    </div><!--widgetbox-->
+    <br />
+</body>
+</html>
+
+
+
