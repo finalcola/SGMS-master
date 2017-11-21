@@ -814,7 +814,6 @@
     <Content Include="Scripts\layui\font\iconfont.ttf" />
     <Content Include="Scripts\layui\font\iconfont.woff" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\AdminOperateStudent.cshtml" />
     <Content Include="Views\Admin\StudentChangePassword.cshtml" />
     <Content Include="Views\Course\CourseDisplay.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -825,7 +824,6 @@
     <Content Include="Views\Admin\AlterCourseInfo.cshtml" />
     <Content Include="Views\Admin\SubmitUpdateCourseInfo.cshtml" />
     <Content Include="Views\Course\GetCourseDetail.cshtml" />
-    <Content Include="Views\Admin\DeleteCourseInfo.cshtml" />
     <Content Include="Views\Teacher\SelectCourse.cshtml" />
     <Content Include="Views\Teacher\TeacherCheckScore.cshtml" />
     <Content Include="Views\Teacher\TeacherManager.cshtml" />
@@ -841,13 +839,15 @@
     <Content Include="Views\Admin\AddTeacherInfo.cshtml" />
     <Content Include="Views\Admin\AdminAlterStudentInfo.cshtml" />
     <Content Include="Views\Admin\AdminAlterTeacherInfo.cshtml" />
-    <Content Include="Views\Admin\AdminDeleteStudent.cshtml" />
-    <Content Include="Views\Admin\AdminDeleteTeacher.cshtml" />
     <Content Include="Views\Admin\AdminUpdateStudentInfo.cshtml" />
     <Content Include="Views\Admin\AdminUpdateTeacherInfo.cshtml" />
     <Content Include="Views\Admin\AlterAdminInfo.cshtml" />
-    <Content Include="Views\Admin\DeleteAdmin.cshtml" />
     <Content Include="Views\Arrange\CAArrangeCourse.cshtml" />
+    <Content Include="Views\Admin\ViewStudentInfo.cshtml" />
+    <Content Include="Views\Admin\ViewAdminInfo.cshtml" />
+    <Content Include="Views\Admin\ViewTeacherInfo.cshtml" />
+    <Content Include="Views\Admin\UpdateAdminInfo.cshtml" />
+    <Content Include="Views\Admin\SubmitAddAdminInfo.cshtml" />
     <Content Include="Views\News\ShowDetail.cshtml" />
     <Content Include="Views\News\AdminShowDetail.cshtml" />
     <Content Include="Views\News\ShowMore.cshtml" />

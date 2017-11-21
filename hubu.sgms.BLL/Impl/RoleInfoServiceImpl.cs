@@ -33,9 +33,9 @@ namespace hubu.sgms.BLL.Impl
         }
 
         // 条件查找管理员信息
-        public List<Administrator> SelectAllAdminInfo(string adminName, int adminStatus)
+        public List<Administrator> SelectAllAdminInfo(string adminName, string adminDepartment)
         {
-            return roleDAL.SelectAllAdminInfo(adminName, adminStatus);
+            return roleDAL.SelectAllAdminInfo(adminName, adminDepartment);
         }
 
         // 删除管理员
@@ -80,9 +80,9 @@ namespace hubu.sgms.BLL.Impl
 
         #region 学生角色
         // 添加学生信息
-        public string AddStudentInfo(string studentID, string studentName, string studentSex, string studentIDCard, int studentAge, string studentDepartment, string studentMajor, string studentGrade, string studentType, string studentAddress, string studentNative, string studentBirthplace, string studentPoliticsstatus, string studentContact, string studentFamily, string studentAward, string studentOther, int studentStatus)
+        public string AddStudentInfo(string studentID, string studentName, string studentSex, string studentIDCard, int studentAge, string studentDepartment, string studentMajor, string studentGrade, string studentType, string studentAddress, string studentNative, string studentBirthplace, string studentPoliticsstatus, string studentContact, string studentFamily, string studentAward, string studentOther, int studentStatus,string studentClass)
         {
-            return roleDAL.AddStudentInfo(studentID, studentName, studentSex, studentIDCard, studentAge, studentDepartment, studentMajor, studentGrade, studentType, studentAddress, studentNative, studentBirthplace, studentPoliticsstatus, studentContact, studentFamily, studentAward, studentOther, studentStatus);
+            return roleDAL.AddStudentInfo(studentID, studentName, studentSex, studentIDCard, studentAge, studentDepartment, studentMajor, studentGrade, studentType, studentAddress, studentNative, studentBirthplace, studentPoliticsstatus, studentContact, studentFamily, studentAward, studentOther, studentStatus,studentClass);
         }
         
         // 修改学生信息
@@ -99,9 +99,9 @@ namespace hubu.sgms.BLL.Impl
         }
 
         // 通过条件查找学生信息
-        public List<Student> SelectAllStudentInfo(string studentName, string studentDepartment, string studentSex)
+        public List<Student> SelectAllStudentInfo(string studentName, string studentDepartment, string studentMajor, string studentClass)
         {
-            return roleDAL.SelectAllStudentInfo(studentName, studentDepartment, studentSex);
+            return roleDAL.SelectAllStudentInfo(studentName, studentDepartment, studentMajor, studentClass);
         }
 
         // 通过 ID 删除对应的学生
@@ -109,6 +109,8 @@ namespace hubu.sgms.BLL.Impl
         {
             return roleDAL.AdminDeleteStudent(studentID);
         }
+
+       
         #endregion
     }
 }

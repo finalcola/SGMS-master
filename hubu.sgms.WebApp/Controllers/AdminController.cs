@@ -231,19 +231,27 @@ namespace hubu.sgms.WebApp.Controllers
         // 管理员修改个人信息界面
         public ActionResult AlterAdminInfo()
         {
-            string Statue = Request["status"];
+            string sqlNull = "2b婿s1jHh子1hl91";  // 赋值，防止sql报错
+            string adminDepartment = Request["adminDepartment"];
             string adminName = Request["adminName"];
-            // 转换类型
-            int adminStatus = Convert.ToInt32(Statue);
-            if (adminName == null && adminStatus == 0)
+            
+            if (adminName == null && adminDepartment == null)   //一开始加载不显示
             {
                 return View();
             }
-            if (adminName == "" && adminStatus != 0)
+            if(adminName == "" && adminDepartment == null)  //都没有输入
             {
-                adminName = "2b婿s1jHh子1hl91";   // 赋值，防止sql报错
+                adminDepartment = adminName = sqlNull;
             }
-            List<Administrator> administratorList = roleInfoService.SelectAllAdminInfo(adminName, adminStatus);
+            if (adminName == "" && adminDepartment != null)     //只输入院系
+            {
+                adminName = sqlNull;
+            }
+            if(adminName != "" && adminDepartment == null) //只输入姓名
+            {
+                adminDepartment = sqlNull;
+            }
+            List<Administrator> administratorList = roleInfoService.SelectAllAdminInfo(adminName, adminDepartment);
             ViewData["adminList"] = administratorList;
             return View();
         }
@@ -302,7 +310,7 @@ namespace hubu.sgms.WebApp.Controllers
         public ActionResult DeleteAdmin(string administratorId)
         {
             string result = roleInfoService.DeleteAdmin(administratorId);
-            return View();
+            return View("AlterAdminInfo");
         }
         #endregion
 
@@ -440,7 +448,7 @@ namespace hubu.sgms.WebApp.Controllers
         public ActionResult AdminDeleteTeacher(string teacherID)
         {
             string result = roleInfoService.AdminDeleteTeacher(teacherID);
-            return View();
+            return View("AdminAlterTeacherInfo");
         }
         #endregion
 
@@ -472,11 +480,13 @@ namespace hubu.sgms.WebApp.Controllers
             string studentOther = Request["studentOther"];
             string StudentStatus = Request["studentStatus"];
 
+            string studentClass = Request["classlist"];
+
             //数据类型转换
             int studentAge = Convert.ToInt32(StudentAge);
             int studentStatus = Convert.ToInt32(StudentStatus);
 
-            string result = roleInfoService.AddStudentInfo(studentID, studentName, studentSex, studentIDCard, studentAge, studentDepartment, studentMajor, studentGrade, studentType, studentAddress, studentNative, studentBirthplace, studentPoliticsstatus, studentContact, studentFamily, studentAward, studentOther, studentStatus);
+            string result = roleInfoService.AddStudentInfo(studentID, studentName, studentSex, studentIDCard, studentAge, studentDepartment, studentMajor, studentGrade, studentType, studentAddress, studentNative, studentBirthplace, studentPoliticsstatus, studentContact, studentFamily, studentAward, studentOther, studentStatus,studentClass);
 
             return View();
         }
@@ -484,54 +494,47 @@ namespace hubu.sgms.WebApp.Controllers
         // 管理员修改学生信息
         public ActionResult AdminAlterStudentInfo()
         {
+            string sqlNull = "2b婿s1jHh子1hl91";  //防止参数为空，使sql报错
             string studentName = Request["studentName"];
             string studentDepartment = Request["studentDepartment"];
-            string studentSex = Request["studentSex"];
-
-            if (studentName == null && studentSex == null && studentDepartment == null)  //刚加载页面时不显示信息
+            string studentMajor = Request["majorlist"];
+            string studentClass = Request["classlist"];
+            
+            if(studentDepartment == null && studentName == null)    //刚加载页面时不显示信息
             {
                 return View();
             }
-            if (studentName == "" && studentSex == null && studentDepartment == null)  //页面点击按钮但是没有输入任何信息
+            if (studentDepartment == null && studentName == "")   //没有输入信息
             {
-                studentName = "2b婿s1jHh子1hl91";  //赋值，防止sql报错
-                studentDepartment = "2b婿";  //赋值，防止sql报错
-                studentSex = "2b";  //赋值，防止sql报错
+                studentDepartment = studentName = studentMajor = studentClass = sqlNull;  //赋值,防止sql报错
             }
-            if (studentName == "" && studentSex != null && studentDepartment == null)   //只输入性别
+            if (studentDepartment != null && studentMajor =="" && studentName == "")   //只输入学院信息
             {
-                studentName = "2b婿s1jHh子1hl91";  //赋值，防止sql报错
-                studentDepartment = "2b婿";  //赋值，防止sql报错
+                studentName = studentMajor = studentClass = sqlNull;  //赋值,防止sql报错
             }
-            if (studentName != null && studentName != "" && studentSex == null && studentDepartment == null)    //只输入姓名
+            if(studentMajor != "" && studentClass == "" && studentName == "")   //只输入学院，专业
             {
-                studentSex = "2b";  //赋值，防止sql报错
-                studentDepartment = "2b婿";  //赋值，防止sql报错
+                studentName = studentClass = sqlNull;
             }
-            if (studentName != null && studentName != "" && studentSex != null && studentDepartment == null)  //只输入姓名-性别
+            if(studentClass != "" && studentName == "")   //只输入学院，专业，班级
             {
-                studentDepartment = "2b婿";  //赋值，防止sql报错
+                studentName = sqlNull;
             }
-            if (studentName == "" && studentSex == null && studentDepartment != null)  //只输入学院
+            if (studentDepartment == null && studentName != "")   //只输入姓名
             {
-                studentName = "2b婿s1jHh子1hl91";  //赋值，防止sql报错
-                studentSex = "2b";  //赋值，防止sql报错
+                studentDepartment = studentMajor = studentClass = sqlNull;  //赋值,防止sql报错
             }
-            if (studentName != null && studentName != "" && studentSex == null && studentDepartment != null)  //只输入学院-姓名
+            if (studentDepartment != null && studentMajor == "" && studentName != "")   //只输入学院，姓名
             {
-                studentSex = "2b";  //赋值，防止sql报错
+                studentMajor = studentClass = sqlNull;
             }
-            if (studentName == "" && studentSex != null && studentDepartment != null)  //只输入学院-性别
+            if (studentMajor != null && studentClass == null && studentName != "")   //只输入学院，专业，姓名
             {
-                studentName = "2b婿s1jHh子1hl91";  //赋值，防止sql报错
+                studentClass = sqlNull;
             }
-            if (studentName == "" && studentSex == null && studentDepartment == null)  //都没有输入点击按钮
-            {
-                studentName = "2b婿s1jHh子1hl91";  //赋值，防止sql报错
-                studentDepartment = "2b婿";  //赋值，防止sql报错
-                studentSex = "2b";  //赋值，防止sql报错
-            }
-            List<Student> studentList = roleInfoService.SelectAllStudentInfo(studentName, studentDepartment, studentSex);
+
+            
+            List<Student> studentList = roleInfoService.SelectAllStudentInfo(studentName, studentDepartment, studentMajor, studentClass);
             ViewData["studentList"] = studentList;
             return View();
         }
@@ -587,7 +590,7 @@ namespace hubu.sgms.WebApp.Controllers
 
             string result = roleInfoService.UpdateStudentInfo(studentID, studentName, studentSex, studentIDCard, studentAge, studentDepartment, studentMajor, studentGrade, studentType, studentAddress, studentNative, studentBirthplace, studentPoliticsstatus, studentContact, studentFamily, studentAward, studentOther, studentStatus);
 
-            return View();
+            return View("AdminAlterStudentInfo");
         }
 
         // 查看学生详细信息
@@ -621,7 +624,7 @@ namespace hubu.sgms.WebApp.Controllers
         public ActionResult AdminDeleteStudent(string studentID)
         {
             string result = roleInfoService.AdminDeleteStudent(studentID);
-            return View();
+            return View("AdminAlterStudentInfo");
         }
         #endregion
 

@@ -25,7 +25,7 @@ namespace hubu.sgms.BLL
         Administrator SelectAdministratorByID(string adminID);
 
         // 条件查找管理员信息
-        List<Administrator> SelectAllAdminInfo(string adminName, int adminStatus);
+        List<Administrator> SelectAllAdminInfo(string adminName, string adminDepartment);
 
         // 删除管理员
         string DeleteAdmin(string adminID);
@@ -54,20 +54,19 @@ namespace hubu.sgms.BLL
 
         #region 学生
         // 添加学生信息
+        string AddStudentInfo(string studentID, string studentName, string studentSex, string studentIDCard, int studentAge, string studentDepartment, string studentMajor,
+                          string studentGrade, string studentType, string studentAddress, string studentNative, string studentBirthplace, string studentPoliticsstatus,
+                          string studentContact, string studentFamily, string studentAward, string studentOther, int studentStatus,string studentClass);
+        //修改学生信息
         string UpdateStudentInfo(string studentID, string studentName, string studentSex, string studentIDCard, int studentAge, string studentDepartment, string studentMajor,
                           string studentGrade, string studentType, string studentAddress, string studentNative, string studentBirthplace, string studentPoliticsstatus,
-                          string studentContact, string studentFamily, string studentAward, string studentOther, int studentStatus);
-
-        // 添加学生信息
-        string AddStudentInfo(string studentID, string studentName, string studentSex, string studentIDCard, int studentAge, string studentDepartment, string studentMajor,
-                          string studentGrade, string studentType, string studentAddress, string studentNative, string studentBirthplace, string studentPoliticsstatus, 
                           string studentContact, string studentFamily, string studentAward, string studentOther, int studentStatus);
 
         // 通过 ID 查找对应的学生信息
         Student SelectStudent(string studentID);
 
         // 通过条件查找学生信息
-        List<Student> SelectAllStudentInfo(string studentName, string studentDepartment, string studentSex);
+        List<Student> SelectAllStudentInfo(string studentName, string studentDepartment, string studentMajor, string studentClass);
 
         // 通过 ID 删除对应的学生
         string AdminDeleteStudent(string studentID);
