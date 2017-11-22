@@ -228,6 +228,21 @@ namespace hubu.sgms.WebApp.Controllers
             return Json(new { courseTypes = courseTypes, colleges = colleges ,courseTypeCount=courseTypes.Count,collegeCount=colleges.Count});
 
         }
+
+        public ActionResult HomeCourseDetail(int courseId)
+        {
+            Course course = courseService.SelectCourseById(courseId);
+
+            ViewData["courseName"] = course.course_name;
+            ViewData["courseType"] = course.course_type;
+            ViewData["courseHour"] = course.course_hour;
+            ViewData["courseCredit"] = course.course_credit;
+            ViewData["coursePhoto"] = course.course_photo;
+            ViewData["courseCollege"] = course.college_id;
+            ViewData["courseExperiment"] = course.course_experiment;
+            ViewData["courseOpentime"] = course.course_opentime;
+            return View();
+        }
     }
 
 

@@ -339,6 +339,7 @@
     <Content Include="Content\News\js\responsiveslides.min.js" />
     <Content Include="Content\News\js\scripts.js" />
     <Content Include="Content\public\bootstrap-grid.min.css" />
+    <Content Include="Content\public\crowd.css" />
     <Content Include="Content\public\formValidation.css" />
     <Content Include="Content\public\formValidation.min.css" />
     <Content Include="Content\public\jquery.idcode.css" />
@@ -364,6 +365,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\bg.jpg" />
     <Content Include="images\hubu.jpg" />
     <Content Include="images\huhunew.jpg" />
     <Content Include="images\loading.gif" />
@@ -780,6 +782,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\MyAjaxForm.js" />
     <Content Include="Scripts\pcasunzip.js" />
+    <Content Include="Scripts\public\constellation.js" />
     <Content Include="Scripts\public\docs.min.js" />
     <Content Include="Scripts\public\formValidation.js" />
     <Content Include="Scripts\public\formValidation.min.js" />
@@ -853,6 +856,7 @@
     <Content Include="Views\News\ShowMore.cshtml" />
     <Content Include="Views\Teacher\TeacherSelectCourse2.cshtml" />
     <Content Include="Views\Teacher\TeacherCheckScore2.cshtml" />
+    <Content Include="Views\Course\HomeCourseDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

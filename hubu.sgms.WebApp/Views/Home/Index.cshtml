@@ -13,6 +13,12 @@
     <script type="text/javascript" src="~/Scripts/public/docs.min.js"></script>
     <title>学生选课系统首页</title>
 </head>
+<style>
+    .z_class_detail img {
+        cursor: pointer;
+    }
+</style>
+
 <body onload="loadCourseInfo()">
     <!--logo部分-->
     <div class="container-fluid">
@@ -732,6 +738,10 @@
                 links[i+1].innerHTML = array[i].course_name;
                 document.getElementById(imgId + (i + 1) + "").src = rootImg + array[i].course_photo;
 
+                document.getElementById(imgId + (i + 1) + "").onclick = function () {
+                    // alert(array[i].course_id + ":" + array[i].course_name);
+                    window.open("/Course/HomeCourseDetail?courseId=" + array[i].course_id);
+                }
             });
 
 

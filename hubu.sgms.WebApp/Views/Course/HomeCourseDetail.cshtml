@@ -1,0 +1,133 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/public/crowd.css" rel="stylesheet" />
+    <link href="~/Content/admin/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="~/Content/public/style.css" rel="stylesheet" />
+    <script type="text/javascript" src="bs/js/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <style>
+        * {
+            font-family: "微软雅黑";
+        }
+        /*回到首页*/
+        .z_blank {
+            width: 100%;
+            height: 130px;
+        }
+
+            .z_blank button {
+                opacity: 0.3;
+                margin-top: 15px;
+                border-radius: 3px;
+                float: right;
+                margin-right: 5%;
+            }
+        /*左侧课程图片展示*/
+        .z_img {
+            width: 35%;
+            height: 340px;
+            background: whitesmoke;
+            border: 1px solid #ADADAD;
+            padding: 0 !important;
+            margin-left: 10%;
+            color: black;
+        }
+
+            .z_img label {
+                width: 100%;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+            }
+
+        .demo {
+            padding: 0em 0 !important;
+        }
+
+        .box {
+            width: 100%;
+            height: 300px;
+            /*background: yellow;*/
+        }
+
+            .box .box-img img {
+                width: 100%;
+                height: 300px !important;
+            }
+        /*右侧课程信息*/
+        .z_info {
+            width: 50%;
+            margin-left: 5%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="bg">
+            <!--背景粒子-->
+            <canvas id="display"></canvas>
+            <div id="blachole"></div>
+
+            <!--顶部空白-->
+            <div class="z_blank">
+                <div class="container">
+                    <button class="btn btn-default" id="retHome">回到首页</button>
+                </div>
+            </div>
+            <!--中间课程详细信息-->
+            <div class="container">
+                <div class="z_img col-md-3">
+                    <!--<img src="img/class5.jpg" />-->
+                    <div class="demo">
+                        <div class="box">
+                            <div class="box-img">
+                                <img src="~/Content/courseImg/@ViewData["coursePhoto"]" />
+                            </div>
+                            <div class="box-content">
+                                <h4 class="title">课程简介</h4>
+                                <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae libero orci. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed vestibulum.</p>
+                                <ul class="social-links">
+                                    <li><a href="#" class="fa fa-qq"></a></li>
+                                    <li><a href="#" class="fa fa-weibo"></a></li>
+                                    <li><a href="#" class="fa fa-weixin"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <label>@ViewData["courseName"]</label>
+                </div>
+                <div class="z_info col-md-6">
+                    <p><label>课程名称：</label><span>@ViewData["courseName"]</span></p>
+                    <p><label>课程学分：</label><span>@ViewData["courseCredit"]</span></p>
+                    <p><label>课程类型：</label><span>@ViewData["courseType"]</span></p>
+                    <p><label>课程时长：</label><span>@ViewData["courseHour"]</span></p>
+                    <p><label>实验课时：</label><span>@ViewData["courseExperiment"]</span></p>
+                    <p><label>开课时间：</label><span>@ViewData["courseOpentime"]</span></p>
+                    <p><label>开课学院：</label><span>@ViewData["courseCollege"]</span></p>
+                    <p><label>课程教材：</label><span></span></p>
+                    <p><label>教材作者：</label><span></span></p>
+                    <p><label>教材价格：</label><span></span></p>
+                    <p><label>教材出版社：</label><span></span></p>
+                </div>
+            </div>
+        </div>
+    </header>
+    <script src="~/Scripts/public/constellation.js"></script>
+    <script>
+        //回到首页
+        $("#retHome").click(function () {
+            window.open("/Home/Index");
+        });
+    </script>
+</body>
+</html>
